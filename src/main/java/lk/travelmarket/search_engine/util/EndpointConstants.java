@@ -1,0 +1,8 @@
+package lk.travelmarket.search_engine.util;
+
+public class EndpointConstants {
+
+    public static final String V1 = "/v1/";
+
+    public static final String TEST = "tests";
+}
