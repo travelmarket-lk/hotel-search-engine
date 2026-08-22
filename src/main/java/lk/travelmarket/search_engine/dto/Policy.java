@@ -50,5 +50,6 @@ public class Policy<Hotel> implements Serializable {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+
     }
 }
