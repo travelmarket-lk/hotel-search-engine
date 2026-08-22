@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table( name = "address")
 @Builder
@@ -29,5 +32,8 @@ public class Address {
     @OneToOne( cascade = CascadeType.ALL)
     @JoinColumn( name = "district_id")
     private City district;
+
+    @OneToMany( mappedBy = "address" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contact> contacts;
 
 }

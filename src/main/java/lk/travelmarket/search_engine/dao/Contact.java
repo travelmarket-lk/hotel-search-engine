@@ -19,6 +19,7 @@ public class Contact {
 
     private String value;
 
-    @OneToMany(mappedBy = "contact", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Long addressId;
+    @ManyToOne( fetch = FetchType.LAZY)
+    @JoinColumn( name = "address_id")
+    private Address address;
 }
