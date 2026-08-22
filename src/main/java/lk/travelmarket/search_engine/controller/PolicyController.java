@@ -25,4 +25,5 @@ public class PolicyController {
     public Policy createPolicy(@RequestBody Policy policy) {
         return policyService.savePolicy(policy);
     }
+
 }
