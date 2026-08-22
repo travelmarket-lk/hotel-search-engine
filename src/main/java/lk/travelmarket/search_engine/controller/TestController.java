@@ -19,7 +19,27 @@ public class TestController implements ITestController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<TestDto>> getTest() {
+    public ResponseEntity<CCResponseWrapper<TestDto>> create(TestDto request) {
+        return NetworkUtils.wrap( testService.createTest( request) );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<TestDto>> getAll() {
         return NetworkUtils.wrap( testService.findAll() );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<TestDto>> getById(Long id) {
+        return NetworkUtils.wrap( testService.findTest( id ) );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<TestDto>> update(Long id, TestDto request) {
+        return NetworkUtils.wrap( testService.updateTest( id, request) );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<TestDto>> delete(Long id) {
+        return NetworkUtils.wrap( testService.deleteTest( id ) );
     }
 }
