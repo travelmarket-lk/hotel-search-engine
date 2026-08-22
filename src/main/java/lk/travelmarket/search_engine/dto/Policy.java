@@ -16,7 +16,7 @@ public class Policy<Hotel> implements Serializable {
 
     // Assuming you have a Hotel entity
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "Hotel_Id", nullable = false)
+    @JoinColumn(name = "Hotel_Id",  nullable = false)
     private Hotel hotel;
 
     public Policy() {
