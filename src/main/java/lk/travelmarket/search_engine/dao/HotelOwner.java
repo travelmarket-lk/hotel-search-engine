@@ -16,11 +16,15 @@ public class HotelOwner {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column( name = "name" )
     private String name;
 
+    @Column( name = "phone_number")
     private String phoneNumber;
 
+    @Column( name = "nic")
     private String nic;
 
+    @Column( name = "email")
     private String email;
 }

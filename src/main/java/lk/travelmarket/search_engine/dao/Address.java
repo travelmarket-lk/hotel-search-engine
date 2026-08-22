@@ -16,8 +16,10 @@ public class Address {
     @GeneratedValue( strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column( name = "address_line_1")
     private String addressLine1;
 
+    @Column( name = "address_line_2")
     private String addressLine2;
 
     @OneToOne( cascade = CascadeType.ALL)

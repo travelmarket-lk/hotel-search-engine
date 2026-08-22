@@ -13,6 +13,4 @@ public class City {
 
     private String name;
 
-    @OneToOne( cascade = CascadeType.ALL)
-    private Address address;
 }
