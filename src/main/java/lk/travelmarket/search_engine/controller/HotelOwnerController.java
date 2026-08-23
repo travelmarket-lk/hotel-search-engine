@@ -1,22 +1,27 @@
 package lk.travelmarket.search_engine.controller;
 
-import lk.travelmarket.search_engine.dao.HotelOwner;
-import lk.travelmarket.search_engine.repository.HotelOwnerRepository;
+import lk.travelmarket.search_engine.dto.HotelOwnerDto;
+import lk.travelmarket.search_engine.network.CCResponseWrapper;
+import lk.travelmarket.search_engine.network.util.NetworkUtils;
+import lk.travelmarket.search_engine.service.hotelOwner.IHotelOwnerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HotelOwnerController implements IHotelOwnerController{
+public class HotelOwnerController implements IHotelOwnerController {
 
-    private final HotelOwnerRepository hotelOwnerRepository;
+    private final IHotelOwnerService hotelOwnerService;
 
-    public HotelOwnerController(HotelOwnerRepository hotelOwnerRepository) {
-        this.hotelOwnerRepository = hotelOwnerRepository;
+    public HotelOwnerController(IHotelOwnerService hotelOwnerService) {
+        this.hotelOwnerService = hotelOwnerService;
     }
 
     @Override
-    public ResponseEntity<HotelOwner> registerOwner(@RequestBody HotelOwner hotelOwner) {
-        HotelOwner savedOwner = hotelOwnerRepository.save(hotelOwner);
-        return ResponseEntity.ok(savedOwner);
+    public ResponseEntity<CCResponseWrapper<HotelOwnerDto>> registerOwner(
+            HotelOwnerDto request) {
+
+        return NetworkUtils.wrap(
+                hotelOwnerService.registerOwner(request)
+        );
     }
 }
