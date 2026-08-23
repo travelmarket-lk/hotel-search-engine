@@ -1,94 +1,335 @@
 package lk.travelmarket.search_engine.service.master;
 
-import lk.travelmarket.search_engine.dao.City;
-import lk.travelmarket.search_engine.dao.District;
-import lk.travelmarket.search_engine.repository.CityRepository;
-import lk.travelmarket.search_engine.repository.DistrictRepository;
+import lk.travelmarket.search_engine.dto.CityDto;
+import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.network.commons.CCError;
+import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
+import lk.travelmarket.search_engine.network.commons.CCResponse;
+import lk.travelmarket.search_engine.network.commons.CCResponsePack;
+import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
+import lk.travelmarket.search_engine.network.error.code.ErrorSource;
+import lk.travelmarket.search_engine.network.error.code.Status;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
+import static lk.travelmarket.search_engine.util.Constants.*;
 
 @Service
 public class MasterService implements IMasterService {
 
-    private final DistrictRepository districtRepository;
-    private final CityRepository cityRepository;
+    private final MasterServiceImpl masterServiceImpl;
 
-    public MasterService(DistrictRepository districtRepository, CityRepository cityRepository) {
-        this.districtRepository = districtRepository;
-        this.cityRepository = cityRepository;
+    public MasterService(MasterServiceImpl masterServiceImpl) {
+        this.masterServiceImpl = masterServiceImpl;
     }
 
-    // CREATE
-    public District addDistrict(District district) {
-        return districtRepository.save(district);
-    }
+    // DISTRICT
 
-    // READ ALL
-    public List<District> getAllDistricts() {
-        return districtRepository.findAll();
-    }
+    @Override
+    public CCResponsePack<DistrictDto> findAllDistricts() {
 
-    // READ BY ID
-    public Optional<District> getDistrictById(Long id) {
-        return districtRepository.findById(id);
-    }
+        try {
 
-    // UPDATE
-    public District updateDistrict(Long id, District district) {
+            CCError<List<DistrictDto>> ccError =
+                    masterServiceImpl.findAllDistricts();
 
-        District existingDistrict = districtRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("District not found"));
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
 
-        existingDistrict.setName(district.getName());
+                return new CCResponsePack<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
 
-        return districtRepository.save(existingDistrict);
-    }
+            return new CCResponsePack<>(ccError.getData());
 
-    // DELETE
-    public void deleteDistrict(Long id) {
+        } catch (Exception e) {
 
-        if (!districtRepository.existsById(id)) {
-            throw new RuntimeException("District not found");
+            return new CCResponsePack<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_RETRIEVE_DISTRICTS,
+                    e
+            );
         }
-
-        districtRepository.deleteById(id);
     }
 
-    // CREATE
-    public City addCity(City city) {
-        return cityRepository.save(city);
-    }
+    @Override
+    public CCResponse<DistrictDto> findDistrict(Long id) {
 
-    // READ ALL
-    public List<City> getAllCities() {
-        return cityRepository.findAll();
-    }
+        try {
 
-    // READ BY ID
-    public Optional<City> getCityById(Long id) {
-        return cityRepository.findById(id);
-    }
+            CCError<DistrictDto> ccError =
+                    masterServiceImpl.findDistrict(id);
 
-    // UPDATE
-    public City updateCity(Long id, City city) {
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
 
-        City existingCity = cityRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("City not found"));
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
 
-        existingCity.setName(city.getName());
+            return new CCResponse<>(ccError.getData());
 
-        return cityRepository.save(existingCity);
-    }
+        } catch (Exception e) {
 
-    // DELETE
-    public void deleteCity(Long id) {
-
-        if (!cityRepository.existsById(id)) {
-            throw new RuntimeException("City not found");
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_RETRIEVE_DISTRICT,
+                    e
+            );
         }
+    }
 
-        cityRepository.deleteById(id);
+    @Override
+    public CCResponse<DistrictDto> createDistrict(DistrictDto dto) {
+
+        try {
+
+            CCError<DistrictDto> ccError =
+                    masterServiceImpl.createDistrict(dto);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_CREATE_DISTRICT,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<DistrictDto> updateDistrict(
+            Long id,
+            DistrictDto dto) {
+
+        try {
+
+            CCError<DistrictDto> ccError =
+                    masterServiceImpl.updateDistrict(id, dto);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_UPDATE_DISTRICT,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<DistrictDto> deleteDistrict(Long id) {
+
+        try {
+
+            CCError<DistrictDto> ccError =
+                    masterServiceImpl.deleteDistrict(id);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_DELETE_DISTRICT,
+                    e
+            );
+        }
+    }
+
+
+    // CITY
+
+    @Override
+    public CCResponsePack<CityDto> findAllCities() {
+
+        try {
+
+            CCError<List<CityDto>> ccError =
+                    masterServiceImpl.findAllCities();
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponsePack<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponsePack<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponsePack<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_RETRIEVE_CITIES,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<CityDto> findCity(Long id) {
+
+        try {
+
+            CCError<CityDto> ccError =
+                    masterServiceImpl.findCity(id);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_RETRIEVE_CITY,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<CityDto> createCity(CityDto dto) {
+
+        try {
+
+            CCError<CityDto> ccError =
+                    masterServiceImpl.createCity(dto);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_CREATE_CITY,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<CityDto> updateCity(
+            Long id,
+            CityDto dto) {
+
+        try {
+
+            CCError<CityDto> ccError =
+                    masterServiceImpl.updateCity(id, dto);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_UPDATE_CITY,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<CityDto> deleteCity(Long id) {
+
+        try {
+
+            CCError<CityDto> ccError =
+                    masterServiceImpl.deleteCity(id);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponse<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+
+            return new CCResponse<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_DELETE_CITY,
+                    e
+            );
+        }
     }
 }

@@ -1,118 +1,114 @@
 package lk.travelmarket.search_engine.controller;
 
-import lk.travelmarket.search_engine.dao.City;
-import lk.travelmarket.search_engine.dao.District;
-import lk.travelmarket.search_engine.service.master.MasterService;
+import lk.travelmarket.search_engine.dto.CityDto;
+import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.network.CCResponseWrapper;
+import lk.travelmarket.search_engine.network.util.NetworkUtils;
+import lk.travelmarket.search_engine.service.master.IMasterService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MasterDataController implements IMasterDataController{
+public class MasterDataController implements IMasterDataController {
 
-    private final MasterService masterService;
+    private final IMasterService masterService;
 
-    public MasterDataController(MasterService masterService) {
+    public MasterDataController(IMasterService masterService) {
         this.masterService = masterService;
     }
 
-    // CREATE
-    @PostMapping("api/districts/add")
-    public District addDistrict(@RequestBody District district) {
-        return masterService.addDistrict(district);
+    // DISTRICT
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<DistrictDto>> createDistrict(
+            DistrictDto request) {
+
+        return NetworkUtils.wrap(
+                masterService.createDistrict(request)
+        );
     }
 
-    // READ ALL
-    @GetMapping("api/districts/getAllDistricts")
-    public List<District> getAllDistricts() {
-        return masterService.getAllDistricts();
+    @Override
+    public ResponseEntity<CCResponseWrapper<DistrictDto>> getAllDistricts() {
+
+        return NetworkUtils.wrap(
+                masterService.findAllDistricts()
+        );
     }
 
-    // READ ONE
-    @GetMapping("api/districts/{id}")
-    public ResponseEntity<District> getDistrictById(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<CCResponseWrapper<DistrictDto>> getDistrictById(
+            Long id) {
 
-        return masterService.getDistrictById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return NetworkUtils.wrap(
+                masterService.findDistrict(id)
+        );
     }
 
-    // UPDATE
-    @PutMapping("api/districts/update/{id}")
-    public ResponseEntity<District> updateDistrict(
-            @PathVariable Long id,
-            @RequestBody District district) {
+    @Override
+    public ResponseEntity<CCResponseWrapper<DistrictDto>> updateDistrict(
+            Long id,
+            DistrictDto request) {
 
-        try {
-            return ResponseEntity.ok(
-                    masterService.updateDistrict(id, district)
-            );
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return NetworkUtils.wrap(
+                masterService.updateDistrict(id, request)
+        );
     }
 
-    // DELETE
-    @DeleteMapping("api/districts/delete/{id}")
-    public ResponseEntity<Void> deleteDistrict(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<CCResponseWrapper<DistrictDto>> deleteDistrict(
+            Long id) {
 
-        try {
-            masterService.deleteDistrict(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return NetworkUtils.wrap(
+                masterService.deleteDistrict(id)
+        );
     }
 
-    // CREATE
-    @PostMapping("api/cities/add")
-    public City addCity(@RequestBody City city) {
-        return masterService.addCity(city);
+
+    // CITY
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<CityDto>> createCity(
+            CityDto request) {
+
+        return NetworkUtils.wrap(
+                masterService.createCity(request)
+        );
     }
 
-    // READ ALL
-    @GetMapping("api/cities/getAllCities")
-    public List<City> getAllCities() {
-        return masterService.getAllCities();
+    @Override
+    public ResponseEntity<CCResponseWrapper<CityDto>> getAllCities() {
+
+        return NetworkUtils.wrap(
+                masterService.findAllCities()
+        );
     }
 
-    // READ ONE
-    @GetMapping("api/cities/{id}")
-    public ResponseEntity<City> getCityById(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<CCResponseWrapper<CityDto>> getCityById(
+            Long id) {
 
-        return masterService.getCityById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return NetworkUtils.wrap(
+                masterService.findCity(id)
+        );
     }
 
-    // UPDATE
-    @PutMapping("api/cities/update/{id}")
-    public ResponseEntity<City> updateCity(
-            @PathVariable Long id,
-            @RequestBody City city) {
+    @Override
+    public ResponseEntity<CCResponseWrapper<CityDto>> updateCity(
+            Long id,
+            CityDto request) {
 
-        try {
-            return ResponseEntity.ok(
-                    masterService.updateCity(id, city)
-            );
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return NetworkUtils.wrap(
+                masterService.updateCity(id, request)
+        );
     }
 
-    // DELETE
-    @DeleteMapping("api/cities/delete/{id}")
-    public ResponseEntity<Void> deleteCity(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<CCResponseWrapper<CityDto>> deleteCity(
+            Long id) {
 
-        try {
-            masterService.deleteCity(id);
-            return ResponseEntity.noContent().build();
-
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return NetworkUtils.wrap(
+                masterService.deleteCity(id)
+        );
     }
-
 }
