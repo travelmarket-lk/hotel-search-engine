@@ -1,12 +1,12 @@
 package lk.travelmarket.search_engine.service.hotel;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
-import lk.travelmarket.search_engine.dto.HotelResponse;
-import java.util.List;
+import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 
 public interface IHotelService {
-    List<HotelResponse> getAllHotels();
-    HotelResponse getHotelById(Long id);
-    HotelResponse createHotel(Hotel hotel);
-    HotelResponse updateHotel(Long id, Hotel hotelDetails);
-    boolean deleteHotel(Long id);
+    CCResponsePack<HotelDto> getAllHotels();
+    CCResponsePack<HotelDto> getHotelById(Long id);
+    CCResponsePack<HotelDto> createHotel(Hotel hotel);
+    CCResponsePack<HotelDto> updateHotel(Long id, Hotel hotelDetails);
+    CCResponsePack<Boolean> deleteHotel(Long id);
 }

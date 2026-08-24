@@ -2,6 +2,7 @@ package lk.travelmarket.search_engine.dao.HotelRoom;
 
 import jakarta.persistence.*;
 import lk.travelmarket.search_engine.dao.Contact;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.*;
 
 import java.util.HashSet;
