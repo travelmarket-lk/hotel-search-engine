@@ -16,9 +16,8 @@ public class Policy implements Serializable {
     private String policyDetails;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "Hotel_Id",  nullable = false)
-//    private Hotel hotel;
+//    @ManyToOne
+//    public Policy;
 
     public Policy() {
     }
