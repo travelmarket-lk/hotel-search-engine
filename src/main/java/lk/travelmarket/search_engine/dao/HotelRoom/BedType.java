@@ -12,7 +12,6 @@ import java.util.List;
 @Table(name = "bed_type")
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class BedType {
 
     @Id
