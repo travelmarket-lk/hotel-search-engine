@@ -43,6 +43,4 @@ public class Policy implements Serializable {
     public void setPolicyDetails(String policyDetails) {
         this.policyDetails = policyDetails;
     }
-
-
 }

@@ -17,11 +17,10 @@ public class PolicyService {
     }
 
     public List<Policy> getAllPolicies() {
-        return getAllPolicies();
+        return policyRepository.findAll();
     }
 
-    public Policy savePolicy(Policy policyRepository) {
-        return savePolicy(policyRepository);
+    public Policy savePolicy(Policy policy) {
+        return policyRepository.save(policy);
     }
-
 }
