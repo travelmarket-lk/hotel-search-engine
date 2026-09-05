@@ -34,6 +34,10 @@ public class Constants {
     public static final String ERROR_RETRIEVE_DISTRICT =
             "District retrieve failed";
 
+    public static final String SUCCESS_REGISTER_HOTEL_OWNER = "Hotel owner registered successfully";
+    public static final String ERROR_REGISTER_HOTEL_OWNER = "Hotel owner registration failed";
+    public static final String ERROR_HOTEL_OWNER_EMAIL_ALREADY_EXISTS = "Email already exists";
+    public static final String ERROR_HOTEL_OWNER_NIC_ALREADY_EXISTS = "NIC already exists";
     public static final String ERROR_RETRIEVE_DISTRICT_NOT_FOUND =
             "District not found";
 
