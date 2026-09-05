@@ -18,6 +18,9 @@ public class Policy implements Serializable {
 
 //    @ManyToOne
 //    public Policy;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "Hotel_Id",  nullable = false)
+//    private Hotel hotel;
 
     public Policy() {
     }
@@ -42,4 +45,6 @@ public class Policy implements Serializable {
     public void setPolicyDetails(String policyDetails) {
         this.policyDetails = policyDetails;
     }
+
+
 }

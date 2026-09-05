@@ -3,3 +3,4 @@ target/
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/shelf/
+src/main/resources/application.properties
