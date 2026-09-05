@@ -120,23 +120,23 @@ public class MasterDataController implements IMasterDataController {
             return NetworkUtils.wrap(masterService.findAllBedTypes());
         }
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
-            return NetworkUtils.wrap(masterService.addBedType(bedType));
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
+        return NetworkUtils.wrap(masterService.addBedType(bedType));
+    }
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<Void>> deleteBedType(Long id) {
-            return NetworkUtils.wrap(masterService.deleteBedType(id));
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<Void>> deleteBedType(Long id) {
+        return NetworkUtils.wrap(masterService.deleteBedType(id));
+    }
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> getBedTypeById(Long id) {
-            return NetworkUtils.wrap(masterService.findBedTypeById(id));
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> getBedTypeById(Long id) {
+        return NetworkUtils.wrap(masterService.findBedTypeById(id));
+    }
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
-            return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
+        return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
+    }
 }
