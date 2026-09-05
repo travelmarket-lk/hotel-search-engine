@@ -33,6 +33,10 @@ public class Address {
     @JoinColumn( name = "district_id")
     private City district;
 
+    @OneToOne( cascade = CascadeType.ALL)
+    @JoinColumn( name = "province_id")
+    private Province province;
+
     @OneToMany( mappedBy = "address" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts;
 
