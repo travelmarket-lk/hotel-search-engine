@@ -9,16 +9,14 @@ import lk.travelmarket.search_engine.network.error.code.ErrorSource;
 import lk.travelmarket.search_engine.network.error.code.Status;
 import org.springframework.stereotype.Service;
 
-import static lk.travelmarket.search_engine.util.Constants.ERROR_REGISTER_HOTEL_OWNER;
+import static lk.travelmarket.search_engine.util.Constants.*;
 
 @Service
 public class HotelOwnerService implements IHotelOwnerService {
 
     private final HotelOwnerServiceImpl hotelOwnerServiceImpl;
 
-    public HotelOwnerService(
-            HotelOwnerServiceImpl hotelOwnerServiceImpl) {
-
+    public HotelOwnerService(HotelOwnerServiceImpl hotelOwnerServiceImpl) {
         this.hotelOwnerServiceImpl = hotelOwnerServiceImpl;
     }
 
@@ -40,7 +38,9 @@ public class HotelOwnerService implements IHotelOwnerService {
                 );
             }
 
-            return new CCResponse<>(ccError.getData());
+            return new CCResponse<>(
+                    ccError.getData()
+            );
 
         } catch (Exception e) {
 

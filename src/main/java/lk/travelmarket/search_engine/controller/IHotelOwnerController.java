@@ -21,7 +21,7 @@ public interface IHotelOwnerController {
 
     @Operation(
             summary = "Register a Hotel Owner",
-            description = "Creates a new Hotel Owner and returns the registered owner details."
+            description = "Creates a User account first and then registers the Hotel Owner."
     )
     @ApiResponses({
             @ApiResponse(
