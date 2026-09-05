@@ -8,8 +8,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table( name = "district")
-public class District {
+@Table( name = "province")
+public class Province {
 
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
