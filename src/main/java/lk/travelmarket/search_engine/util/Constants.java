@@ -13,7 +13,6 @@ public class Constants {
     public static final String ERROR_UPDATE_TEST = "Test update failed";
     public static final String SUCCESS_DELETE_TEST = "Test deleted successfully";
     public static final String ERROR_DELETE_TEST = "Test deletion failed";
-}
 
     // DISTRICT
 
@@ -85,4 +84,5 @@ public class Constants {
 
     public static final String ERROR_DELETE_CITY =
             "City deletion failed";
+
 }
