@@ -1,8 +1,10 @@
 package lk.travelmarket.search_engine.service.master;
 
 import jakarta.transaction.Transactional;
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dao.City;
 import lk.travelmarket.search_engine.dao.District;
+import lk.travelmarket.search_engine.repository.BedTypeRepository;
 import lk.travelmarket.search_engine.repository.CityRepository;
 import lk.travelmarket.search_engine.repository.DistrictRepository;
 import lk.travelmarket.search_engine.dto.CityDto;
@@ -22,6 +24,7 @@ public class MasterServiceImpl {
 
     private final DistrictRepository districtRepository;
     private final CityRepository cityRepository;
+    private final BedTypeRepository bedTypeRepository;
 
     public MasterServiceImpl(
             DistrictRepository districtRepository,
@@ -318,5 +321,48 @@ public class MasterServiceImpl {
                 city.getId(),
                 city.getName()
         );
+    }
+
+    // BED TYPES
+    public CCError<List<BedType>> findAllBedTypes() {
+        CCError<List<BedType>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BED_TYPES);
+        List<BedType> bedTypes = this.bedTypeRepository.findAll();
+        ccError.setData(bedTypes);
+        return ccError;
+    }
+
+    public CCError<BedType> addBedType(BedType bedType) {
+        CCError<BedType> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_ADD_BED_TYPES);
+        BedType savedBedType = this.bedTypeRepository.save(bedType);
+        ccError.setData(savedBedType);
+        return ccError;
+    }
+
+
+    public CCError<Void> deleteBedType(Long id) {
+        if (!this.bedTypeRepository.existsById(id)) {
+            return new CCError<>(CCErrorStatus.ERROR, ERROR_BED_ID_NOT_FOUND + id);
+        }
+        this.bedTypeRepository.deleteById(id);
+        return new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_BED_TYPES);
+    }
+
+    public CCError<BedType> findBedTypeById(Long id) {
+        Optional<BedType> optionalBedType = this.bedTypeRepository.findById(id);
+        if (optionalBedType.isEmpty()) {
+            return new CCError<>(CCErrorStatus.ERROR, ERROR_RETRIEVE_BED_TYPES + id);
+        }
+        CCError<BedType> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BED_TYPES);
+        ccError.setData(optionalBedType.get());
+        return ccError;
+    }
+
+    public CCError<BedType> updateBedType(Long id, BedType bedType) {
+        if (!this.bedTypeRepository.existsById(id)) {
+            return new CCError<>(CCErrorStatus.ERROR, ERROR_BED_ID_NOT_FOUND + id);
+        }
+        bedType.setId(id);
+        BedType updatedBedType = this.bedTypeRepository.save(bedType);
+        return new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BED_TYPES);
     }
 }

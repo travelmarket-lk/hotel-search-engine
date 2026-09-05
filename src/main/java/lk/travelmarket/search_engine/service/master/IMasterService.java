@@ -1,5 +1,6 @@
 package lk.travelmarket.search_engine.service.master;
 
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
@@ -31,4 +32,14 @@ public interface IMasterService {
     CCResponse<CityDto> updateCity(Long id, CityDto dto);
 
     CCResponse<CityDto> deleteCity(Long id);
+
+    CCResponsePack<BedType> findAllBedTypes();
+
+    CCResponse<BedType> addBedType(BedType bedType);
+
+    CCResponse<Void> deleteBedType(Long id);
+
+    CCResponse<BedType> findBedTypeById(Long id);
+
+    CCResponse<BedType> updateBedType(Long id, BedType bedType);
 }

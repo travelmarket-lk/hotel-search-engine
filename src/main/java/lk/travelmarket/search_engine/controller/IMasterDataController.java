@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
@@ -207,8 +208,24 @@ public interface IMasterDataController {
                     description = "City not found"
             )
     })
+
     @DeleteMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> deleteCity(
             @PathVariable Long id
     );
+
+    @GetMapping(EndpointConstants.BED_TYPES)
+    public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes();
+
+    @PostMapping(EndpointConstants.BED_TYPES)
+    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@RequestBody BedType bedType);
+
+    @DeleteMapping(EndpointConstants.BED_TYPES_ID)
+    public ResponseEntity<CCResponseWrapper<Void>> deleteBedType(@PathVariable Long id);
+
+    @GetMapping(EndpointConstants.BED_TYPES_ID)
+    public ResponseEntity<CCResponseWrapper<BedType>> getBedTypeById(@PathVariable("id") Long id);
+
+    @PutMapping(EndpointConstants.BED_TYPES_ID)
+    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(@PathVariable("id") Long id, @RequestBody BedType bedType);
 }
