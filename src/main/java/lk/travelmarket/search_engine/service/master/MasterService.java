@@ -1,7 +1,92 @@
 package lk.travelmarket.search_engine.service.master;
 
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+import lk.travelmarket.search_engine.network.commons.CCError;
+import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
+import lk.travelmarket.search_engine.network.commons.CCResponse;
+import lk.travelmarket.search_engine.network.commons.CCResponsePack;
+import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
+import lk.travelmarket.search_engine.network.error.code.ErrorSource;
+import lk.travelmarket.search_engine.network.error.code.Status;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import static lk.travelmarket.search_engine.util.Constants.*;
+
 
 @Service
 public class MasterService implements IMasterService {
+
+    private final MasterServiceImpl masterServiceImpl;
+
+    public MasterService(MasterServiceImpl masterServiceImpl) {
+        this.masterServiceImpl = masterServiceImpl;
+    }
+// BED TYPES
+
+    @Override
+    public CCResponsePack<BedType> findAllBedTypes() {
+        try {
+            CCError<List<BedType>> ccError = masterServiceImpl.findAllBedTypes();
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_BED_TYPES, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BedType> addBedType(BedType bedType) {
+        try {
+            CCError<BedType> ccError = masterServiceImpl.addBedType(bedType);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_ADD_BED_TYPE, e);
+        }
+    }
+
+
+    @Override
+    public CCResponse<Void> deleteBedType(Long id) {
+        try {
+            CCError<Void> ccError = masterServiceImpl.deleteBedType(id);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(null);
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_BED_TYPE, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BedType> findBedTypeById(Long id) {
+        try {
+            CCError<BedType> ccError = masterServiceImpl.findBedTypeById(id);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_BED_TYPES, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BedType> updateBedType(Long id, BedType bedType) {
+        try {
+            CCError<BedType> ccError = masterServiceImpl.updateBedType(id, bedType);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_UPDATE_BED_TYPE, e);
+        }
+    }
 }

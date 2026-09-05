@@ -6,9 +6,7 @@ import lk.travelmarket.search_engine.dao.test.TestRepository;
 import lk.travelmarket.search_engine.dto.TestDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
