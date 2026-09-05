@@ -14,11 +14,10 @@ public class Policy implements Serializable {
 
     @Column(name = "Policy_Details", columnDefinition = "TEXT")
     private String policyDetails;
+    
 
-
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "Hotel_Id",  nullable = false)
-//    private Hotel hotel;
+//    @ManyToOne
+//    public policy table;
 
     public Policy() {
     }
