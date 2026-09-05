@@ -40,4 +40,6 @@ public class Address {
     @OneToMany( mappedBy = "address" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts;
 
+
+
 }
