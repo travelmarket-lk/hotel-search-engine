@@ -7,4 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(EndpointConstants.V1)
 public interface IMasterDataController {
+
+
+
 }
+

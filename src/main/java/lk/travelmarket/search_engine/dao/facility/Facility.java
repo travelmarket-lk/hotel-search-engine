@@ -1,4 +1,4 @@
-package lk.travelmarket.search_engine.dao.facilities;
+package lk.travelmarket.search_engine.dao.facility;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,4 +22,7 @@ public class Facility {
 
     @Column(name = "facility_icon")
     private Long facilityIcon;
+
+    @Column(name = "hotel_id")  // ← ADD THIS
+    private Long hotelId;
 }
