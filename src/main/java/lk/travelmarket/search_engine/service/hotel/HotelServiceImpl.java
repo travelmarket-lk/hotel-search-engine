@@ -2,8 +2,11 @@ package lk.travelmarket.search_engine.service.hotel;
 
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dto.HotelDto;
+
+import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
+
 import lk.travelmarket.search_engine.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ public class HotelServiceImpl {
 
     private final HotelRepository hotelRepository;
 
+
     public CCError<List<HotelDto>> findAll() {
         CCError<List<HotelDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_TESTS);
         List<HotelDto> hotels = hotelRepository.findAll().stream()
@@ -30,17 +34,22 @@ public class HotelServiceImpl {
 
     public CCError<HotelDto> findById(Long id) {
         Optional<Hotel> hotelOpt = hotelRepository.findById(id);
-
-        if (hotelOpt.isEmpty()) {
-            return new CCError<>(CCErrorStatus.ERROR, ERROR_HOTEL_NOT_FOUND);
+        CCError<HotelDto> ccError;
+        if (hotelOpt.isPresent()) {
+            ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL);
+            ccError.setData(toDto(hotelOpt.get()));
+        } else {
+            ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_RETRIEVE_HOTEL);
+            ccError.setData(null);
         }
-
-        CCError<HotelDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL);
-        ccError.setData(toDto(hotelOpt.get()));
         return ccError;
     }
 
-    public CCError<HotelDto> create(Hotel hotel) {
+    public CCError<HotelDto> create(HotelCreationCriteria criteria) {
+        Hotel hotel = new Hotel();
+        hotel.setName(criteria.getName());
+        hotel.setDescription(criteria.getDescription());
+
         Hotel saved = hotelRepository.save(hotel);
         CCError<HotelDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_HOTEL);
         ccError.setData(toDto(saved));
@@ -49,33 +58,34 @@ public class HotelServiceImpl {
 
     public CCError<HotelDto> update(Long id, Hotel hotelDetails) {
         Optional<Hotel> hotelOpt = hotelRepository.findById(id);
+        CCError<HotelDto> ccError;
 
-        if (hotelOpt.isEmpty()) {
-            return new CCError<>(CCErrorStatus.ERROR, ERROR_HOTEL_NOT_FOUND);
+        if (hotelOpt.isPresent()) {
+            Hotel hotel = hotelOpt.get();
+            hotel.setName(hotelDetails.getName());
+            hotel.setDescription(hotelDetails.getDescription());
+
+            Hotel updated = hotelRepository.save(hotel);
+            ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_HOTEL);
+            ccError.setData(toDto(updated));
+        } else {
+            ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_UPDATE_HOTEL);
+            ccError.setData(null);
         }
 
-        Hotel hotel = hotelOpt.get();
-        hotel.setName(hotelDetails.getName());
-        hotel.setDescription(hotelDetails.getDescription());
-        // map any other updatable fields here
-
-        Hotel updated = hotelRepository.save(hotel);
-
-        CCError<HotelDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_HOTEL);
-        ccError.setData(toDto(updated));
         return ccError;
     }
 
     public CCError<Boolean> delete(Long id) {
-        if (!hotelRepository.existsById(id)) {
-            CCError<Boolean> ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_HOTEL_NOT_FOUND);
-            ccError.setData(false);
+        Optional<Hotel> hotelOpt = hotelRepository.findById(id);
+        if (hotelOpt.isPresent()) {
+            hotelRepository.delete(hotelOpt.get());
+            CCError<Boolean> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_HOTEL);
+            ccError.setData(true);
             return ccError;
         }
-
-        hotelRepository.deleteById(id);
-        CCError<Boolean> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_HOTEL);
-        ccError.setData(true);
+        CCError<Boolean> ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_DELETE_HOTEL);
+        ccError.setData(false);
         return ccError;
     }
 

@@ -2,6 +2,7 @@ package lk.travelmarket.search_engine.service.hotel;
 
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
@@ -50,9 +51,9 @@ public class HotelService implements IHotelService {
     }
 
     @Override
-    public CCResponsePack<HotelDto> createHotel(Hotel hotel) {
+    public CCResponsePack<HotelDto> createHotel(HotelCreationCriteria criteria) {
         try {
-            CCError<HotelDto> ccError = hotelServiceImpl.create(hotel);
+            CCError<HotelDto> ccError = hotelServiceImpl.create(criteria);
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
             }

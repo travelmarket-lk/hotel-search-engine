@@ -2,6 +2,7 @@ package lk.travelmarket.search_engine.controller;
 
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public interface IHotelController {
     ResponseEntity<CCResponseWrapper<HotelDto>> getHotelById(@PathVariable Long id);
 
     @PostMapping(EndpointConstants.HOTEL)
-    ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody Hotel hotel);
+    ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody HotelCreationCriteria criteria);
 
     @PutMapping(EndpointConstants.HOTEL_BY_ID)
     ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody Hotel hotelDetails);

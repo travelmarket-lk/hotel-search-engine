@@ -110,4 +110,17 @@ public class Constants {
     public static final String ERROR_DELETE_ROOM_CATEGORY = "Room Category deletes error";
     public static final String ERROR_CREATE_ROOM_CATEGORY = "Room Category create error";
 
+    //Hotel
+    public static final String SUCCESS_RETRIEVE_HOTELS = "Hotels retrieved successfully";
+    public static final String ERROR_RETRIEVE_HOTELS = "Failed to retrieve hotels";
+    public static final String SUCCESS_CREATE_HOTEL = "Hotel created successfully";
+    public static final String ERROR_CREATE_HOTEL = "Failed to create hotel";
+    public static final String SUCCESS_RETRIEVE_HOTEL = "Hotel retrieved successfully";
+    public static final String ERROR_RETRIEVE_HOTEL = "Failed to retrieve hotel";
+    public static final String ERROR_RETRIEVE_HOTEL_NOT_FOUND = "Hotel not found";
+    public static final String SUCCESS_UPDATE_HOTEL = "Hotel updated successfully";
+    public static final String ERROR_UPDATE_HOTEL = "Failed to update hotel";
+    public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
+    public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
+
 }

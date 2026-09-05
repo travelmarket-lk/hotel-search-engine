@@ -2,15 +2,15 @@ package lk.travelmarket.search_engine.controller;
 
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 import lk.travelmarket.search_engine.service.hotel.HotelService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1") // or use EndpointConstants.V1 if you prefer
 public class HotelController implements IHotelController {
 
     private final HotelService hotelService;
@@ -32,8 +32,8 @@ public class HotelController implements IHotelController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody Hotel hotel) {
-        CCResponsePack<HotelDto> response = hotelService.createHotel(hotel);
+    public ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody HotelCreationCriteria criteria) {
+        CCResponsePack<HotelDto> response = hotelService.createHotel(criteria);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
 
@@ -48,4 +48,7 @@ public class HotelController implements IHotelController {
         CCResponsePack<Boolean> response = hotelService.deleteHotel(id);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
+
+
+
 }
