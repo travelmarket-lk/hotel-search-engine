@@ -127,4 +127,33 @@ public class Constants {
     public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
     public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
 
+    // HOTEL BLACKOUTS
+    public static final String SUCCESS_RETRIEVE_HOTEL_BLACKOUTS = "Hotel blackouts retrieved successfully";
+    public static final String SUCCESS_RETRIEVE_HOTEL_BLACKOUT = "Hotel blackout retrieved successfully";
+    public static final String SUCCESS_CREATE_HOTEL_BLACKOUT = "Hotel blackout created successfully";
+    public static final String SUCCESS_UPDATE_HOTEL_BLACKOUT = "Hotel blackout updated successfully";
+    public static final String SUCCESS_DELETE_HOTEL_BLACKOUT = "Hotel blackout deleted successfully";
+
+    public static final String ERROR_RETRIEVE_HOTEL_BLACKOUTS = "Failed to retrieve hotel blackouts";
+    public static final String ERROR_RETRIEVE_HOTEL_BLACKOUT = "Failed to retrieve hotel blackout";
+    public static final String ERROR_CREATE_HOTEL_BLACKOUT = "Failed to create hotel blackout";
+    public static final String ERROR_UPDATE_HOTEL_BLACKOUT = "Failed to update hotel blackout";
+    public static final String ERROR_DELETE_HOTEL_BLACKOUT = "Failed to delete hotel blackout";
+    public static final String ERROR_HOTEL_BLACKOUT_NOT_FOUND = "Hotel blackout not found with ID: ";
+
+    // ROOM BLACKOUTS
+    public static final String SUCCESS_RETRIEVE_ROOM_BLACKOUTS = "Room blackouts retrieved successfully";
+    public static final String SUCCESS_RETRIEVE_ROOM_BLACKOUT = "Room blackout retrieved successfully";
+    public static final String SUCCESS_CREATE_ROOM_BLACKOUT = "Room blackout created successfully";
+    public static final String SUCCESS_UPDATE_ROOM_BLACKOUT = "Room blackout updated successfully";
+    public static final String SUCCESS_DELETE_ROOM_BLACKOUT = "Room blackout deleted successfully";
+
+    public static final String ERROR_RETRIEVE_ROOM_BLACKOUTS = "Failed to retrieve room blackouts";
+    public static final String ERROR_RETRIEVE_ROOM_BLACKOUT = "Failed to retrieve room blackout";
+    public static final String ERROR_CREATE_ROOM_BLACKOUT = "Failed to create room blackout";
+    public static final String ERROR_UPDATE_ROOM_BLACKOUT = "Failed to update room blackout";
+    public static final String ERROR_DELETE_ROOM_BLACKOUT = "Failed to delete room blackout";
+    public static final String ERROR_ROOM_BLACKOUT_NOT_FOUND = "Room blackout not found with ID: ";
+    public static final String ERROR_ROOM_ID_REQUIRED = "Room ID is required for a room blackout";
+
 }

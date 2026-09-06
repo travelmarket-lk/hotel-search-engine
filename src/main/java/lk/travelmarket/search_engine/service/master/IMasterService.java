@@ -34,6 +34,8 @@ public interface IMasterService {
 
     CCResponse<CityDto> deleteCity(Long id);
 
+    // BED TYPES
+
     CCResponsePack<BedType> findAllBedTypes();
 
     CCResponse<BedType> addBedType(BedType bedType);
@@ -46,6 +48,7 @@ public interface IMasterService {
 
     CCResponsePack<RoomCategoryDto> findAllRoomCategories();
 
+    // ROOM
 
     CCResponse <RoomCategoryDto>createRoomCategory(RoomCategoryDto request);
 

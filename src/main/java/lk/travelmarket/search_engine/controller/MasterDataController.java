@@ -116,10 +116,10 @@ public class MasterDataController implements IMasterDataController {
 
     // BED TYPES
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
-            return NetworkUtils.wrap(masterService.findAllBedTypes());
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
+        return NetworkUtils.wrap(masterService.findAllBedTypes());
+    }
 
     @Override
     public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
@@ -140,6 +140,8 @@ public class MasterDataController implements IMasterDataController {
     public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
         return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
     }
+
+    // ROOMS
 
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(RoomCategoryDto request) {

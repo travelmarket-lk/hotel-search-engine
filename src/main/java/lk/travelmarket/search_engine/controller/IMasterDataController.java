@@ -215,6 +215,8 @@ public interface IMasterDataController {
             @PathVariable Long id
     );
 
+    //  BED TYPES
+
     @GetMapping(EndpointConstants.BED_TYPES)
     public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes();
 
@@ -229,6 +231,8 @@ public interface IMasterDataController {
 
     @PutMapping(EndpointConstants.BED_TYPES_ID)
     public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(@PathVariable("id") Long id, @RequestBody BedType bedType);
+
+    // ROOMS
 
     @Operation(
             summary = "Create a new Room Category",
