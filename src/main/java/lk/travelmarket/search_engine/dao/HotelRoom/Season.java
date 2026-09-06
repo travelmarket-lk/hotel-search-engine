@@ -1,8 +1,9 @@
 package lk.travelmarket.search_engine.dao.HotelRoom;
 
-
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -20,11 +21,10 @@ public class Season {
     @Column(name = "season_name")
     private String seasonName;
 
-    @Column(name = "start_date")
-    private String startDate;
+    @Column(name = "start_date", nullable = false)
+    private LocalDate startDate;
 
-    @Column(name = "end_date")
-    private String endDate;
-
+    @Column(name = "end_date", nullable = false)
+    private LocalDate endDate;
 
 }

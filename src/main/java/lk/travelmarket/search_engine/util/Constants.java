@@ -127,4 +127,20 @@ public class Constants {
     public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
     public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
 
+
+    //Season
+
+    public static final String SUCCESS_RETRIEVE_SEASONS = "Seasons retrieve success";
+    public static final String ERROR_RETRIEVE_SEASONS = "Seasons retrieve failed";
+    public static final String SUCCESS_CREATE_SEASON = "Season created successfully";
+    public static final String ERROR_CREATE_SEASON = "Season creation failed";
+    public static final String SUCCESS_RETRIEVE_SEASON = "Season retrieve success";
+    public static final String ERROR_RETRIEVE_SEASON = "Season retrieve failed";
+    public static final String ERROR_RETRIEVE_SEASON_NOT_FOUND = "Season not found";
+    public static final String SUCCESS_UPDATE_SEASON = "Season updated successfully";
+    public static final String ERROR_UPDATE_SEASON = "Season update failed";
+    public static final String SUCCESS_DELETE_SEASON = "Season deleted successfully";
+    public static final String ERROR_DELETE_SEASON = "Season deletion failed";
+
+
 }
