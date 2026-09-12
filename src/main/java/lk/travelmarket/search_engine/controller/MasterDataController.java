@@ -1,12 +1,12 @@
 package lk.travelmarket.search_engine.controller;
 
+import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
-import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
@@ -120,10 +120,10 @@ public class MasterDataController implements IMasterDataController {
 
     // BED TYPES
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
-            return NetworkUtils.wrap(masterService.findAllBedTypes());
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
+        return NetworkUtils.wrap(masterService.findAllBedTypes());
+    }
 
     @Override
     public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
@@ -144,6 +144,8 @@ public class MasterDataController implements IMasterDataController {
     public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
         return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
     }
+
+    // ROOMS
 
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(RoomCategoryDto request) {
@@ -190,32 +192,6 @@ public class MasterDataController implements IMasterDataController {
     public ResponseEntity<CCResponseWrapper<HotelTypeDto>> updateHotelType(Long id, HotelTypeDto hotelTypeDto) {
         return NetworkUtils.wrap(masterService.updateHotelType(id, hotelTypeDto));
     }
-
-    @Override
-    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(BoardBasisDto request) {
-        return NetworkUtils.wrap(masterService.createBoardBasis(request));
-    }
-
-    @Override
-    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis() {
-        return NetworkUtils.wrap(masterService.findAllBoardBasis());
-    }
-
-    @Override
-    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findBoardBasisById(Long id) {
-        return NetworkUtils.wrap(masterService.findBoardBasisById(id));
-    }
-
-    @Override
-    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> updateBoardBasis(Long id, BoardBasisDto request) {
-        return NetworkUtils.wrap(masterService.updateBoardBasis(id,request));
-    }
-
-    @Override
-    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(Long id) {
-        return NetworkUtils.wrap(masterService.deleteBoardBasis(id));
-    }
-}
 
     @Override
     public ResponseEntity<CCResponseWrapper<HotelTypeDto>> deleteHotelType(Long id) {
@@ -272,5 +248,30 @@ public class MasterDataController implements IMasterDataController {
     @Override
     public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(Long id) {
         return NetworkUtils.wrap(masterService.deleteFacilityCategory( id ));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(BoardBasisDto request) {
+        return NetworkUtils.wrap(masterService.createBoardBasis(request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis() {
+        return NetworkUtils.wrap(masterService.findAllBoardBasis());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findBoardBasisById(Long id) {
+        return NetworkUtils.wrap(masterService.findBoardBasisById(id));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> updateBoardBasis(Long id, BoardBasisDto request) {
+        return NetworkUtils.wrap(masterService.updateBoardBasis(id,request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(Long id) {
+        return NetworkUtils.wrap(masterService.deleteBoardBasis(id));
     }
 }

@@ -474,6 +474,5 @@ public interface IMasterDataController {
     ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(
             @PathVariable Long id
     );
-}
 
 }
