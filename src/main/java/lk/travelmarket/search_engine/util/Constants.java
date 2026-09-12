@@ -246,4 +246,23 @@ public class Constants {
     public static final String ERROR_DELETE_BOARD_BASIS = "Board Basis deletes error";
 
     public static final String ERROR_CREATE_BOARD_BASIS = "Board Basis create error";
+
+
+    public static final String SUCCESS_RETRIEVE_ROOM_TYPE = "ROOM Type retrieve success";
+
+    public static final String ERROR_RETRIEVE_ROOM_TYPE = "Room Type retrieve failed";
+
+    public static final String ERROR_UPDATE_ROOM_TYPE = "ROom Type update failed";
+
+    public static final String ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND = "Room Type retrieve failed not found";
+
+    public static final String SUCCESS_CREATE_ROOM_TYPE= "Room Type creates success";
+
+    public static final String SUCCESS_UPDATE_ROOM_TYPE = "Room type updates success";
+
+    public static final String SUCCESS_DELETE_ROOM_TYPE = "Room Type deletes success";
+
+    public static final String ERROR_DELETE_ROOM_TYPE = "Room Type deletes error";
+
+    public static final String ERROR_CREATE_ROOM_TYPE = "Room Type create error";
 }

@@ -5,11 +5,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dao.RoomCategory;
-import lk.travelmarket.search_engine.dto.BoardBasisDto;
-import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
@@ -476,6 +473,101 @@ public interface IMasterDataController {
     })
     @DeleteMapping("/board-basis/{id}")
     ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(
+            @PathVariable Long id
+    );
+
+
+    @Operation(
+            summary = "Create a new Room Type",
+            description = "Creates a new Room Type resource and returns the created Test details."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Test created successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            )
+    })
+    @PostMapping("/room-type")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> createRoomType(
+            @RequestBody RoomTypeDto request
+    );
+
+    @Operation(
+            summary = "Get all Room Type",
+            description = "Retrieves all available Room Type resources."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Room Type retrieved successfully"
+            )
+    })
+    @GetMapping("/room-type")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> findAllRoomType();
+
+    @Operation(
+            summary = "Get Room Type by ID",
+            description = "Retrieves a single Room Type resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Room Type retrieved successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Board Basis not found"
+            )
+    })
+    @GetMapping("/room-type/{id}")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> findRoomTypeById(
+            @PathVariable Long id
+    );
+
+    @Operation(
+            summary = "Update Room Type",
+            description = "Updates an existing Room Type resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Room Type updated successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @PutMapping("/room-type/{id}")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> updateRoomType(
+            @PathVariable Long id,
+            @RequestBody RoomTypeDto request
+    );
+
+    @Operation(
+            summary = "Delete Room Type",
+            description = "Deletes an existing Room Type resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Room Type deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @DeleteMapping("/room-type/{id}")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> deleteRoomType(
             @PathVariable Long id
     );
 
