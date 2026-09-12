@@ -1,5 +1,8 @@
 package lk.travelmarket.search_engine.controller;
 
+import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
+import lk.travelmarket.search_engine.dto.facility.FacilityDto;
+import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
@@ -116,10 +119,10 @@ public class MasterDataController implements IMasterDataController {
 
     // BED TYPES
 
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
-            return NetworkUtils.wrap(masterService.findAllBedTypes());
-        }
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
+        return NetworkUtils.wrap(masterService.findAllBedTypes());
+    }
 
     @Override
     public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
@@ -140,6 +143,8 @@ public class MasterDataController implements IMasterDataController {
     public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
         return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
     }
+
+    // ROOMS
 
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(RoomCategoryDto request) {
@@ -164,5 +169,83 @@ public class MasterDataController implements IMasterDataController {
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> deleteRoomCategory(Long id) {
         return NetworkUtils.wrap(masterService.deleteRoomCategory(id));
+    }
+
+    // ---------------------------- HotelType ----------------------------
+    @Override
+    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> findAllHotelTypes() {
+        return NetworkUtils.wrap(masterService.findAllHotelTypes());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> findHotelTypeById(Long id) {
+        return NetworkUtils.wrap(masterService.findHotelTypeById( id ));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> saveHotelType(HotelTypeDto hotelTypeDto) {
+        return NetworkUtils.wrap(masterService.saveHotelType(hotelTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> updateHotelType(Long id, HotelTypeDto hotelTypeDto) {
+        return NetworkUtils.wrap(masterService.updateHotelType(id, hotelTypeDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> deleteHotelType(Long id) {
+        return NetworkUtils.wrap(masterService.deleteHotelType(id));
+    }
+
+    // ---------------------------- Facility ----------------------------
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> findAllFacilities() {
+        return NetworkUtils.wrap(masterService.findAllFacilities());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> findFacilityById(Long id) {
+        return NetworkUtils.wrap(masterService.findFacilityById( id ));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> saveFacility(FacilityDto facilityDto) {
+        return NetworkUtils.wrap(masterService.saveFacility(facilityDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> updateFacility(Long id, FacilityDto facilityDto) {
+        return NetworkUtils.wrap(masterService.updateFacility(id, facilityDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> deleteFacility(Long id) {
+        return NetworkUtils.wrap(masterService.deleteFacility( id ));
+    }
+
+    // ------------------------- FacilityCategory -------------------------
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> findAllFacilityCategories() {
+        return NetworkUtils.wrap(masterService.findAllFacilityCategories());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> findFacilityCategoryById(Long id) {
+        return NetworkUtils.wrap(masterService.findFacilityCategoryById( id ));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
+        return NetworkUtils.wrap(masterService.saveFacilityCategory(facilityCategoryDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto) {
+        return NetworkUtils.wrap(masterService.updateFacilityCategory(id, facilityCategoryDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(Long id) {
+        return NetworkUtils.wrap(masterService.deleteFacilityCategory( id ));
     }
 }

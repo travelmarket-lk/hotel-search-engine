@@ -34,6 +34,10 @@ public class Constants {
     public static final String ERROR_RETRIEVE_DISTRICT =
             "District retrieve failed";
 
+    public static final String SUCCESS_REGISTER_HOTEL_OWNER = "Hotel owner registered successfully";
+    public static final String ERROR_REGISTER_HOTEL_OWNER = "Hotel owner registration failed";
+    public static final String ERROR_HOTEL_OWNER_EMAIL_ALREADY_EXISTS = "Email already exists";
+    public static final String ERROR_HOTEL_OWNER_NIC_ALREADY_EXISTS = "NIC already exists";
     public static final String ERROR_RETRIEVE_DISTRICT_NOT_FOUND =
             "District not found";
 
@@ -122,18 +126,5 @@ public class Constants {
     public static final String ERROR_UPDATE_HOTEL = "Failed to update hotel";
     public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
     public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
-
-    // Address
-    public static final String SUCCESS_RETRIEVE_ADDRESSES = "Addresses retrieved successfully";
-    public static final String ERROR_RETRIEVE_ADDRESSES = "Failed to retrieve addresses";
-    public static final String SUCCESS_CREATE_ADDRESS = "Address created successfully";
-    public static final String ERROR_CREATE_ADDRESS = "Failed to create address";
-    public static final String SUCCESS_RETRIEVE_ADDRESS = "Address retrieved successfully";
-    public static final String ERROR_RETRIEVE_ADDRESS = "Failed to retrieve address";
-    public static final String ERROR_RETRIEVE_ADDRESS_NOT_FOUND = "Address not found";
-    public static final String SUCCESS_UPDATE_ADDRESS = "Address updated successfully";
-    public static final String ERROR_UPDATE_ADDRESS = "Failed to update address";
-    public static final String SUCCESS_DELETE_ADDRESS = "Address deleted successfully";
-    public static final String ERROR_DELETE_ADDRESS = "Failed to delete address";
 
 }
