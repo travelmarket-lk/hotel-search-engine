@@ -591,16 +591,21 @@ public class MasterServiceImpl {
     public CCError<FacilityDto> updateFacility(Long id, FacilityDto facilityDto) {
 
         Optional<Facility> facilityOpt = this.facilityRepository.findById(id);
+        Optional<FacilityCategory> facilityCategory = this.facilityCategoryRepository.findById( facilityDto.getCategory().getId() );
 
         if (facilityOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_NOT_FOUND);
         }
 
+        if (facilityCategory.isEmpty()) {
+            return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_CATEGORY_NOT_FOUND);
+        }
+
+
         Facility facility = facilityOpt.get();
-        facility.setFacilityName(facilityDto.getFacilityName());
-        facility.setFacilityCategory(facilityDto.getFacilityCategory());
-        facility.setFacilityIcon(facilityDto.getFacilityIcon());
-        facility.setHotelId(facilityDto.getHotelId());
+        facility.setTitle(facilityDto.getTitle());
+        facility.setCategory( facilityCategory.get() );
+        facility.setIcon(facilityDto.getIcon());
 
         Facility updated = this.facilityRepository.save(facility);
 
@@ -670,7 +675,7 @@ public class MasterServiceImpl {
         }
 
         FacilityCategory category = categoryOpt.get();
-        category.setFacilityCategory(facilityCategoryDto.getFacilityCategory());
+        category.setName(facilityCategoryDto.getName());
 
         FacilityCategory updated = this.facilityCategoryRepository.save(category);
 
@@ -787,34 +792,32 @@ public class MasterServiceImpl {
     private FacilityDto toDto(Facility facility) {
         FacilityDto dto = new FacilityDto();
         dto.setId(facility.getId());
-        dto.setFacilityName(facility.getFacilityName());
-        dto.setFacilityCategory(facility.getFacilityCategory());
-        dto.setFacilityIcon(facility.getFacilityIcon());
-        dto.setHotelId(facility.getHotelId());
+        dto.setTitle(facility.getTitle());
+        dto.setCategory( toDto( facility.getCategory() ));
+        dto.setIcon(facility.getIcon());
         return dto;
     }
 
     private Facility toEntity(FacilityDto dto) {
         Facility facility = new Facility();
         facility.setId(dto.getId());
-        facility.setFacilityName(dto.getFacilityName());
-        facility.setFacilityCategory(dto.getFacilityCategory());
-        facility.setFacilityIcon(dto.getFacilityIcon());
-        facility.setHotelId(dto.getHotelId());
+        facility.setTitle(dto.getTitle());
+        facility.setCategory( toEntity( dto.getCategory() ));
+        facility.setIcon(dto.getIcon());
         return facility;
     }
 
     private FacilityCategoryDto toDto(FacilityCategory category) {
         FacilityCategoryDto dto = new FacilityCategoryDto();
         dto.setId(category.getId());
-        dto.setFacilityCategory(category.getFacilityCategory());
+        dto.setName(category.getName());
         return dto;
     }
 
     private FacilityCategory toEntity(FacilityCategoryDto dto) {
         FacilityCategory category = new FacilityCategory();
         category.setId(dto.getId());
-        category.setFacilityCategory(dto.getFacilityCategory());
+        category.setName(dto.getName());
         return category;
     }
 }

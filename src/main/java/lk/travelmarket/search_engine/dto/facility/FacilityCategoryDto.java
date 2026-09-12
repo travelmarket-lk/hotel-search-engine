@@ -8,5 +8,5 @@ import lombok.Setter;
 public class FacilityCategoryDto {
 
     private Long id;
-    private String facilityCategory;
+    private String name;
 }

@@ -9,11 +9,5 @@ import java.util.Optional;
 public interface FacilityCategoryRepository
         extends CrudRepository<FacilityCategory, Long> {
 
-    Optional<FacilityCategory> findByFacilityCategory(
-            String facilityCategory
-    );
 
-    List<FacilityCategory> findByFacilityCategoryContainingIgnoreCase(
-            String facilityCategory
-    );
 }

@@ -8,8 +8,7 @@ import lombok.Setter;
 public class FacilityDto {
 
     private Long id;
-    private String facilityName;
-    private Long facilityCategory;
-    private Long facilityIcon;
-    private Long hotelId;  // ← ADD THIS
+    private String title;
+    private FacilityCategoryDto category;
+    private String icon;
 }
