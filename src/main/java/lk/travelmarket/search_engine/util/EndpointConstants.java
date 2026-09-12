@@ -8,4 +8,11 @@ public class EndpointConstants {
 
     public static final String HOTEL = "/hotels";
     public static final String HOTEL_BY_ID = "/hotels/{id}";
+
+    public static final String ADDRESS = "/addresses";
+    public static final String ADDRESS_BY_ID = "/addresses/{id}";
+
+
+
+
 }

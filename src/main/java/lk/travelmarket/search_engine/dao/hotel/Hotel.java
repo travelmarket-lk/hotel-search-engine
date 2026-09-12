@@ -1,5 +1,6 @@
 package lk.travelmarket.search_engine.dao.hotel;
 import jakarta.persistence.*;
+import lk.travelmarket.search_engine.dao.Address;
 import lk.travelmarket.search_engine.dao.Blackouts;
 import lk.travelmarket.search_engine.dao.HotelOwner;
 import lk.travelmarket.search_engine.dao.HotelRoom.Room;
@@ -33,6 +34,10 @@ public class Hotel {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ContentHotel> hotelContents;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
 //    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Policy> policies;
