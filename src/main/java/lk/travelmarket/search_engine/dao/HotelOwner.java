@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.dao;
 
 import jakarta.persistence.*;
+import lk.travelmarket.search_engine.dao.user.User;
 import lombok.*;
 
 @Entity
@@ -27,4 +28,8 @@ public class HotelOwner {
 
     @Column( name = "email")
     private String email;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
+    private User user;
 }

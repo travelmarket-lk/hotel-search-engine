@@ -34,6 +34,10 @@ public class Constants {
     public static final String ERROR_RETRIEVE_DISTRICT =
             "District retrieve failed";
 
+    public static final String SUCCESS_REGISTER_HOTEL_OWNER = "Hotel owner registered successfully";
+    public static final String ERROR_REGISTER_HOTEL_OWNER = "Hotel owner registration failed";
+    public static final String ERROR_HOTEL_OWNER_EMAIL_ALREADY_EXISTS = "Email already exists";
+    public static final String ERROR_HOTEL_OWNER_NIC_ALREADY_EXISTS = "NIC already exists";
     public static final String ERROR_RETRIEVE_DISTRICT_NOT_FOUND =
             "District not found";
 
@@ -122,6 +126,60 @@ public class Constants {
     public static final String ERROR_UPDATE_HOTEL = "Failed to update hotel";
     public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
     public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
+
+
+    // ---------------------------- HotelType ----------------------------
+    public static final String SUCCESS_RETRIEVE_HOTEL_TYPES = "Hotel types retrieved successfully";
+    public static final String ERROR_RETRIEVE_HOTEL_TYPES = "Error retrieving hotel types";
+
+    public static final String SUCCESS_RETRIEVE_HOTEL_TYPE = "Hotel type retrieved successfully";
+    public static final String ERROR_RETRIEVE_HOTEL_TYPE = "Error retrieving hotel type";
+
+    public static final String SUCCESS_SAVE_HOTEL_TYPE = "Hotel type saved successfully";
+    public static final String ERROR_SAVE_HOTEL_TYPE = "Error saving hotel type";
+
+    public static final String SUCCESS_UPDATE_HOTEL_TYPE = "Hotel type updated successfully";
+    public static final String ERROR_UPDATE_HOTEL_TYPE = "Error updating hotel type";
+
+    public static final String SUCCESS_DELETE_HOTEL_TYPE = "Hotel type deleted successfully";
+    public static final String ERROR_DELETE_HOTEL_TYPE = "Error deleting hotel type";
+
+    public static final String ERROR_HOTEL_TYPE_NOT_FOUND = "Hotel type not found";
+
+    // ---------------------------- Facility ----------------------------
+    public static final String SUCCESS_RETRIEVE_FACILITIES = "Facilities retrieved successfully";
+    public static final String ERROR_RETRIEVE_FACILITIES = "Error retrieving facilities";
+
+    public static final String SUCCESS_RETRIEVE_FACILITY = "Facility retrieved successfully";
+    public static final String ERROR_RETRIEVE_FACILITY = "Error retrieving facility";
+
+    public static final String SUCCESS_SAVE_FACILITY = "Facility saved successfully";
+    public static final String ERROR_SAVE_FACILITY = "Error saving facility";
+
+    public static final String SUCCESS_UPDATE_FACILITY = "Facility updated successfully";
+    public static final String ERROR_UPDATE_FACILITY = "Error updating facility";
+
+    public static final String SUCCESS_DELETE_FACILITY = "Facility deleted successfully";
+    public static final String ERROR_DELETE_FACILITY = "Error deleting facility";
+
+    public static final String ERROR_FACILITY_NOT_FOUND = "Facility not found";
+
+    // ------------------------- FacilityCategory -------------------------
+    public static final String SUCCESS_RETRIEVE_FACILITY_CATEGORIES = "Facility categories retrieved successfully";
+    public static final String ERROR_RETRIEVE_FACILITY_CATEGORIES = "Error retrieving facility categories";
+
+    public static final String SUCCESS_RETRIEVE_FACILITY_CATEGORY = "Facility category retrieved successfully";
+    public static final String ERROR_RETRIEVE_FACILITY_CATEGORY = "Error retrieving facility category";
+
+    public static final String SUCCESS_SAVE_FACILITY_CATEGORY = "Facility category saved successfully";
+    public static final String ERROR_SAVE_FACILITY_CATEGORY = "Error saving facility category";
+
+    public static final String SUCCESS_UPDATE_FACILITY_CATEGORY = "Facility category updated successfully";
+    public static final String ERROR_UPDATE_FACILITY_CATEGORY = "Error updating facility category";
+
+    public static final String SUCCESS_DELETE_FACILITY_CATEGORY = "Facility category deleted successfully";
+    public static final String ERROR_DELETE_FACILITY_CATEGORY = "Error deleting facility category";
+    public static final String ERROR_FACILITY_CATEGORY_NOT_FOUND = "Facility category not found";
 
     // HOTEL BLACKOUTS
     public static final String SUCCESS_RETRIEVE_HOTEL_BLACKOUTS = "Hotel blackouts retrieved successfully";
