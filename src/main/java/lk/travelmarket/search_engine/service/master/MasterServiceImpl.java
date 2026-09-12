@@ -1,12 +1,13 @@
 package lk.travelmarket.search_engine.service.master;
 
 import jakarta.transaction.Transactional;
+import lk.travelmarket.search_engine.dao.BoardBasis;
 import lk.travelmarket.search_engine.dao.RoomCategory;
-import lk.travelmarket.search_engine.dao.test.Test;
+import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
-import lk.travelmarket.search_engine.dto.TestDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
+import lk.travelmarket.search_engine.repository.BoardBasisRepository;
 import lk.travelmarket.search_engine.repository.RoomCategoryRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,9 +21,12 @@ import static lk.travelmarket.search_engine.util.Constants.*;
 public class MasterServiceImpl {
 
     private final RoomCategoryRepository categoryRepository;
+    private final BoardBasisRepository boardBasisRepository;
 
-    public MasterServiceImpl(RoomCategoryRepository categoryRepository) {
+    public MasterServiceImpl(RoomCategoryRepository categoryRepository,
+                             BoardBasisRepository boardBasisRepository) {
         this.categoryRepository = categoryRepository;
+        this.boardBasisRepository = boardBasisRepository;
     }
 
     public CCError<List<RoomCategoryDto>> findAllRoomCategories() {
@@ -110,4 +114,78 @@ public class MasterServiceImpl {
         return ccError;
     }
 
+
+    private BoardBasisDto toBoardBasisDto(BoardBasis boardBasis) {
+        return new BoardBasisDto(boardBasis.getId(), boardBasis.getName(), boardBasis.getDescription());
+    }
+
+    public CCError<BoardBasisDto> createBoardBasis(BoardBasisDto dto) {
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_BOARD_BASIS);
+
+        BoardBasis dao = new BoardBasis();
+        dao.setName(dto.getName());
+        dao.setDescription(dto.getDescription());
+
+        BoardBasis saved = boardBasisRepository.save(dao);
+        ccError.setData(toBoardBasisDto(saved));
+        return ccError;
+    }
+
+    public CCError<List<BoardBasisDto>> findAllBoardBasis() {
+        CCError<List<BoardBasisDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BOARD_BASIS);
+
+        List<BoardBasisDto> data = boardBasisRepository.findAll().stream()
+                .map(this::toBoardBasisDto)
+                .toList();
+
+        ccError.setData(data);
+        return ccError;
+    }
+
+    public CCError<BoardBasisDto> findBoardBasisById(Long id) {
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BOARD_BASIS);
+
+        Optional<BoardBasis> dao = boardBasisRepository.findById(id);
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
+            return ccError;
+        }
+
+        ccError.setData(toBoardBasisDto(dao.get()));
+        return ccError;
+    }
+
+    public CCError<BoardBasisDto> updateBoardBasis(Long id, BoardBasisDto dto) {
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BOARD_BASIS);
+
+        Optional<BoardBasis> dao = boardBasisRepository.findById(id);
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
+            return ccError;
+        }
+
+        dao.get().setName(dto.getName());
+        dao.get().setDescription(dto.getDescription());
+        BoardBasis updated = boardBasisRepository.save(dao.get());
+
+        ccError.setData(toBoardBasisDto(updated));
+        return ccError;
+    }
+
+    public CCError<BoardBasisDto> deleteBoardBasis(Long id) {
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_BOARD_BASIS);
+
+        Optional<BoardBasis> dao = boardBasisRepository.findById(id);
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
+            return ccError;
+        }
+
+        boardBasisRepository.delete(dao.get());
+        ccError.setData(toBoardBasisDto(dao.get()));
+        return ccError;
+    }
 }

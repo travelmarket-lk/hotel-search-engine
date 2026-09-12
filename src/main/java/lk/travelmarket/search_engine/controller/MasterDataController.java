@@ -1,5 +1,6 @@
 package lk.travelmarket.search_engine.controller;
 
+import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
@@ -39,5 +40,30 @@ public class MasterDataController implements IMasterDataController {
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> deleteRoomCategory(Long id) {
         return NetworkUtils.wrap(masterService.deleteRoomCategory(id));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(BoardBasisDto request) {
+        return NetworkUtils.wrap(masterService.createBoardBasis(request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis() {
+        return NetworkUtils.wrap(masterService.findAllBoardBasis());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findBoardBasisById(Long id) {
+        return NetworkUtils.wrap(masterService.findBoardBasisById(id));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> updateBoardBasis(Long id, BoardBasisDto request) {
+        return NetworkUtils.wrap(masterService.updateBoardBasis(id,request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(Long id) {
+        return NetworkUtils.wrap(masterService.deleteBoardBasis(id));
     }
 }
