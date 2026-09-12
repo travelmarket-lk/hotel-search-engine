@@ -1,22 +1,34 @@
 package lk.travelmarket.search_engine.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serial;
-import java.io.Serializable;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class PolicyDto {
+    private String name;
+    private String description;
 
-@Setter
-@Getter
-public class PolicyDto implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    private String policyId;
-    private String policyDetails;
-
-    public PolicyDto() {
+    public String getPolicyName() {
+        return name;
     }
 
+    public String getPolicyDescription() {
+        return description;
+    }
+
+    public void setField1(String arg1) {
+        this.name = arg1;
+    }
+
+    public void setField2(String arg2) {
+        this.description = arg2;
+    }
+
+
+    public void setField3(String arg3) {
+        this.name = arg3;
+    }
 }

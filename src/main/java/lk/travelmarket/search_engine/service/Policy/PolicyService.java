@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.service.Policy;
 
 import lk.travelmarket.search_engine.dto.PolicyDto;
+import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
@@ -8,6 +9,8 @@ import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
 import lk.travelmarket.search_engine.network.error.code.ErrorSource;
 import lk.travelmarket.search_engine.network.error.code.Status;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PolicyService implements IPolicyService {
@@ -27,7 +30,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> createPolicy(PolicyDto dto) {
         try {
-            CCResponse<PolicyDto> response = policyServiceImpl.createPolicy(dto);
+            CCError<PolicyDto> response = policyServiceImpl.createPolicy(dto);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -40,7 +43,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> findPolicy(Long id) {
         try {
-            CCResponse<PolicyDto> response = policyServiceImpl.findPolicy(id);
+            CCError<PolicyDto> response = policyServiceImpl.findPolicy(id);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -58,7 +61,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponsePack<PolicyDto> findAll() {
         try {
-            CCResponsePack<PolicyDto> response = policyServiceImpl.findAll();
+            CCError<List<PolicyDto>> response = policyServiceImpl.findAll();
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponsePack<>(Status.ERROR, response.getMessage(), null);
             }
@@ -71,7 +74,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> updatePolicy(Long id, PolicyDto dto) {
         try {
-            CCResponse<PolicyDto> response = policyServiceImpl.updatePolicy(id, dto);
+            CCError<PolicyDto> response = policyServiceImpl.updatePolicy(id, dto);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -89,7 +92,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> deletePolicy(Long id) {
         try {
-            CCResponse<PolicyDto> response = policyServiceImpl.deletePolicy(id);
+            CCError<PolicyDto> response = policyServiceImpl.deletePolicy(id);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -100,22 +103,17 @@ public class PolicyService implements IPolicyService {
     }
 
     @Override
-    public CCResponse<PolicyDto> deletePolicy(String id) {
-        return deletePolicy(Long.parseLong(id));
-    }
-
-    @Override
-    public CCResponse createpolicy(PolicyDto request) {
+    public CCResponse<PolicyDto> createpolicy(PolicyDto request) {
         return null;
     }
 
     @Override
-    public CCResponse findpolicy(String s) {
+    public CCResponse<PolicyDto> findpolicy(String s) {
         return null;
     }
 
     @Override
-    public CCResponse updatepolicy(String s, PolicyDto request) {
+    public CCResponse<PolicyDto> updatepolicy(String s, PolicyDto request) {
         return null;
     }
 

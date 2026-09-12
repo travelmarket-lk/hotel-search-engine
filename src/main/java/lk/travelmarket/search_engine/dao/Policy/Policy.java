@@ -1,6 +1,8 @@
 package lk.travelmarket.search_engine.dao.Policy;
 
 import jakarta.persistence.*;
+
+import javax.naming.Name;
 import java.io.Serializable;
 
 @Entity
@@ -40,4 +42,27 @@ public class Policy implements Serializable {
         this.policyDetails = policyDetails;
     }
 
+    public void setName(String name) {
+        this.policyId = name;
+    }
+    
+    public void setDescription(String description) {
+        this.policyDetails = description;
+    }
+    
+    public String getDescription() {
+        return policyDetails;
+    }
+
+    public String getId() {
+        return policyId;
+    }
+    
+    public void setId(String id) {
+        this.policyId = id;
+    }
+
+    public String getName() {
+        return null;
+    }
 }
