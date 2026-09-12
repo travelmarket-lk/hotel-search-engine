@@ -38,6 +38,12 @@ public class Room {
     @Column(name = "max_pax_count", nullable = false)
     private Integer maxPaxCount;
 
+    @Column(name = "room_size", nullable = false)
+    private Integer roomSize;
+
+    @Column(name = "view_type", nullable = false)
+    private String viewType;
+
     @Column(name = "hotel_id", nullable = false)
     private Long hotelId;
 
