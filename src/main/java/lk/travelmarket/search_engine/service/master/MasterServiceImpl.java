@@ -5,16 +5,15 @@ import lk.travelmarket.search_engine.dao.BoardBasis;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dao.City;
 import lk.travelmarket.search_engine.dao.District;
+import lk.travelmarket.search_engine.dao.HotelRoom.RoomContent;
+import lk.travelmarket.search_engine.dao.HotelRoom.RoomType;
 import lk.travelmarket.search_engine.dao.RoomCategory;
 import lk.travelmarket.search_engine.dao.hotel.HotelType;
-import lk.travelmarket.search_engine.dto.BoardBasisDto;
-import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.repository.*;
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.repository.hotel.HotelTypeRepository;
@@ -41,6 +40,7 @@ public class MasterServiceImpl {
     private final FacilityRepository facilityRepository;
     private final FacilityCategoryRepository facilityCategoryRepository;
     private final BoardBasisRepository boardBasisRepository;
+    private final RoomTypeRepository roomTypeRepository;
 
     public MasterServiceImpl(
             BedTypeRepository bedTypeRepository,
@@ -50,7 +50,8 @@ public class MasterServiceImpl {
             HotelTypeRepository hotelTypeRepository,
             FacilityRepository facilityRepository,
             FacilityCategoryRepository facilityCategoryRepository,
-            BoardBasisRepository boardBasisRepository
+            BoardBasisRepository boardBasisRepository,
+            RoomTypeRepository roomTypeRepository
     ) {
 
         this.districtRepository = districtRepository;
@@ -61,6 +62,7 @@ public class MasterServiceImpl {
         this.facilityRepository = facilityRepository;
         this.facilityCategoryRepository = facilityCategoryRepository;
         this.boardBasisRepository = boardBasisRepository;
+        this.roomTypeRepository = roomTypeRepository;
     }
 
 
@@ -820,4 +822,80 @@ public class MasterServiceImpl {
         category.setName(dto.getName());
         return category;
     }
+
+
+
+    private RoomTypeDto toRoomTypeDto(RoomType roomType) {
+        return new RoomTypeDto(roomType.getId(), roomType.getType());
+    }
+
+    public CCError<RoomTypeDto> createRoomType(RoomTypeDto dto) {
+        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_ROOM_TYPE);
+
+        RoomType dao = new RoomType();
+        dao.setType(dto.getType());
+
+        RoomType saved = roomTypeRepository.save(dao);
+        ccError.setData(toRoomTypeDto(saved));
+        return ccError;
+    }
+
+    public CCError<List<RoomTypeDto>> findAllRoomType() {
+        CCError<List<RoomTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_TYPE);
+
+        List<RoomTypeDto> data = roomTypeRepository.findAll().stream()
+                .map(this::toRoomTypeDto)
+                .toList();
+
+        ccError.setData(data);
+        return ccError;
+    }
+
+    public CCError<RoomTypeDto> findRoomTypeById(Long id) {
+        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_TYPE);
+
+        Optional<RoomType> dao = roomTypeRepository.findById(id);
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND);
+            return ccError;
+        }
+
+        ccError.setData(toRoomTypeDto(dao.get()));
+        return ccError;
+    }
+
+    public CCError<RoomTypeDto> updateRoomType(Long id, RoomTypeDto dto) {
+        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_ROOM_TYPE);
+
+        Optional<RoomType> dao = roomTypeRepository.findById(id);
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND);
+            return ccError;
+        }
+
+        dao.get().setType(dto.getType());
+        RoomType updated = roomTypeRepository.save(dao.get());
+
+        ccError.setData(toRoomTypeDto(updated));
+        return ccError;
+    }
+
+    public CCError<RoomTypeDto> deleteRoomType(Long id) {
+        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_ROOM_TYPE);
+
+        Optional<RoomType> dao = roomTypeRepository.findById(id);
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND);
+            return ccError;
+        }
+
+        roomTypeRepository.delete(dao.get());
+        ccError.setData(toRoomTypeDto(dao.get()));
+        return ccError;
+    }
+
+
 }
