@@ -2,6 +2,7 @@ package lk.travelmarket.search_engine.dao.HotelRoom;
 
 import jakarta.persistence.*;
 import lk.travelmarket.search_engine.dao.Contact;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.*;
 
 import java.util.HashSet;
@@ -37,13 +38,19 @@ public class Room {
     @Column(name = "max_pax_count", nullable = false)
     private Integer maxPaxCount;
 
+    @Column(name = "room_size", nullable = false)
+    private Integer roomSize;
+
+    @Column(name = "view_type", nullable = false)
+    private String viewType;
+
     @Column(name = "hotel_id", nullable = false)
     private Long hotelId;
 
     @ManyToMany
     @JoinTable(
-            name = "room_bed_type",
-            joinColumns = @JoinColumn(name = "room_id"),
+            name="room_bed_type",
+            joinColumns = @JoinColumn(name= "room_id" ),
             inverseJoinColumns = @JoinColumn(name = "bed_type_id")
     )
     private Set<BedType> bedTypes = new HashSet<>();

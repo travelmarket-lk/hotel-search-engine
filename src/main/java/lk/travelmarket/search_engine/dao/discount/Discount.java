@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.dao.discount;
 
 import jakarta.persistence.*;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,6 @@ public class Discount {
 
     @Column(name = "discount", nullable = false, length = 100)
     private String discountName;
-
 
     @Column(name="discount_code", nullable = false, length = 100)
     private String discountCode;

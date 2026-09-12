@@ -28,14 +28,16 @@ public class RoomRate {
     @Column(name = "pax_count")
     private Integer paxCount;
 
-    @Column(name = "room_id")
+    @Column(name = "room_id", nullable = false)
     private Long roomId;
+
+    @Column(name = "season_id", nullable = false)
+    private Long seasonId;
 
     @Column(name = "refundable")
     private Boolean refundable;
 
     @Column(name = "hotel_id")
     private Long hotelId;
-
 
 }
