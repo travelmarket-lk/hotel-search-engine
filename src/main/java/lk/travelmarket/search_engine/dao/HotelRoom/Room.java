@@ -43,8 +43,8 @@ public class Room {
 
     @ManyToMany
     @JoinTable(
-            name = "room_bed_type",
-            joinColumns = @JoinColumn(name = "room_id"),
+            name="room_bed_type",
+            joinColumns = @JoinColumn(name= "room_id" ),
             inverseJoinColumns = @JoinColumn(name = "bed_type_id")
     )
     private Set<BedType> bedTypes = new HashSet<>();
