@@ -1,9 +1,13 @@
 package lk.travelmarket.search_engine.service.hotel;
 
+import lk.travelmarket.search_engine.dao.Address;
+import lk.travelmarket.search_engine.dao.facility.Facility;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import lk.travelmarket.search_engine.dto.AddressDto;
 import lk.travelmarket.search_engine.dto.HotelDto;
 
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
+import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 
@@ -49,12 +53,38 @@ public class HotelServiceImpl {
         Hotel hotel = new Hotel();
         hotel.setName(criteria.getName());
         hotel.setDescription(criteria.getDescription());
+        hotel.setStarRating(criteria.getStarRating());
+        hotel.setLocationHighlight(criteria.getLocationHighlight());
+
+        // Convert AddressDto → Address entity
+        if (criteria.getAddress() != null) {
+            Address address = new Address();
+            address.setAddressLine1(criteria.getAddress().getAddressLine1());
+            address.setAddressLine2(criteria.getAddress().getAddressLine2());
+            hotel.setAddress(address);
+        }
+
+        // Convert FacilityDto list → Facility entities
+        if (criteria.getFacilities() != null) {
+            List<Facility> facilities = criteria.getFacilities().stream()
+                    .map(dto -> {
+                        Facility facility = new Facility();
+                        facility.setFacilityName(dto.getFacilityName());
+                        facility.setFacilityCategory(dto.getFacilityCategory());
+                        facility.setFacilityIcon(dto.getFacilityIcon());
+                        facility.setHotel(hotel);
+                        return facility;
+                    })
+                    .toList();
+            hotel.setFacilities(facilities);
+        }
 
         Hotel saved = hotelRepository.save(hotel);
         CCError<HotelDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_HOTEL);
         ccError.setData(toDto(saved));
         return ccError;
     }
+
 
     public CCError<HotelDto> update(Long id, Hotel hotelDetails) {
         Optional<Hotel> hotelOpt = hotelRepository.findById(id);
@@ -64,6 +94,10 @@ public class HotelServiceImpl {
             Hotel hotel = hotelOpt.get();
             hotel.setName(hotelDetails.getName());
             hotel.setDescription(hotelDetails.getDescription());
+            hotel.setStarRating(hotelDetails.getStarRating());
+            hotel.setLocationHighlight(hotelDetails.getLocationHighlight());
+            hotel.setAddress(hotelDetails.getAddress());
+            hotel.setFacilities(hotelDetails.getFacilities());
 
             Hotel updated = hotelRepository.save(hotel);
             ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_HOTEL);
@@ -90,6 +124,39 @@ public class HotelServiceImpl {
     }
 
     private HotelDto toDto(Hotel hotel) {
-        return new HotelDto(hotel.getId(), hotel.getName(), hotel.getDescription());
+        return new HotelDto(
+                hotel.getId(),
+                hotel.getName(),
+                hotel.getDescription(),
+                hotel.getLocationHighlight(),
+                hotel.getStarRating(),
+                hotel.getFacilities() != null
+                        ? hotel.getFacilities().stream()
+                        .map(this::toDto)
+                        .toList()
+                        : List.of(),
+                toDto(hotel.getAddress())
+        );
     }
+
+    private AddressDto toDto(Address address) {
+        if (address == null) return null;
+        return new AddressDto(
+                address.getId(),
+                address.getAddressLine1(),
+                address.getAddressLine2()
+        );
+    }
+
+    private FacilityDto toDto(Facility facility) {
+        if (facility == null) return null;
+        return new FacilityDto(
+                facility.getId(),
+                facility.getFacilityName(),
+                facility.getFacilityCategory(),
+                facility.getFacilityIcon(),
+                facility.getHotel() != null ? facility.getHotel().getId() : null
+        );
+    }
+
 }

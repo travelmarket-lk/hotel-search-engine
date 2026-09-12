@@ -6,6 +6,7 @@ import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dao.City;
 import lk.travelmarket.search_engine.dao.District;
 import lk.travelmarket.search_engine.dao.RoomCategory;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.HotelType;
 import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
@@ -41,6 +42,7 @@ public class MasterServiceImpl {
     private final FacilityRepository facilityRepository;
     private final FacilityCategoryRepository facilityCategoryRepository;
     private final BoardBasisRepository boardBasisRepository;
+    private final HotelRepository hotelRepository;
 
     public MasterServiceImpl(
             BedTypeRepository bedTypeRepository,
@@ -50,7 +52,7 @@ public class MasterServiceImpl {
             HotelTypeRepository hotelTypeRepository,
             FacilityRepository facilityRepository,
             FacilityCategoryRepository facilityCategoryRepository,
-            BoardBasisRepository boardBasisRepository
+            BoardBasisRepository boardBasisRepository, HotelRepository hotelRepository
     ) {
 
         this.districtRepository = districtRepository;
@@ -61,6 +63,7 @@ public class MasterServiceImpl {
         this.facilityRepository = facilityRepository;
         this.facilityCategoryRepository = facilityCategoryRepository;
         this.boardBasisRepository = boardBasisRepository;
+        this.hotelRepository = hotelRepository;
     }
 
 
@@ -483,7 +486,7 @@ public class MasterServiceImpl {
     // ---------------------------- HotelType ----------------------------
     public CCError<List<HotelTypeDto>> findAllHotelTypes() {
 
-        CCError<List<HotelTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL_TYPES);
+        CCError<List<HotelTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL_TYPE);
 
         List<HotelTypeDto> data = new java.util.ArrayList<>();
 
@@ -589,8 +592,7 @@ public class MasterServiceImpl {
     }
 
     public CCError<FacilityDto> updateFacility(Long id, FacilityDto facilityDto) {
-
-        Optional<Facility> facilityOpt = this.facilityRepository.findById(id);
+        Optional<Facility> facilityOpt = facilityRepository.findById(id);
 
         if (facilityOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_NOT_FOUND);
@@ -600,14 +602,20 @@ public class MasterServiceImpl {
         facility.setFacilityName(facilityDto.getFacilityName());
         facility.setFacilityCategory(facilityDto.getFacilityCategory());
         facility.setFacilityIcon(facilityDto.getFacilityIcon());
-        facility.setHotelId(facilityDto.getHotelId());
 
-        Facility updated = this.facilityRepository.save(facility);
+        if (facilityDto.getHotelId() != null) {
+            Hotel hotel = hotelRepository.findById(facilityDto.getHotelId())
+                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
+            facility.setHotel(hotel);
+        }
+
+        Facility updated = facilityRepository.save(facility);
 
         CCError<FacilityDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_FACILITY);
         ccError.setData(toDto(updated));
         return ccError;
     }
+
 
     public CCError<FacilityDto> deleteFacility(Long id) {
 
@@ -790,7 +798,7 @@ public class MasterServiceImpl {
         dto.setFacilityName(facility.getFacilityName());
         dto.setFacilityCategory(facility.getFacilityCategory());
         dto.setFacilityIcon(facility.getFacilityIcon());
-        dto.setHotelId(facility.getHotelId());
+        dto.setHotelId(facility.getHotel().getId());
         return dto;
     }
 
@@ -800,7 +808,7 @@ public class MasterServiceImpl {
         facility.setFacilityName(dto.getFacilityName());
         facility.setFacilityCategory(dto.getFacilityCategory());
         facility.setFacilityIcon(dto.getFacilityIcon());
-        facility.setHotelId(dto.getHotelId());
+//        facility.setHotel(dto.getHotelId());
         return facility;
     }
 

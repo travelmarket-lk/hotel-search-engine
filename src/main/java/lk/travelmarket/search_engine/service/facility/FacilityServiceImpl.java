@@ -23,7 +23,7 @@ public class FacilityServiceImpl implements IFacilityService {
         facility.setFacilityName(facilityDto.getFacilityName());
         facility.setFacilityCategory(facilityDto.getFacilityCategory());
         facility.setFacilityIcon(facilityDto.getFacilityIcon());
-        facility.setHotelId(facilityDto.getHotelId());
+        facility.setHotel(facilityDto.getHotelId());
 
         Facility savedFacility = facilityRepository.save(facility);
 
@@ -61,7 +61,7 @@ public class FacilityServiceImpl implements IFacilityService {
         facility.setFacilityName(facilityDto.getFacilityName());
         facility.setFacilityCategory(facilityDto.getFacilityCategory());
         facility.setFacilityIcon(facilityDto.getFacilityIcon());
-        facility.setHotelId(facilityDto.getHotelId());
+        facility.setHotel(facilityDto.getHotelId());
 
         Facility updatedFacility = facilityRepository.save(facility);
 
@@ -87,7 +87,7 @@ public class FacilityServiceImpl implements IFacilityService {
         dto.setFacilityName(facility.getFacilityName());
         dto.setFacilityCategory(facility.getFacilityCategory());
         dto.setFacilityIcon(facility.getFacilityIcon());
-        dto.setHotelId(facility.getHotelId());
+        dto.setHotelId(facility.getHotel());
 
         return dto;
     }

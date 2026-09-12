@@ -1,13 +1,10 @@
 package lk.travelmarket.search_engine.dao.hotel;
 import jakarta.persistence.*;
 import lk.travelmarket.search_engine.dao.Address;
-import lk.travelmarket.search_engine.dao.Blackouts;
 import lk.travelmarket.search_engine.dao.HotelOwner;
 import lk.travelmarket.search_engine.dao.HotelRoom.Room;
-import lk.travelmarket.search_engine.dao.discount.Discount;
 import lk.travelmarket.search_engine.dao.facility.Facility;
 import lombok.*;
-import org.w3c.dom.Text;
 
 
 import java.util.List;
@@ -32,6 +29,12 @@ public class Hotel {
     @Column(name = "description",length = 1000 ,columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "location-highlight" , length = 500)
+    private String locationHighlight;
+
+    @Column(name = "star-rating" , length = 5)
+    private Integer starRating;
+
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ContentHotel> hotelContents;
 
@@ -39,24 +42,26 @@ public class Hotel {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_owner_id")
+    private HotelOwner hotelOwner;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Room> rooms;
+
 //    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Policy> policies;
-//
-//    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Facility> facilities;
-//
-//    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<Room> rooms;
-//
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Facility> facilities;
+
 //    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Discount> discounts;
 //
 //    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Blackouts> blackouts;
 //
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "hotel_owner_id")
-//    private HotelOwner hotelOwner;
+
 
 
 }

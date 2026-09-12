@@ -38,9 +38,6 @@ public class Room {
     @Column(name = "max_pax_count", nullable = false)
     private Integer maxPaxCount;
 
-    @Column(name = "hotel_id", nullable = false)
-    private Long hotelId;
-
     @ManyToMany
     @JoinTable(
             name="room_bed_type",
@@ -48,5 +45,9 @@ public class Room {
             inverseJoinColumns = @JoinColumn(name = "bed_type_id")
     )
     private Set<BedType> bedTypes = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id", nullable = false)
+    private Hotel hotel;
 
 }

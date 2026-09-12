@@ -5,8 +5,6 @@ import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "facility")
 @Getter
@@ -26,6 +24,8 @@ public class Facility {
     @Column(name = "facility_icon")
     private Long facilityIcon;
 
-    @Column(name = "hotel_id")  // ← ADD THIS
-    private Long hotelId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id", nullable = false)
+    private Hotel hotel;
+
 }
