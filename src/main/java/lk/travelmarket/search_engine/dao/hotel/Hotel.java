@@ -4,11 +4,11 @@ import lk.travelmarket.search_engine.dao.Blackouts;
 import lk.travelmarket.search_engine.dao.HotelOwner;
 import lk.travelmarket.search_engine.dao.HotelRoom.Room;
 import lk.travelmarket.search_engine.dao.discount.Discount;
-import lk.travelmarket.search_engine.dao.facilities.Facility;
+import lk.travelmarket.search_engine.dao.facility.Facility;
 import lombok.*;
 import org.w3c.dom.Text;
 
-import java.security.Policy;
+
 import java.util.List;
 
 @Entity

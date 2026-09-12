@@ -4,6 +4,9 @@ import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
+import lk.travelmarket.search_engine.dto.facility.FacilityDto;
+import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 
@@ -54,4 +57,40 @@ public interface IMasterService {
     CCResponse <RoomCategoryDto>updateRoomCategory(Long id, RoomCategoryDto request);
 
     CCResponse <RoomCategoryDto>deleteRoomCategory(Long id);
+
+    CCResponsePack<HotelTypeDto> findAllHotelTypes();
+
+    CCResponse<HotelTypeDto> findHotelTypeById(Long id);
+
+    CCResponse<HotelTypeDto> saveHotelType(HotelTypeDto hotelTypeDto);
+
+    CCResponse<HotelTypeDto> updateHotelType(Long id, HotelTypeDto hotelTypeDto);
+
+    CCResponse<HotelTypeDto> deleteHotelType(Long id);
+
+    // ---------------------------- Facility ----------------------------
+
+
+    CCResponsePack<FacilityDto> findAllFacilities();
+
+    CCResponse<FacilityDto> findFacilityById(Long id);
+
+    CCResponse<FacilityDto> saveFacility(FacilityDto facilityDto);
+
+    CCResponse<FacilityDto> updateFacility(Long id, FacilityDto facilityDto);
+
+    CCResponse<FacilityDto> deleteFacility(Long id);
+
+    // ------------------------- FacilityCategory -------------------------
+
+
+    CCResponsePack<FacilityCategoryDto> findAllFacilityCategories();
+
+    CCResponse<FacilityCategoryDto> findFacilityCategoryById(Long id);
+
+    CCResponse<FacilityCategoryDto> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto);
+
+    CCResponse<FacilityCategoryDto> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto);
+
+    CCResponse<FacilityCategoryDto> deleteFacilityCategory(Long id);
 }
