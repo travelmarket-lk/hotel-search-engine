@@ -2,8 +2,12 @@ package lk.travelmarket.search_engine.dao;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 @Table( name = "district")
 public class District {
 
@@ -12,6 +16,5 @@ public class District {
     private Long id;
 
     private String name;
-
 
 }

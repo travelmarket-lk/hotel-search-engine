@@ -1,9 +1,12 @@
 package lk.travelmarket.search_engine.dao.HotelRoom;
 
 import jakarta.persistence.*;
+import lk.travelmarket.search_engine.dao.Contact;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,9 +38,6 @@ public class Room {
     @Column(name = "max_pax_count", nullable = false)
     private Integer maxPaxCount;
 
-//    @Column(name = "room_type_id")
-//    private Long roomTypeId;
-
     @Column(name = "hotel_id", nullable = false)
     private Long hotelId;
 
@@ -48,6 +48,5 @@ public class Room {
             inverseJoinColumns = @JoinColumn(name = "bed_type_id")
     )
     private Set<BedType> bedTypes = new HashSet<>();
-
 
 }
