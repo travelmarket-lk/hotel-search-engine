@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dao.RoomCategory;
+import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
@@ -253,7 +255,7 @@ public interface IMasterDataController {
                     description = "Invalid request"
             )
     })
-    @PostMapping
+    @PostMapping("/room-category")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(
             @RequestBody RoomCategoryDto request
     );
@@ -268,7 +270,7 @@ public interface IMasterDataController {
                     description = "RoomCategory retrieved successfully"
             )
     })
-    @GetMapping
+    @GetMapping("/room-category")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> findAllRoomCategories();
 
     @Operation(
@@ -285,7 +287,7 @@ public interface IMasterDataController {
                     description = "Room Category not found"
             )
     })
-    @GetMapping("/{id}")
+    @GetMapping("/room-category/{id}")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> findRoomCategoryById(
             @PathVariable Long id
     );
@@ -308,7 +310,7 @@ public interface IMasterDataController {
                     description = "Test not found"
             )
     })
-    @PutMapping("/{id}")
+    @PutMapping("/room-category/{id}")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> updateRoomCategory(
             @PathVariable Long id,
             @RequestBody RoomCategoryDto request
@@ -328,7 +330,7 @@ public interface IMasterDataController {
                     description = "Test not found"
             )
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/room-category/{id}")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> deleteRoomCategory(
             @PathVariable Long id
     );
@@ -380,5 +382,101 @@ public interface IMasterDataController {
 
     @DeleteMapping(FACILITY_CATEGORY_BY_ID)
     ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(@PathVariable Long id);
+
+
+
+    @Operation(
+            summary = "Create a new Board Basis",
+            description = "Creates a new Board basis resource and returns the created Test details."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Test created successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            )
+    })
+    @PostMapping("/board-basis")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(
+            @RequestBody BoardBasisDto request
+    );
+
+    @Operation(
+            summary = "Get all Board Basis",
+            description = "Retrieves all available Board Basis resources."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Board basis retrieved successfully"
+            )
+    })
+    @GetMapping("/board-basis")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis();
+
+    @Operation(
+            summary = "Get Board Basis by ID",
+            description = "Retrieves a single Board basis resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Board basis retrieved successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Board Basis not found"
+            )
+    })
+    @GetMapping("/board-basis/{id}")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> findBoardBasisById(
+            @PathVariable Long id
+    );
+
+    @Operation(
+            summary = "Update Bord basis",
+            description = "Updates an existing Board Basis resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Board Basis updated successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @PutMapping("/board-basis/{id}")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> updateBoardBasis(
+            @PathVariable Long id,
+            @RequestBody BoardBasisDto request
+    );
+
+    @Operation(
+            summary = "Delete Board Basis",
+            description = "Deletes an existing Board Basis resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Room Category deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @DeleteMapping("/board-basis/{id}")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(
+            @PathVariable Long id
+    );
 
 }

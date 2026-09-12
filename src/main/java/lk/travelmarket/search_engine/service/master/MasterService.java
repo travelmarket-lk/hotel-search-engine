@@ -3,6 +3,7 @@ package lk.travelmarket.search_engine.service.master;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
@@ -468,6 +469,71 @@ public class MasterService implements IMasterService {
             return new CCResponse<>(ccError.getData());
         } catch (Exception e) {
             return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_ROOM_CATEGORY, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BoardBasisDto> createBoardBasis(BoardBasisDto boardBasisDto) {
+        try {
+            CCError<BoardBasisDto> ccError = masterServiceImpl.createBoardBasis(boardBasisDto);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_CREATE_BOARD_BASIS, e);
+        }
+    }
+
+    @Override
+    public CCResponsePack<BoardBasisDto> findAllBoardBasis() {
+        try {
+            CCError<List<BoardBasisDto>> ccError = masterServiceImpl.findAllBoardBasis();
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_BOARD_BASIS, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BoardBasisDto> findBoardBasisById(Long id) {
+        try {
+            CCError<BoardBasisDto> ccError = masterServiceImpl.findBoardBasisById(id);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_BOARD_BASIS, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BoardBasisDto> updateBoardBasis(Long id, BoardBasisDto boardBasisDto) {
+        try {
+            CCError<BoardBasisDto> ccError = masterServiceImpl.updateBoardBasis(id, boardBasisDto);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_UPDATE_BOARD_BASIS, e);
+        }
+    }
+
+    @Override
+    public CCResponse<BoardBasisDto> deleteBoardBasis(Long id) {
+        try {
+            CCError<BoardBasisDto> ccError = masterServiceImpl.deleteBoardBasis(id);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_BOARD_BASIS, e);
         }
     }
 

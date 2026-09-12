@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.service.master;
 
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
@@ -96,4 +97,14 @@ public interface IMasterService {
     CCResponse<FacilityCategoryDto> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto);
 
     CCResponse<FacilityCategoryDto> deleteFacilityCategory(Long id);
+
+    CCResponse<BoardBasisDto> createBoardBasis(BoardBasisDto boardBasisDto);
+
+    CCResponsePack<BoardBasisDto> findAllBoardBasis();
+
+    CCResponse<BoardBasisDto> findBoardBasisById(Long id);
+
+    CCResponse<BoardBasisDto> updateBoardBasis(Long id, BoardBasisDto boardBasisDto);
+
+    CCResponse<BoardBasisDto> deleteBoardBasis(Long id);
 }
