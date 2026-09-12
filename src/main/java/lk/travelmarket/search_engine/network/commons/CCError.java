@@ -1,5 +1,7 @@
 package lk.travelmarket.search_engine.network.commons;
 
+import lk.travelmarket.search_engine.dto.HotelDto;
+
 public class CCError<T> {
 
   private CCErrorStatus status;
@@ -20,6 +22,7 @@ public class CCError<T> {
     this.status = status;
     this.message = message;
   }
+
 
   public CCErrorStatus getStatus() {
     return status;
