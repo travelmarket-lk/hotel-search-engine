@@ -8,10 +8,15 @@ import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
+import lk.travelmarket.search_engine.dto.facility.FacilityDto;
+import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static lk.travelmarket.search_engine.util.EndpointConstants.*;
 
 @RestController
 @RequestMapping(EndpointConstants.V1 + EndpointConstants.MASTER)
@@ -323,5 +328,53 @@ public interface IMasterDataController {
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> deleteRoomCategory(
             @PathVariable Long id
     );
+
+    // ---------------------------- HotelType ----------------------------
+    @GetMapping(HOTEL_TYPES)
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> findAllHotelTypes();
+
+    @GetMapping(HOTEL_TYPE_BY_ID)
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> findHotelTypeById(@PathVariable Long id);
+
+    @PostMapping(HOTEL_TYPES)
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> saveHotelType(@RequestBody HotelTypeDto hotelTypeDto);
+
+    @PutMapping(HOTEL_TYPE_BY_ID)
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> updateHotelType(@PathVariable Long id, @RequestBody HotelTypeDto hotelTypeDto);
+
+    @DeleteMapping(HOTEL_TYPE_BY_ID)
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> deleteHotelType(@PathVariable Long id);
+
+    // ---------------------------- Facility ----------------------------
+    @GetMapping(FACILITIES)
+    ResponseEntity<CCResponseWrapper<FacilityDto>> findAllFacilities();
+
+    @GetMapping(FACILITY_BY_ID)
+    ResponseEntity<CCResponseWrapper<FacilityDto>> findFacilityById(@PathVariable Long id);
+
+    @PostMapping(FACILITIES)
+    ResponseEntity<CCResponseWrapper<FacilityDto>> saveFacility(@RequestBody FacilityDto facilityDto);
+
+    @PutMapping(FACILITY_BY_ID)
+    ResponseEntity<CCResponseWrapper<FacilityDto>> updateFacility(@PathVariable Long id, @RequestBody FacilityDto facilityDto);
+
+    @DeleteMapping(FACILITY_BY_ID)
+    ResponseEntity<CCResponseWrapper<FacilityDto>> deleteFacility(@PathVariable Long id);
+
+    // ------------------------- FacilityCategory -------------------------
+    @GetMapping(FACILITY_CATEGORIES)
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> findAllFacilityCategories();
+
+    @GetMapping(FACILITY_CATEGORY_BY_ID)
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> findFacilityCategoryById(@PathVariable Long id);
+
+    @PostMapping(FACILITY_CATEGORIES)
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> saveFacilityCategory(@RequestBody FacilityCategoryDto facilityCategoryDto);
+
+    @PutMapping(FACILITY_CATEGORY_BY_ID)
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> updateFacilityCategory(@PathVariable Long id, @RequestBody FacilityCategoryDto facilityCategoryDto);
+
+    @DeleteMapping(FACILITY_CATEGORY_BY_ID)
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(@PathVariable Long id);
 
 }

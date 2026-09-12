@@ -18,7 +18,7 @@ public class BedType {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "bed_type")
-    private String bed_type;
+    @Column(name = "type")
+    private String type;
 
 }
