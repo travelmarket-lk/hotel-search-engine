@@ -17,9 +17,10 @@ public class Facility {
     @Column(name = "facility_name", nullable = false)
     private String facilityName;
 
-    @Column(name = "facility_category", nullable = false)
-    private Long facilityCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "facility_category_id", nullable = false)
+    private FacilityCategory facilityCategory;
 
     @Column(name = "facility_icon")
-    private Long facilityIcon;
+    private String facilityIcon;
 }

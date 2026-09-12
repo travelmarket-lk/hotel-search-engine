@@ -1,5 +1,7 @@
 package lk.travelmarket.search_engine.controller;
 
+import lk.travelmarket.search_engine.dto.FacilityCategoryDto;
+import lk.travelmarket.search_engine.dto.FacilityDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -209,6 +211,198 @@ public interface IMasterDataController {
     })
     @DeleteMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> deleteCity(
+            @PathVariable Long id
+    );
+
+    // FACILITY CATEGORY
+
+    @Operation(
+            summary = "Create a new Facility Category",
+            description = "Creates a new Facility Category and returns the created Facility Category details."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Facility Category created successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            )
+    })
+    @PostMapping("/facility-categories")
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> createFacilityCategory(
+            @RequestBody FacilityCategoryDto request
+    );
+
+    @Operation(
+            summary = "Get all Facility Categories",
+            description = "Retrieves all available Facility Categories."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Facility Categories retrieved successfully"
+            )
+    })
+    @GetMapping("/facility-categories")
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> getAllFacilityCategories();
+
+    @Operation(
+            summary = "Get Facility Category by ID",
+            description = "Retrieves a single Facility Category using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Facility Category retrieved successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Facility Category not found"
+            )
+    })
+    @GetMapping("/facility-categories/{id}")
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> getFacilityCategoryById(
+            @PathVariable Long id
+    );
+
+    @Operation(
+            summary = "Update Facility Category",
+            description = "Updates an existing Facility Category using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Facility Category updated successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Facility Category not found"
+            )
+    })
+    @PutMapping("/facility-categories/{id}")
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> updateFacilityCategory(
+            @PathVariable Long id,
+            @RequestBody FacilityCategoryDto request
+    );
+
+    @Operation(
+            summary = "Delete Facility Category",
+            description = "Deletes an existing Facility Category using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Facility Category deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Facility Category not found"
+            )
+    })
+    @DeleteMapping("/facility-categories/{id}")
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(
+            @PathVariable Long id
+    );
+
+    // FACILITY
+
+    @Operation(
+            summary = "Create a new Facility",
+            description = "Creates a new Facility and returns the created Facility details."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Facility created successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            )
+    })
+    @PostMapping("/facilities")
+    ResponseEntity<CCResponseWrapper<FacilityDto>> createFacility(
+            @RequestBody FacilityDto request
+    );
+
+    @Operation(
+            summary = "Get all Facilities",
+            description = "Retrieves all available Facilities."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Facilities retrieved successfully"
+            )
+    })
+    @GetMapping("/facilities")
+    ResponseEntity<CCResponseWrapper<FacilityDto>> getAllFacilities();
+
+    @Operation(
+            summary = "Get Facility by ID",
+            description = "Retrieves a single Facility using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Facility retrieved successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Facility not found"
+            )
+    })
+    @GetMapping("/facilities/{id}")
+    ResponseEntity<CCResponseWrapper<FacilityDto>> getFacilityById(
+            @PathVariable Long id
+    );
+
+    @Operation(
+            summary = "Update Facility",
+            description = "Updates an existing Facility using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Facility updated successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Facility not found"
+            )
+    })
+    @PutMapping("/facilities/{id}")
+    ResponseEntity<CCResponseWrapper<FacilityDto>> updateFacility(
+            @PathVariable Long id,
+            @RequestBody FacilityDto request
+    );
+
+    @Operation(
+            summary = "Delete Facility",
+            description = "Deletes an existing Facility using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Facility deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Facility not found"
+            )
+    })
+    @DeleteMapping("/facilities/{id}")
+    ResponseEntity<CCResponseWrapper<FacilityDto>> deleteFacility(
             @PathVariable Long id
     );
 }

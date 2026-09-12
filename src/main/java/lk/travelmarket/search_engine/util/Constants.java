@@ -85,4 +85,75 @@ public class Constants {
     public static final String ERROR_DELETE_CITY =
             "City deletion failed";
 
+    // FACILITY CATEGORY
+
+    public static final String SUCCESS_RETRIEVE_FACILITY_CATEGORIES =
+            "Facility categories retrieve success";
+
+    public static final String ERROR_RETRIEVE_FACILITY_CATEGORIES =
+            "Facility categories retrieve failed";
+
+    public static final String SUCCESS_CREATE_FACILITY_CATEGORY =
+            "Facility category created successfully";
+
+    public static final String ERROR_CREATE_FACILITY_CATEGORY =
+            "Facility category creation failed";
+
+    public static final String SUCCESS_RETRIEVE_FACILITY_CATEGORY =
+            "Facility category retrieve success";
+
+    public static final String ERROR_RETRIEVE_FACILITY_CATEGORY =
+            "Facility category retrieve failed";
+
+    public static final String ERROR_RETRIEVE_FACILITY_CATEGORY_NOT_FOUND =
+            "Facility category not found";
+
+    public static final String SUCCESS_UPDATE_FACILITY_CATEGORY =
+            "Facility category updated successfully";
+
+    public static final String ERROR_UPDATE_FACILITY_CATEGORY =
+            "Facility category update failed";
+
+    public static final String SUCCESS_DELETE_FACILITY_CATEGORY =
+            "Facility category deleted successfully";
+
+    public static final String ERROR_DELETE_FACILITY_CATEGORY =
+            "Facility category deletion failed";
+
+
+    // FACILITY
+
+    public static final String SUCCESS_RETRIEVE_FACILITIES =
+            "Facilities retrieve success";
+
+    public static final String ERROR_RETRIEVE_FACILITIES =
+            "Facilities retrieve failed";
+
+    public static final String SUCCESS_CREATE_FACILITY =
+            "Facility created successfully";
+
+    public static final String ERROR_CREATE_FACILITY =
+            "Facility creation failed";
+
+    public static final String SUCCESS_RETRIEVE_FACILITY =
+            "Facility retrieve success";
+
+    public static final String ERROR_RETRIEVE_FACILITY =
+            "Facility retrieve failed";
+
+    public static final String ERROR_RETRIEVE_FACILITY_NOT_FOUND =
+            "Facility not found";
+
+    public static final String SUCCESS_UPDATE_FACILITY =
+            "Facility updated successfully";
+
+    public static final String ERROR_UPDATE_FACILITY =
+            "Facility update failed";
+
+    public static final String SUCCESS_DELETE_FACILITY =
+            "Facility deleted successfully";
+
+    public static final String ERROR_DELETE_FACILITY =
+            "Facility deletion failed";
+
 }

@@ -2,6 +2,8 @@ package lk.travelmarket.search_engine.controller;
 
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dto.FacilityCategoryDto;
+import lk.travelmarket.search_engine.dto.FacilityDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
 import lk.travelmarket.search_engine.service.master.IMasterService;
@@ -109,6 +111,100 @@ public class MasterDataController implements IMasterDataController {
 
         return NetworkUtils.wrap(
                 masterService.deleteCity(id)
+        );
+    }
+    // FACILITY CATEGORY
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> createFacilityCategory(
+            FacilityCategoryDto request) {
+
+        return NetworkUtils.wrap(
+                masterService.createFacilityCategory(request)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> getAllFacilityCategories() {
+
+        return NetworkUtils.wrap(
+                masterService.findAllFacilityCategories()
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> getFacilityCategoryById(
+            Long id) {
+
+        return NetworkUtils.wrap(
+                masterService.findFacilityCategory(id)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> updateFacilityCategory(
+            Long id,
+            FacilityCategoryDto request) {
+
+        return NetworkUtils.wrap(
+                masterService.updateFacilityCategory(id, request)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(
+            Long id) {
+
+        return NetworkUtils.wrap(
+                masterService.deleteFacilityCategory(id)
+        );
+    }
+
+
+    // FACILITY
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> createFacility(
+            FacilityDto request) {
+
+        return NetworkUtils.wrap(
+                masterService.createFacility(request)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> getAllFacilities() {
+
+        return NetworkUtils.wrap(
+                masterService.findAllFacilities()
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> getFacilityById(
+            Long id) {
+
+        return NetworkUtils.wrap(
+                masterService.findFacility(id)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> updateFacility(
+            Long id,
+            FacilityDto request) {
+
+        return NetworkUtils.wrap(
+                masterService.updateFacility(id, request)
+        );
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> deleteFacility(
+            Long id) {
+
+        return NetworkUtils.wrap(
+                masterService.deleteFacility(id)
         );
     }
 }
