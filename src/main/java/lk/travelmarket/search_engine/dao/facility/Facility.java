@@ -15,17 +15,13 @@ public class Facility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "facility_name", nullable = false)
-    private String facilityName;
+    @Column(name = "title", nullable = false)
+    private String title;
 
-    @Column(name = "facility_category", nullable = false)
-    private Long facilityCategory;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "category_id", nullable = false)
+    private FacilityCategory category;
 
-    @Column(name = "facility_icon")
-    private Long facilityIcon;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id", nullable = false)
-    private Hotel hotel;
-
+    @Column(name = "icon")
+    private String icon;
 }

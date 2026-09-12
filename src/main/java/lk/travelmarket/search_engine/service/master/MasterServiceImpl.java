@@ -6,7 +6,6 @@ import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dao.City;
 import lk.travelmarket.search_engine.dao.District;
 import lk.travelmarket.search_engine.dao.RoomCategory;
-import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.HotelType;
 import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
@@ -42,7 +41,6 @@ public class MasterServiceImpl {
     private final FacilityRepository facilityRepository;
     private final FacilityCategoryRepository facilityCategoryRepository;
     private final BoardBasisRepository boardBasisRepository;
-    private final HotelRepository hotelRepository;
 
     public MasterServiceImpl(
             BedTypeRepository bedTypeRepository,
@@ -52,7 +50,7 @@ public class MasterServiceImpl {
             HotelTypeRepository hotelTypeRepository,
             FacilityRepository facilityRepository,
             FacilityCategoryRepository facilityCategoryRepository,
-            BoardBasisRepository boardBasisRepository, HotelRepository hotelRepository
+            BoardBasisRepository boardBasisRepository
     ) {
 
         this.districtRepository = districtRepository;
@@ -63,7 +61,6 @@ public class MasterServiceImpl {
         this.facilityRepository = facilityRepository;
         this.facilityCategoryRepository = facilityCategoryRepository;
         this.boardBasisRepository = boardBasisRepository;
-        this.hotelRepository = hotelRepository;
     }
 
 
@@ -486,7 +483,7 @@ public class MasterServiceImpl {
     // ---------------------------- HotelType ----------------------------
     public CCError<List<HotelTypeDto>> findAllHotelTypes() {
 
-        CCError<List<HotelTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL_TYPE);
+        CCError<List<HotelTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL_TYPES);
 
         List<HotelTypeDto> data = new java.util.ArrayList<>();
 
@@ -592,30 +589,30 @@ public class MasterServiceImpl {
     }
 
     public CCError<FacilityDto> updateFacility(Long id, FacilityDto facilityDto) {
-        Optional<Facility> facilityOpt = facilityRepository.findById(id);
+
+        Optional<Facility> facilityOpt = this.facilityRepository.findById(id);
+        Optional<FacilityCategory> facilityCategory = this.facilityCategoryRepository.findById( facilityDto.getCategory().getId() );
 
         if (facilityOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_NOT_FOUND);
         }
 
-        Facility facility = facilityOpt.get();
-        facility.setFacilityName(facilityDto.getFacilityName());
-        facility.setFacilityCategory(facilityDto.getFacilityCategory());
-        facility.setFacilityIcon(facilityDto.getFacilityIcon());
-
-        if (facilityDto.getHotelId() != null) {
-            Hotel hotel = hotelRepository.findById(facilityDto.getHotelId())
-                    .orElseThrow(() -> new RuntimeException("Hotel not found"));
-            facility.setHotel(hotel);
+        if (facilityCategory.isEmpty()) {
+            return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_CATEGORY_NOT_FOUND);
         }
 
-        Facility updated = facilityRepository.save(facility);
+
+        Facility facility = facilityOpt.get();
+        facility.setTitle(facilityDto.getTitle());
+        facility.setCategory( facilityCategory.get() );
+        facility.setIcon(facilityDto.getIcon());
+
+        Facility updated = this.facilityRepository.save(facility);
 
         CCError<FacilityDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_FACILITY);
         ccError.setData(toDto(updated));
         return ccError;
     }
-
 
     public CCError<FacilityDto> deleteFacility(Long id) {
 
@@ -678,7 +675,7 @@ public class MasterServiceImpl {
         }
 
         FacilityCategory category = categoryOpt.get();
-        category.setFacilityCategory(facilityCategoryDto.getFacilityCategory());
+        category.setName(facilityCategoryDto.getName());
 
         FacilityCategory updated = this.facilityCategoryRepository.save(category);
 
@@ -795,34 +792,32 @@ public class MasterServiceImpl {
     private FacilityDto toDto(Facility facility) {
         FacilityDto dto = new FacilityDto();
         dto.setId(facility.getId());
-        dto.setFacilityName(facility.getFacilityName());
-        dto.setFacilityCategory(facility.getFacilityCategory());
-        dto.setFacilityIcon(facility.getFacilityIcon());
-        dto.setHotelId(facility.getHotel().getId());
+        dto.setTitle(facility.getTitle());
+        dto.setCategory( toDto( facility.getCategory() ));
+        dto.setIcon(facility.getIcon());
         return dto;
     }
 
     private Facility toEntity(FacilityDto dto) {
         Facility facility = new Facility();
         facility.setId(dto.getId());
-        facility.setFacilityName(dto.getFacilityName());
-        facility.setFacilityCategory(dto.getFacilityCategory());
-        facility.setFacilityIcon(dto.getFacilityIcon());
-//        facility.setHotel(dto.getHotelId());
+        facility.setTitle(dto.getTitle());
+        facility.setCategory( toEntity( dto.getCategory() ));
+        facility.setIcon(dto.getIcon());
         return facility;
     }
 
     private FacilityCategoryDto toDto(FacilityCategory category) {
         FacilityCategoryDto dto = new FacilityCategoryDto();
         dto.setId(category.getId());
-        dto.setFacilityCategory(category.getFacilityCategory());
+        dto.setName(category.getName());
         return dto;
     }
 
     private FacilityCategory toEntity(FacilityCategoryDto dto) {
         FacilityCategory category = new FacilityCategory();
         category.setId(dto.getId());
-        category.setFacilityCategory(dto.getFacilityCategory());
+        category.setName(dto.getName());
         return category;
     }
 }
