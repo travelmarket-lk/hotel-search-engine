@@ -107,8 +107,6 @@ public class RoomBlackoutServiceImpl {
         }
 
         Blackouts entity = dao.get();
-        entity.setHotelId(dto.getHotelId());
-        entity.setRoomId(dto.getRoomId());
         entity.setReason(dto.getReason());
         entity.setStartDate(dto.getStartDate());
         entity.setEndDate(dto.getEndDate());
