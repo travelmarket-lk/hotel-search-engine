@@ -22,7 +22,7 @@ public interface IHotelController {
     ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody HotelCreationCriteria criteria);
 
     @PutMapping(EndpointConstants.HOTEL_BY_ID)
-    ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody Hotel hotelDetails);
+    ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody HotelDto hotel);
 
     @DeleteMapping(EndpointConstants.HOTEL_BY_ID)
     ResponseEntity<CCResponseWrapper<Boolean>> deleteHotel(@PathVariable Long id);

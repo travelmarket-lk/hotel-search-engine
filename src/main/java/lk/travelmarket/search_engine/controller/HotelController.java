@@ -1,5 +1,4 @@
 package lk.travelmarket.search_engine.controller;
-
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dto.HotelDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
@@ -38,8 +37,8 @@ public class HotelController implements IHotelController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody Hotel hotelDetails) {
-        CCResponsePack<HotelDto> response = hotelService.updateHotel(id, hotelDetails);
+    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody HotelDto hotel) {
+        CCResponsePack<HotelDto> response = hotelService.updateHotel(id, hotel);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
 

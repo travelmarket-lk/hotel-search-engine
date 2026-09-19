@@ -12,20 +12,17 @@ public class HotelDto {
     private Integer starRating;
 
     private AddressDto address;
-    private List<FacilityDto> facilities;
 
     public HotelDto() {
     }
 
     public HotelDto(Long id, String name, String description,
-                    String locationHighlight, Integer starRating,
-                    List<FacilityDto> facilities, AddressDto address) {
+                    String locationHighlight, Integer starRating, AddressDto address) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.locationHighlight = locationHighlight;
         this.starRating = starRating;
-        this.facilities = facilities;
         this.address = address;
     }
 
@@ -48,6 +45,4 @@ public class HotelDto {
     public AddressDto getAddress() { return address; }
     public void setAddress(AddressDto address) { this.address = address; }
 
-    public List<FacilityDto> getFacilities() { return facilities; }
-    public void setFacilities(List<FacilityDto> facilities) { this.facilities = facilities; }
 }

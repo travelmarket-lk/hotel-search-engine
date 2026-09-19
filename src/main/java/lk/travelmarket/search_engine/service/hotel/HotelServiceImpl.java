@@ -64,21 +64,6 @@ public class HotelServiceImpl {
             hotel.setAddress(address);
         }
 
-        // Convert FacilityDto list → Facility entities
-        if (criteria.getFacilities() != null) {
-            List<Facility> facilities = criteria.getFacilities().stream()
-                    .map(dto -> {
-                        Facility facility = new Facility();
-                        facility.setFacilityName(dto.getFacilityName());
-                        facility.setFacilityCategory(dto.getFacilityCategory());
-                        facility.setFacilityIcon(dto.getFacilityIcon());
-                        facility.setHotel(hotel);
-                        return facility;
-                    })
-                    .toList();
-            hotel.setFacilities(facilities);
-        }
-
         Hotel saved = hotelRepository.save(hotel);
         CCError<HotelDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_HOTEL);
         ccError.setData(toDto(saved));
@@ -86,7 +71,7 @@ public class HotelServiceImpl {
     }
 
 
-    public CCError<HotelDto> update(Long id, Hotel hotelDetails) {
+    public CCError<HotelDto> update(Long id, HotelDto hotelDetails) {
         Optional<Hotel> hotelOpt = hotelRepository.findById(id);
         CCError<HotelDto> ccError;
 
@@ -96,9 +81,8 @@ public class HotelServiceImpl {
             hotel.setDescription(hotelDetails.getDescription());
             hotel.setStarRating(hotelDetails.getStarRating());
             hotel.setLocationHighlight(hotelDetails.getLocationHighlight());
-            hotel.setAddress(hotelDetails.getAddress());
-            hotel.setFacilities(hotelDetails.getFacilities());
-
+            hotel.getAddress().setAddressLine1( hotelDetails.getAddress().getAddressLine1() );
+            hotel.getAddress().setAddressLine2( hotelDetails.getAddress().getAddressLine2() );
             Hotel updated = hotelRepository.save(hotel);
             ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_HOTEL);
             ccError.setData(toDto(updated));
@@ -130,11 +114,6 @@ public class HotelServiceImpl {
                 hotel.getDescription(),
                 hotel.getLocationHighlight(),
                 hotel.getStarRating(),
-                hotel.getFacilities() != null
-                        ? hotel.getFacilities().stream()
-                        .map(this::toDto)
-                        .toList()
-                        : List.of(),
                 toDto(hotel.getAddress())
         );
     }
@@ -148,15 +127,6 @@ public class HotelServiceImpl {
         );
     }
 
-    private FacilityDto toDto(Facility facility) {
-        if (facility == null) return null;
-        return new FacilityDto(
-                facility.getId(),
-                facility.getFacilityName(),
-                facility.getFacilityCategory(),
-                facility.getFacilityIcon(),
-                facility.getHotel() != null ? facility.getHotel().getId() : null
-        );
-    }
+
 
 }

@@ -53,7 +53,7 @@ public class Hotel {
 //    private List<Policy> policies;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Facility> facilities;
+    private List<HotelFacility> facilities;
 
 //    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Discount> discounts;

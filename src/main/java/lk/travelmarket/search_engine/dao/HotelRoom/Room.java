@@ -44,9 +44,6 @@ public class Room {
     @Column(name = "view_type", nullable = false)
     private String viewType;
 
-    @Column(name = "hotel_id", nullable = false)
-    private Long hotelId;
-
     @ManyToMany
     @JoinTable(
             name="room_bed_type",
