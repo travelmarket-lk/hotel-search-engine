@@ -1,15 +1,17 @@
 package lk.travelmarket.search_engine.controller;
-import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dto.HotelDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 import lk.travelmarket.search_engine.service.hotel.HotelService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1") // or use EndpointConstants.V1 if you prefer
+@RequestMapping("/api/v1")
+@Validated
 public class HotelController implements IHotelController {
 
     private final HotelService hotelService;
@@ -31,13 +33,15 @@ public class HotelController implements IHotelController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody HotelCreationCriteria criteria) {
+    public ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@Valid @RequestBody HotelCreationCriteria criteria) {
         CCResponsePack<HotelDto> response = hotelService.createHotel(criteria);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody HotelDto hotel) {
+    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(
+            @PathVariable Long id,
+            @Valid @RequestBody HotelDto hotel) {
         CCResponsePack<HotelDto> response = hotelService.updateHotel(id, hotel);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
@@ -47,7 +51,4 @@ public class HotelController implements IHotelController {
         CCResponsePack<Boolean> response = hotelService.deleteHotel(id);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
-
-
-
 }
