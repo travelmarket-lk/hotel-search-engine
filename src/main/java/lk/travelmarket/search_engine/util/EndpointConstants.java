@@ -7,4 +7,5 @@ public class EndpointConstants {
     public static final String TEST = "tests";
 
     public static final String MASTER = "/master";
+    public static final String POLICY = "/policy" ;
 }

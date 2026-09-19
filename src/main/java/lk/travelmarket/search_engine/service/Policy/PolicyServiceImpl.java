@@ -6,13 +6,12 @@ import lk.travelmarket.search_engine.dao.Policy.Policy;
 import lk.travelmarket.search_engine.dto.PolicyDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-
-@Component
+@Service
 @Transactional
 public class PolicyServiceImpl {
 
@@ -31,87 +30,87 @@ public class PolicyServiceImpl {
         return ccError;
     }
 
-    public CCError<PolicyDto> findPolicy( Long id ) {
+    public CCError<PolicyDto> findPolicy(Long id) {
         CCError<PolicyDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, "Policy retrieved successfully");
 
         Optional<Policy> dao = this.policyRepository.findById(String.valueOf(id));
 
-        if( dao.isEmpty() )
-        {
-            ccError.setStatus( CCErrorStatus.ERROR );
-            ccError.setMessage( "Policy retrieve not found" );
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Policy retrieve not found");
             return ccError;
         }
 
-        PolicyDto policyData = this.toDto( dao.get() );
+        PolicyDto policyData = this.toDto(dao.get());
         ccError.setData(policyData);
         return ccError;
     }
 
-    public CCError<PolicyDto> createPolicy( PolicyDto dto ) {
+    public CCError<PolicyDto> createPolicy(PolicyDto dto) {
         CCError<PolicyDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, "Policy created successfully");
 
         Policy dao = new Policy();
-        String name = dto.getPolicyName();
-        String description = dto.getPolicyDescription();
 
-        Policy savedPolicy = policyRepository.save( dao );
+        // --- STEP 2: Map DTO fields to Entity ---
+        dao.setName(dto.getPolicyName());
+        dao.setPolicyDetails(dto.getPolicyDescription());
 
-        PolicyDto policyData = this.toDto( savedPolicy );
+        Policy savedPolicy = policyRepository.save(dao);
+
+        PolicyDto policyData = this.toDto(savedPolicy);
         ccError.setData(policyData);
         return ccError;
     }
 
-    public CCError<PolicyDto> updatePolicy( Long id, PolicyDto dto ) {
+    public CCError<PolicyDto> updatePolicy(Long id, PolicyDto dto) {
         CCError<PolicyDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, "Policy updated successfully");
 
         Optional<Policy> dao = this.policyRepository.findById(String.valueOf(id));
 
-        if( dao.isEmpty() )
-        {
-            ccError.setStatus( CCErrorStatus.ERROR );
-            ccError.setMessage( "Policy retrieve  not found" );
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Policy retrieve not found");
             return ccError;
         }
 
-        dao.get().setName( dto.getName() );
-        dao.get().setDescription( dto.getDescription());
+        Policy policyEntity = dao.get();
 
-        this.policyRepository.save( dao.get() );
 
-        PolicyDto policyData = this.toDto( dao.get() );
+        policyEntity.setName(dto.getPolicyName());
+        policyEntity.setPolicyDetails(dto.getPolicyDescription());
+
+        this.policyRepository.save(policyEntity);
+
+        PolicyDto policyData = this.toDto(policyEntity);
         ccError.setData(policyData);
         return ccError;
     }
 
-    public CCError<PolicyDto> deletePolicy( Long id ) {
+    public CCError<PolicyDto> deletePolicy(Long id) {
         CCError<PolicyDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, "Policy deleted successfully");
 
         Optional<Policy> dao = this.policyRepository.findById(String.valueOf(id));
 
-        if( dao.isEmpty() )
-        {
-            ccError.setStatus( CCErrorStatus.ERROR );
-            ccError.setMessage( "Policy retrieve not found" );
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Policy retrieve not found");
             return ccError;
         }
 
-        this.policyRepository.delete( dao.get() );
+        this.policyRepository.delete(dao.get());
 
-        PolicyDto policyData = this.toDto( dao.get() );
+        PolicyDto policyData = this.toDto(dao.get());
         ccError.setData(policyData);
         return ccError;
     }
 
     private PolicyDto toDto(Policy policy) {
         PolicyDto policyDto = new PolicyDto();
-        String arg1 = policy.getPolicyId();
-        policyDto.setField1(arg1);
-        String arg2 = policy.getPolicyDetails();
-        policyDto.setField2(arg2);
-        String arg3 = policy.getName();
-        policyDto.setField3(arg3);
+
+        policyDto.setPolicyId(policy.getPolicyId());
+        policyDto.setPolicyDescription(policy.getPolicyDetails());
+        policyDto.setPolicyName(policy.getName());
+
         return policyDto;
     }
-
 }

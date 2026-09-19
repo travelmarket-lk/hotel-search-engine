@@ -31,4 +31,13 @@ public class PolicyDto {
     public void setField3(String arg3) {
         this.name = arg3;
     }
+
+    public void setPolicyId(String policyId) {
+    }
+
+    public void setPolicyDescription(String policyDetails) {
+    }
+
+    public void setPolicyName(String name) {
+    }
 }

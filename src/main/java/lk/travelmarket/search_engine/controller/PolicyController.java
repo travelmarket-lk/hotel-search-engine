@@ -5,9 +5,13 @@ import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
 import lk.travelmarket.search_engine.service.Policy.IPolicyService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
 @RestController
+@RequestMapping("/api/v1/policy")
 public class PolicyController implements IPolicyController {
 
     private final IPolicyService policyService;
