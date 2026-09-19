@@ -35,4 +35,7 @@ public class EndpointConstants {
     // ROOM BLACKOUT
     public static final String ROOM_BLACKOUTS = "/room-blackouts";
 
+    //Room
+    public static final String ROOMS = "/rooms";
+
 }

@@ -247,6 +247,20 @@ public class Constants {
 
     public static final String ERROR_CREATE_BOARD_BASIS = "Board Basis create error";
 
+    //ROOMS
+
+    public static final String SUCCESS_RETRIEVE_ROOMS = "Rooms retrieve success";
+    public static final String ERROR_RETRIEVE_ROOMS = "Rooms retrieve failed";
+    public static final String SUCCESS_CREATE_ROOM = "Room created successfully";
+    public static final String ERROR_CREATE_ROOM = "Room creation failed";
+    public static final String SUCCESS_RETRIEVE_ROOM = "Room retrieve success";
+    public static final String ERROR_RETRIEVE_ROOM = "Room retrieve failed";
+    public static final String ERROR_RETRIEVE_ROOM_NOT_FOUND = "Room not found";
+    public static final String SUCCESS_UPDATE_ROOM = "Room updated successfully";
+    public static final String ERROR_UPDATE_ROOM = "Room update failed";
+    public static final String SUCCESS_DELETE_ROOM = "Room deleted successfully";
+    public static final String ERROR_DELETE_ROOM = "Room deletion failed";
+
 
     public static final String SUCCESS_RETRIEVE_ROOM_TYPE = "ROOM Type retrieve success";
 
