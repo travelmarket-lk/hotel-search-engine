@@ -111,5 +111,4 @@ public interface ITestController {
     ResponseEntity<CCResponseWrapper<TestDto>> delete(
             @PathVariable Long id
     );
-
 }
