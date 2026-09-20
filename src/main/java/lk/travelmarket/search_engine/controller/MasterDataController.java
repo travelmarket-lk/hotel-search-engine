@@ -1,5 +1,6 @@
 package lk.travelmarket.search_engine.controller;
 
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
@@ -115,7 +116,7 @@ public class MasterDataController implements IMasterDataController {
         );
     }
 
-    // BED TYPES
+// BED TYPES
 
     @Override
     public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
@@ -123,7 +124,7 @@ public class MasterDataController implements IMasterDataController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
+    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@Valid BedType bedType) {
         return NetworkUtils.wrap(masterService.addBedType(bedType));
     }
 
@@ -138,7 +139,7 @@ public class MasterDataController implements IMasterDataController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
+    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, @Valid BedType bedType) {
         return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
     }
 
