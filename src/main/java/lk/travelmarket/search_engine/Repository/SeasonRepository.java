@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Long> {
+    boolean existsBySeasonNameIgnoreCase(String seasonName);
+    boolean existsBySeasonNameIgnoreCaseAndIdNot(String seasonName, Long id);
 }
