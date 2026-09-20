@@ -1,15 +1,12 @@
 package lk.travelmarket.search_engine.service.hotel;
 
 import lk.travelmarket.search_engine.dao.Address;
-import lk.travelmarket.search_engine.dao.facility.Facility;
-import lk.travelmarket.search_engine.dao.Address;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.AddressDto;
 import lk.travelmarket.search_engine.dto.HotelDto;
 import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
-import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 
@@ -163,9 +160,6 @@ public class HotelServiceImpl {
         return ccError;
     }
 
-
-
-
     private HotelDto toDto(Hotel hotel) {
         return new HotelDto(
                 hotel.getId(),
@@ -173,9 +167,8 @@ public class HotelServiceImpl {
                 hotel.getDescription(),
                 hotel.getLocationHighlight(),
                 hotel.getStarRating(),
-                toDto(hotel.getAddress())
+                toDto(hotel.getAddress()));
     }
-}
 
     private AddressDto toDto(Address address) {
         if (address == null) return null;
@@ -184,9 +177,6 @@ public class HotelServiceImpl {
                 address.getAddressLine1(),
                 address.getAddressLine2()
         );
-    }
-
-    private List<LandMarkDto> toLandMarkDtos( List<Landmark> landmarks) {
     }
 
 
