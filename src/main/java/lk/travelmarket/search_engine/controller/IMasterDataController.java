@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dao.RoomCategory;
@@ -254,6 +255,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/room-category")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(
+            @Valid
             @RequestBody RoomCategoryDto request
     );
 
@@ -398,6 +400,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/board-basis")
     ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(
+            @Valid
             @RequestBody BoardBasisDto request
     );
 
@@ -493,6 +496,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/room-type")
     ResponseEntity<CCResponseWrapper<RoomTypeDto>> createRoomType(
+            @Valid
             @RequestBody RoomTypeDto request
     );
 

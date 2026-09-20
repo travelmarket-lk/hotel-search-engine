@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.service.master;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dao.BoardBasis;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dao.City;
@@ -396,7 +397,7 @@ public class MasterServiceImpl {
         BedType updatedBedType = this.bedTypeRepository.save(bedType);
         return new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BED_TYPES);
     }
-
+//------------------------ROOM CATEGORIES-----------------------------------
     public CCError<List<RoomCategoryDto>> findAllRoomCategories() {
         CCError<List<RoomCategoryDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_CATEGORIES);
         List<RoomCategoryDto> roomCategoryData = this.categoryRepository.findAll().stream()
@@ -427,39 +428,67 @@ public class MasterServiceImpl {
         return ccError;
     }
 
-    public CCError<RoomCategoryDto> createRoomCategory( RoomCategoryDto dto ) {
+    public CCError<RoomCategoryDto> createRoomCategory(RoomCategoryDto dto) {
         CCError<RoomCategoryDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_ROOM_CATEGORY);
 
-        RoomCategory dao = new RoomCategory();
-        dao.setName( dto.getName() );
-        dao.setName( dto.getName());
-
-        RoomCategory savedRoomCategory = categoryRepository.save( dao );
-
-        RoomCategoryDto roomCategoryDto = this.toRoomCategoryDto( savedRoomCategory );
-        ccError.setData(roomCategoryDto);
-        return ccError;
-    }
-
-    public CCError<RoomCategoryDto> updateRoomCategory( Long id, RoomCategoryDto roomCategoryDto ) {
-        CCError<RoomCategoryDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_ROOM_CATEGORY);
-
-        Optional<RoomCategory> dao = this.categoryRepository.findById( id );
-
-        if( dao.isEmpty() )
-        {
-            ccError.setStatus( CCErrorStatus.ERROR );
-            ccError.setMessage( ERROR_RETRIEVE_ROOM_CATEGORIES_NOT_FOUND );
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Room category name cannot be blank");
+            return ccError;
+        }
+        if (dto.getName().length() < 2 || dto.getName().length() > 50) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Room category name must be between 2 and 50 characters");
+            return ccError;
+        }
+        if (categoryRepository.findByName(dto.getName()).isPresent()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Room category with this name already exists");
             return ccError;
         }
 
-        dao.get().setName( roomCategoryDto.getName() );
-        dao.get().setName( roomCategoryDto.getName());
+        RoomCategory dao = new RoomCategory();
+        dao.setName(dto.getName());
 
-        this.categoryRepository.save( dao.get() );
+        RoomCategory savedRoomCategory = categoryRepository.save(dao);
+        ccError.setData(toRoomCategoryDto(savedRoomCategory));
+        return ccError;
+    }
 
-        RoomCategoryDto roomCategoryDto1 = this.toRoomCategoryDto( dao.get() );
-        ccError.setData(roomCategoryDto1);
+    public CCError<RoomCategoryDto> updateRoomCategory(Long id, RoomCategoryDto dto) {
+        CCError<RoomCategoryDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_ROOM_CATEGORY);
+
+        Optional<RoomCategory> dao = this.categoryRepository.findById(id);
+
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_RETRIEVE_ROOM_CATEGORIES_NOT_FOUND);
+            return ccError;
+        }
+
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Room category name cannot be blank");
+            return ccError;
+        }
+        if (dto.getName().length() < 2 || dto.getName().length() > 50) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Room category name must be between 2 and 50 characters");
+            return ccError;
+        }
+        if (categoryRepository.findByName(dto.getName())
+                .filter(existing -> !existing.getId().equals(id))
+                .isPresent()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Another room category with this name already exists");
+            return ccError;
+        }
+
+        RoomCategory existing = dao.get();
+        existing.setName(dto.getName());
+
+        RoomCategory updated = categoryRepository.save(existing);
+        ccError.setData(toRoomCategoryDto(updated));
         return ccError;
     }
 
@@ -706,13 +735,22 @@ public class MasterServiceImpl {
     }
 
     public CCError<BoardBasisDto> createBoardBasis(BoardBasisDto dto) {
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_BOARD_BASIS);
+        if (dto == null) {
+            return createErrorResponse(CCErrorStatus.ERROR, "Request payload cannot be null");
+        }
+
+        // Business Logic Validation: Duplicate check
+        if (boardBasisRepository.existsByName(dto.getName())) {
+            return createErrorResponse(CCErrorStatus.ERROR, "A board basis with this name already exists");
+        }
 
         BoardBasis dao = new BoardBasis();
         dao.setName(dto.getName());
         dao.setDescription(dto.getDescription());
 
         BoardBasis saved = boardBasisRepository.save(dao);
+
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_BOARD_BASIS);
         ccError.setData(toBoardBasisDto(saved));
         return ccError;
     }
@@ -729,50 +767,69 @@ public class MasterServiceImpl {
     }
 
     public CCError<BoardBasisDto> findBoardBasisById(Long id) {
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BOARD_BASIS);
+        if (id == null || id <= 0) {
+            return createErrorResponse(CCErrorStatus.ERROR, "Invalid Board Basis ID");
+        }
 
         Optional<BoardBasis> dao = boardBasisRepository.findById(id);
         if (dao.isEmpty()) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage(ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
-            return ccError;
+            return createErrorResponse(CCErrorStatus.ERROR, ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
         }
 
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BOARD_BASIS);
         ccError.setData(toBoardBasisDto(dao.get()));
         return ccError;
     }
 
     public CCError<BoardBasisDto> updateBoardBasis(Long id, BoardBasisDto dto) {
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BOARD_BASIS);
+        if (id == null || id <= 0) {
+            return createErrorResponse(CCErrorStatus.ERROR, "Invalid Board Basis ID");
+        }
+        if (dto == null) {
+            return createErrorResponse(CCErrorStatus.ERROR, "Request payload cannot be null");
+        }
 
         Optional<BoardBasis> dao = boardBasisRepository.findById(id);
         if (dao.isEmpty()) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage(ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
-            return ccError;
+            return createErrorResponse(CCErrorStatus.ERROR, ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
         }
 
-        dao.get().setName(dto.getName());
-        dao.get().setDescription(dto.getDescription());
-        BoardBasis updated = boardBasisRepository.save(dao.get());
 
+        if (boardBasisRepository.existsByNameAndIdNot(dto.getName(), id)) {
+            return createErrorResponse(CCErrorStatus.ERROR, "A board basis with this name already exists");
+        }
+
+        BoardBasis entity = dao.get();
+        entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
+        BoardBasis updated = boardBasisRepository.save(entity);
+
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BOARD_BASIS);
         ccError.setData(toBoardBasisDto(updated));
         return ccError;
     }
 
     public CCError<BoardBasisDto> deleteBoardBasis(Long id) {
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_BOARD_BASIS);
+        if (id == null || id <= 0) {
+            return createErrorResponse(CCErrorStatus.ERROR, "Invalid Board Basis ID");
+        }
 
         Optional<BoardBasis> dao = boardBasisRepository.findById(id);
         if (dao.isEmpty()) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage(ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
-            return ccError;
+            return createErrorResponse(CCErrorStatus.ERROR, ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
         }
 
         boardBasisRepository.delete(dao.get());
+
+        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_BOARD_BASIS);
         ccError.setData(toBoardBasisDto(dao.get()));
         return ccError;
+    }
+
+
+    private <T> CCError<T> createErrorResponse(CCErrorStatus status, String message) {
+        CCError<T> error = new CCError<>(status, message);
+        return error;
     }
 
 
@@ -829,8 +886,14 @@ public class MasterServiceImpl {
         return new RoomTypeDto(roomType.getId(), roomType.getType());
     }
 
-    public CCError<RoomTypeDto> createRoomType(RoomTypeDto dto) {
+    public CCError<RoomTypeDto> createRoomType(@Valid RoomTypeDto dto) {
         CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_ROOM_TYPE);
+
+        if (roomTypeRepository.existsByType(dto.getType())) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Room type already exists");
+            return ccError;
+        }
 
         RoomType dao = new RoomType();
         dao.setType(dto.getType());
@@ -839,6 +902,7 @@ public class MasterServiceImpl {
         ccError.setData(toRoomTypeDto(saved));
         return ccError;
     }
+
 
     public CCError<List<RoomTypeDto>> findAllRoomType() {
         CCError<List<RoomTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_TYPE);
