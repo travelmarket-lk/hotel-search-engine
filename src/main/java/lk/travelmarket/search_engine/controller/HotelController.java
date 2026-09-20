@@ -1,7 +1,9 @@
 package lk.travelmarket.search_engine.controller;
 
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
@@ -49,6 +51,25 @@ public class HotelController implements IHotelController {
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
 
+    // HOTEL LANDMARKS
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandmarkDto>> getLandmarksByHotelId(@PathVariable Long id) {
+        CCResponsePack<LandmarkDto> response = hotelService.getLandmarksByHotelId(id);
+        return ResponseEntity.ok(new CCResponseWrapper<>(response));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandmarkDto>> addLandmarkToHotel(@PathVariable Long id, @RequestBody Landmark landmark) {
+        CCResponsePack<LandmarkDto> response = hotelService.addLandmarkToHotel(id, landmark);
+        return ResponseEntity.ok(new CCResponseWrapper<>(response));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<Boolean>> deleteLandmark(@PathVariable Long landmarkId) {
+        CCResponsePack<Boolean> response = hotelService.deleteLandmark(landmarkId);
+        return ResponseEntity.ok(new CCResponseWrapper<>(response));
+    }
 
 
 }

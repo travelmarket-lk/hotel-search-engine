@@ -1,6 +1,8 @@
 package lk.travelmarket.search_engine.service.hotel;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 
@@ -13,4 +15,13 @@ public interface IHotelService {
     CCResponsePack<HotelDto> updateHotel(Long id, Hotel hotelDetails);
 
     CCResponsePack<Boolean> deleteHotel(Long id);
+
+    // HOTEL LANDMARKS
+
+    CCResponsePack<LandmarkDto> getLandmarksByHotelId(Long hotelId);
+
+    CCResponsePack<LandmarkDto> addLandmarkToHotel(Long hotelId, Landmark landmark);
+
+    CCResponsePack<Boolean> deleteLandmark(Long landmarkId);
 }
+

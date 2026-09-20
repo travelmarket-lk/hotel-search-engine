@@ -279,4 +279,16 @@ public class Constants {
     public static final String ERROR_DELETE_ROOM_TYPE = "Room Type deletes error";
 
     public static final String ERROR_CREATE_ROOM_TYPE = "Room Type create error";
+
+    // HOTEL LANDMARKS
+    public static final String SUCCESS_RETRIEVE_LANDMARKS = "Landmarks retrieved successfully";
+    public static final String ERROR_RETRIEVE_LANDMARKS = "Failed to retrieve landmarks";
+    public static final String SUCCESS_CREATE_LANDMARK = "Landmark created successfully";
+    public static final String ERROR_CREATE_LANDMARK = "Failed to create landmark";
+    public static final String SUCCESS_UPDATE_LANDMARK = "Landmark updated successfully";
+    public static final String ERROR_UPDATE_LANDMARK = "Failed to update landmark";
+    public static final String SUCCESS_DELETE_LANDMARK = "Landmark deleted successfully";
+    public static final String ERROR_DELETE_LANDMARK = "Failed to delete landmark";
+    public static final String ERROR_LANDMARK_NOT_FOUND = "Landmark not found";
+
 }

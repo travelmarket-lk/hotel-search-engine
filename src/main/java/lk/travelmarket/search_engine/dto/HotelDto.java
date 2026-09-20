@@ -1,18 +1,22 @@
 package lk.travelmarket.search_engine.dto;
 
+import java.util.List;
+
 public class HotelDto {
 
     private Long id;
     private String name;
     private String description;
+    private List<LandmarkDto> landmarks;
 
     public HotelDto() {
     }
 
-    public HotelDto(Long id, String name, String description) {
+    public HotelDto(Long id, String name, String description, List<LandmarkDto> landmarks) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.landmarks = landmarks;
     }
 
     public Long getId() {
@@ -37,5 +41,13 @@ public class HotelDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<LandmarkDto> getLandmarks() {
+        return landmarks;
+    }
+
+    public void setLandmarks(List<LandmarkDto> landmarks) {
+        this.landmarks = landmarks;
     }
 }
