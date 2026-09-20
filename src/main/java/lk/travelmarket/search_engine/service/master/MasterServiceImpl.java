@@ -123,17 +123,22 @@ public class MasterServiceImpl {
                         SUCCESS_CREATE_DISTRICT
                 );
 
+        String name = dto.getName().trim();
+
+        if (districtRepository.existsByNameIgnoreCase(name)) {
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("District already exists");
+
+            return ccError;
+        }
+
         District dao = new District();
+        dao.setName(name);
 
-        dao.setName(dto.getName());
+        District savedDistrict = districtRepository.save(dao);
 
-        District savedDistrict =
-                districtRepository.save(dao);
-
-        DistrictDto districtData =
-                this.toDistrictDto(savedDistrict);
-
-        ccError.setData(districtData);
+        ccError.setData(toDistrictDto(savedDistrict));
 
         return ccError;
     }
@@ -159,14 +164,22 @@ public class MasterServiceImpl {
             return ccError;
         }
 
-        dao.get().setName(dto.getName());
+        String name = dto.getName().trim();
 
-        districtRepository.save(dao.get());
+        if (districtRepository.existsByNameIgnoreCaseAndIdNot(name, id)) {
 
-        DistrictDto districtData =
-                this.toDistrictDto(dao.get());
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("District already exists");
 
-        ccError.setData(districtData);
+            return ccError;
+        }
+
+        District district = dao.get();
+        district.setName(name);
+
+        District savedDistrict = districtRepository.save(district);
+
+        ccError.setData(toDistrictDto(savedDistrict));
 
         return ccError;
     }
@@ -258,17 +271,22 @@ public class MasterServiceImpl {
                         SUCCESS_CREATE_CITY
                 );
 
+        String name = dto.getName().trim();
+
+        if (cityRepository.existsByNameIgnoreCase(name)) {
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("City already exists");
+
+            return ccError;
+        }
+
         City dao = new City();
+        dao.setName(name);
 
-        dao.setName(dto.getName());
+        City savedCity = cityRepository.save(dao);
 
-        City savedCity =
-                cityRepository.save(dao);
-
-        CityDto cityData =
-                this.toCityDto(savedCity);
-
-        ccError.setData(cityData);
+        ccError.setData(toCityDto(savedCity));
 
         return ccError;
     }
@@ -296,12 +314,22 @@ public class MasterServiceImpl {
 
         dao.get().setName(dto.getName());
 
-        cityRepository.save(dao.get());
+        String name = dto.getName().trim();
 
-        CityDto cityData =
-                this.toCityDto(dao.get());
+        if (cityRepository.existsByNameIgnoreCaseAndIdNot(name, id)) {
 
-        ccError.setData(cityData);
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("City already exists");
+
+            return ccError;
+        }
+
+        City city = dao.get();
+        city.setName(name);
+
+        City savedCity = cityRepository.save(city);
+
+        ccError.setData(toCityDto(savedCity));
 
         return ccError;
     }

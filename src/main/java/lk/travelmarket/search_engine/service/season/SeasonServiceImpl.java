@@ -71,8 +71,7 @@ public class SeasonServiceImpl {
         return ccError;
     }
 
-    public CCError<SeasonDto> createSeason(
-            SeasonDto dto) {
+    public CCError<SeasonDto> createSeason(SeasonDto dto) {
 
         CCError<SeasonDto> ccError =
                 new CCError<>(
@@ -80,19 +79,26 @@ public class SeasonServiceImpl {
                         SUCCESS_CREATE_SEASON
                 );
 
+        String seasonName = dto.getSeasonName().trim();
+
+        if (seasonRepository.existsBySeasonNameIgnoreCase(seasonName)) {
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Season already exists");
+
+            return ccError;
+        }
+
         Season dao = new Season();
 
-        dao.setSeasonName(dto.getSeasonName());
+        dao.setSeasonName(seasonName);
         dao.setStartDate(dto.getStartDate());
         dao.setEndDate(dto.getEndDate());
 
         Season savedSeason =
                 seasonRepository.save(dao);
 
-        SeasonDto seasonData =
-                this.toDto(savedSeason);
-
-        ccError.setData(seasonData);
+        ccError.setData(toDto(savedSeason));
 
         return ccError;
     }
@@ -108,7 +114,7 @@ public class SeasonServiceImpl {
                 );
 
         Optional<Season> dao =
-                this.seasonRepository.findById(id);
+                seasonRepository.findById(id);
 
         if (dao.isEmpty()) {
 
@@ -120,16 +126,30 @@ public class SeasonServiceImpl {
             return ccError;
         }
 
-        dao.get().setSeasonName(dto.getSeasonName());
-        dao.get().setStartDate(dto.getStartDate());
-        dao.get().setEndDate(dto.getEndDate());
+        String seasonName = dto.getSeasonName().trim();
 
-        this.seasonRepository.save(dao.get());
+        if (seasonRepository
+                .existsBySeasonNameIgnoreCaseAndIdNot(
+                        seasonName,
+                        id
+                )) {
 
-        SeasonDto seasonData =
-                this.toDto(dao.get());
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Season already exists");
 
-        ccError.setData(seasonData);
+            return ccError;
+        }
+
+        Season season = dao.get();
+
+        season.setSeasonName(seasonName);
+        season.setStartDate(dto.getStartDate());
+        season.setEndDate(dto.getEndDate());
+
+        Season savedSeason =
+                seasonRepository.save(season);
+
+        ccError.setData(toDto(savedSeason));
 
         return ccError;
     }
