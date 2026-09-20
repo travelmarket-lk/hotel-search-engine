@@ -3,6 +3,7 @@ package lk.travelmarket.search_engine.service.room;
 import jakarta.transaction.Transactional;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dao.HotelRoom.Room;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dto.RoomDto;
 import lk.travelmarket.search_engine.dto.SeasonDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
@@ -211,12 +212,11 @@ public class RoomServiceImpl {
         room.setMinPaxCount(dto.getMinPaxCount());
         room.setMaxPaxCount(dto.getMaxPaxCount());
         room.setRoomSize(dto.getRoomSize());
+        room.setViewType(dto.getViewType().trim());
 
-        room.setViewType(
-                dto.getViewType().trim()
-        );
-
-        room.setHotelId(dto.getHotelId());
+        Hotel hotel = new Hotel();
+        hotel.setId(dto.getHotelId());
+        room.setHotel( hotel );
 
         if (dto.getBedTypeIds() != null) {
 
@@ -251,7 +251,7 @@ public class RoomServiceImpl {
                 room.getMaxPaxCount(),
                 room.getRoomSize(),
                 room.getViewType(),
-                room.getHotelId(),
+                room.getHotel().getId(),
                 bedTypeIds
         );
     }
