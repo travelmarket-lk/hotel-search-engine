@@ -5,8 +5,6 @@ import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "facility")
 @Getter

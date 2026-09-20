@@ -611,7 +611,7 @@ public class MasterService implements IMasterService {
             return new CCResponsePack<>(ccError.getData());
 
         } catch (Exception e) {
-            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_HOTEL_TYPES, e);
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_HOTEL_TYPE, e);
         }
     }
 
