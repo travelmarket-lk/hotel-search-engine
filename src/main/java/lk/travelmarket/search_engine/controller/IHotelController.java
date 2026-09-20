@@ -1,5 +1,6 @@
 package lk.travelmarket.search_engine.controller;
 
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
@@ -29,14 +30,18 @@ public interface IHotelController {
     @DeleteMapping(EndpointConstants.HOTEL_BY_ID)
     ResponseEntity<CCResponseWrapper<Boolean>> deleteHotel(@PathVariable Long id);
 
-    // HOTEL LANDMARKS
+// HOTEL LANDMARKS
 
     @GetMapping(EndpointConstants.HOTEL_LANDMARKS)
     ResponseEntity<CCResponseWrapper<LandmarkDto>> getLandmarksByHotelId(@PathVariable Long id);
 
     @PostMapping(EndpointConstants.HOTEL_LANDMARKS)
-    ResponseEntity<CCResponseWrapper<LandmarkDto>> addLandmarkToHotel(@PathVariable Long id, @RequestBody Landmark landmark);
+    ResponseEntity<CCResponseWrapper<LandmarkDto>> addLandmarkToHotel(
+            @PathVariable Long id,
+            @Valid @RequestBody Landmark landmark
+    );
 
     @DeleteMapping(EndpointConstants.LANDMARK_BY_ID)
     ResponseEntity<CCResponseWrapper<Boolean>> deleteLandmark(@PathVariable Long landmarkId);
+
 }
