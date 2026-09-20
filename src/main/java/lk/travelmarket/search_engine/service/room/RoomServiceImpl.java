@@ -9,6 +9,7 @@ import lk.travelmarket.search_engine.dto.SeasonDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.repository.BedTypeRepository;
+import lk.travelmarket.search_engine.repository.HotelRepository;
 import lk.travelmarket.search_engine.repository.RoomRepository;
 import org.springframework.stereotype.Component;
 
@@ -25,13 +26,16 @@ public class RoomServiceImpl {
 
     private final RoomRepository roomRepository;
     private final BedTypeRepository bedTypeRepository;
+    private final HotelRepository hotelRepository;
 
     public RoomServiceImpl(
             RoomRepository roomRepository,
-            BedTypeRepository bedTypeRepository
+            BedTypeRepository bedTypeRepository,
+            HotelRepository hotelRepository
     ) {
         this.roomRepository = roomRepository;
         this.bedTypeRepository = bedTypeRepository;
+        this.hotelRepository = hotelRepository;
     }
 
     public CCError<List<RoomDto>> findAll() {
@@ -75,6 +79,18 @@ public class RoomServiceImpl {
         return ccError;
     }
 
+    private boolean areBedTypesValid(Set<Long> bedTypeIds) {
+
+        if (bedTypeIds == null || bedTypeIds.isEmpty()) {
+            return true;
+        }
+
+        long existingCount =
+                bedTypeRepository.findAllById(bedTypeIds).size();
+
+        return existingCount == bedTypeIds.size();
+    }
+
     public CCError<RoomDto> createRoom(RoomDto dto) {
 
         CCError<RoomDto> ccError =
@@ -82,6 +98,24 @@ public class RoomServiceImpl {
                         CCErrorStatus.SUCCESS,
                         SUCCESS_CREATE_ROOM
                 );
+
+        if (!hotelRepository.existsById(dto.getHotelId())) {
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Hotel not found");
+
+            return ccError;
+        }
+
+        if (!areBedTypesValid(dto.getBedTypeIds())) {
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(
+                    "One or more bed type IDs are invalid"
+            );
+
+            return ccError;
+        }
 
         Room room = new Room();
 
@@ -102,9 +136,18 @@ public class RoomServiceImpl {
         Room room = roomRepository.findById(id).orElse(null);
 
         if (room == null) {
+
             return new CCError<>(
                     CCErrorStatus.ERROR,
                     ERROR_RETRIEVE_ROOM_NOT_FOUND
+            );
+        }
+
+        if (!areBedTypesValid(dto.getBedTypeIds())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    "One or more bed type IDs are invalid"
             );
         }
 
@@ -155,12 +198,21 @@ public class RoomServiceImpl {
     ) {
 
         room.setRoomCount(dto.getRoomCount());
-        room.setRoomName(dto.getRoomName());
-        room.setDescription(dto.getDescription());
+
+        room.setRoomName(
+                dto.getRoomName().trim()
+        );
+
+        room.setDescription(
+                dto.getDescription() != null
+                        ? dto.getDescription().trim()
+                        : null
+        );
+
         room.setMinPaxCount(dto.getMinPaxCount());
         room.setMaxPaxCount(dto.getMaxPaxCount());
         room.setRoomSize(dto.getRoomSize());
-        room.setViewType(dto.getViewType());
+        room.setViewType(dto.getViewType().trim());
 
         Hotel hotel = new Hotel();
         hotel.setId(dto.getHotelId());
