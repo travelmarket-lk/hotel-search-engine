@@ -2,19 +2,23 @@ package lk.travelmarket.search_engine.service.hotel;
 
 import lk.travelmarket.search_engine.dao.Address;
 import lk.travelmarket.search_engine.dao.facility.Facility;
+import lk.travelmarket.search_engine.dao.Address;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.AddressDto;
 import lk.travelmarket.search_engine.dto.HotelDto;
-
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 
 import lk.travelmarket.search_engine.repository.HotelRepository;
+import lk.travelmarket.search_engine.repository.LandmarkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +29,7 @@ import static lk.travelmarket.search_engine.util.Constants.*;
 public class HotelServiceImpl {
 
     private final HotelRepository hotelRepository;
+    private final LandmarkRepository landmarkRepository;
 
 
     public CCError<List<HotelDto>> findAll() {
@@ -107,6 +112,60 @@ public class HotelServiceImpl {
         return ccError;
     }
 
+
+    // HOTEL LANDMARKS
+
+    public CCError<List<LandmarkDto>> findLandmarksByHotelId(Long hotelId) {
+        if (!hotelRepository.existsById(hotelId)) {
+            CCError<List<LandmarkDto>> ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_RETRIEVE_HOTEL_NOT_FOUND);
+            ccError.setData(null);
+            return ccError;
+        }
+
+        List<LandmarkDto> landmarks = landmarkRepository.findByHotelId(hotelId).stream()
+                .map(this::toLandmarkDto)
+                .toList();
+
+        CCError<List<LandmarkDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_LANDMARKS);
+        ccError.setData(landmarks);
+        return ccError;
+    }
+
+    public CCError<LandmarkDto> addLandmarkToHotel(Long hotelId, Landmark landmark) {
+        Optional<Hotel> hotelOpt = hotelRepository.findById(hotelId);
+        if (hotelOpt.isPresent()) {
+            landmark.setHotel(hotelOpt.get());
+            Landmark saved = landmarkRepository.save(landmark);
+
+            CCError<LandmarkDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_LANDMARK);
+            ccError.setData(toLandmarkDto(saved));
+            return ccError;
+        }
+
+        CCError<LandmarkDto> ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_RETRIEVE_HOTEL_NOT_FOUND);
+        ccError.setData(null);
+        return ccError;
+    }
+
+
+
+    public CCError<Boolean> deleteLandmark(Long landmarkId) {
+        Optional<Landmark> landmarkOpt = landmarkRepository.findById(landmarkId);
+        if (landmarkOpt.isPresent()) {
+            landmarkRepository.delete(landmarkOpt.get());
+            CCError<Boolean> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_LANDMARK);
+            ccError.setData(true);
+            return ccError;
+        }
+
+        CCError<Boolean> ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_LANDMARK_NOT_FOUND);
+        ccError.setData(false);
+        return ccError;
+    }
+
+
+
+
     private HotelDto toDto(Hotel hotel) {
         return new HotelDto(
                 hotel.getId(),
@@ -115,8 +174,8 @@ public class HotelServiceImpl {
                 hotel.getLocationHighlight(),
                 hotel.getStarRating(),
                 toDto(hotel.getAddress())
-        );
     }
+}
 
     private AddressDto toDto(Address address) {
         if (address == null) return null;
@@ -127,6 +186,17 @@ public class HotelServiceImpl {
         );
     }
 
+    private List<LandMarkDto> toLandMarkDtos( List<Landmark> landmarks) {
+    }
 
 
+    private LandmarkDto toLandmarkDto(Landmark landmark) {
+        Long hotelId = (landmark.getHotel() != null) ? landmark.getHotel().getId() : null;
+        return new LandmarkDto(
+                landmark.getId(),
+                landmark.getLandmarkName(),
+                landmark.getLandmarkDist(),
+                hotelId
+        );
+    }
 }

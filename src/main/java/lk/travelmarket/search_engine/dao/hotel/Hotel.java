@@ -1,11 +1,16 @@
 package lk.travelmarket.search_engine.dao.hotel;
+
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lk.travelmarket.search_engine.dao.Address;
 import lk.travelmarket.search_engine.dao.HotelOwner;
 import lk.travelmarket.search_engine.dao.HotelRoom.Room;
+import lk.travelmarket.search_engine.dao.discount.Discount;
+import lk.travelmarket.search_engine.dao.facility.Facility;
 import lombok.*;
+import org.w3c.dom.Text;
+
 
 import java.util.List;
 

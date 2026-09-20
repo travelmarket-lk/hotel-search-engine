@@ -35,6 +35,11 @@ public class EndpointConstants {
     // ROOM BLACKOUT
     public static final String ROOM_BLACKOUTS = "/room-blackouts";
 
-    public static final String ADDRESS ="/addresses" ;
-    public static final String ADDRESS_BY_ID ="address/{id}" ;
+    // HOTEL LANDMARKS
+    public static final String HOTEL_LANDMARKS = "hotels/{id}/landmarks";
+    public static final String LANDMARK_BY_ID = "landmarks/{landmarkId}";
+
+    //Room
+    public static final String ROOMS = "/rooms";
+
 }

@@ -1,10 +1,7 @@
 package lk.travelmarket.search_engine.service.master;
 
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
-import lk.travelmarket.search_engine.dto.BoardBasisDto;
-import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
@@ -534,6 +531,71 @@ public class MasterService implements IMasterService {
             return new CCResponse<>(ccError.getData());
         } catch (Exception e) {
             return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_BOARD_BASIS, e);
+        }
+    }
+
+    @Override
+    public CCResponse<RoomTypeDto> createRoomType(RoomTypeDto roomTypeDto) {
+        try {
+            CCError<RoomTypeDto> ccError = masterServiceImpl.createRoomType(roomTypeDto);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_CREATE_ROOM_TYPE, e);
+        }
+    }
+
+    @Override
+    public CCResponsePack<RoomTypeDto> findAllRoomType() {
+        try {
+            CCError<List<RoomTypeDto>> ccError = masterServiceImpl.findAllRoomType();
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_ROOM_TYPE, e);
+        }
+    }
+
+    @Override
+    public CCResponse<RoomTypeDto> findRoomTypeById(Long id) {
+        try {
+            CCError<RoomTypeDto> ccError = masterServiceImpl.findRoomTypeById(id);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_ROOM_TYPE, e);
+        }
+    }
+
+    @Override
+    public CCResponse<RoomTypeDto> updateRoomType(Long id, RoomTypeDto roomTypeDto) {
+        try {
+            CCError<RoomTypeDto> ccError = masterServiceImpl.updateRoomType(id, roomTypeDto);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_UPDATE_ROOM_TYPE, e);
+        }
+    }
+
+    @Override
+    public CCResponse<RoomTypeDto> deleteRoomType(Long id) {
+        try {
+            CCError<RoomTypeDto> ccError = masterServiceImpl.deleteRoomType(id);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_ROOM_TYPE, e);
         }
     }
 

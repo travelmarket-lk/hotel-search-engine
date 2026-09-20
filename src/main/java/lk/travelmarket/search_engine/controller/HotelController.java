@@ -1,6 +1,9 @@
 package lk.travelmarket.search_engine.controller;
-import jakarta.validation.Valid;
+
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
@@ -33,16 +36,14 @@ public class HotelController implements IHotelController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@Valid @RequestBody HotelCreationCriteria criteria) {
+    public ResponseEntity<CCResponseWrapper<HotelDto>> createHotel(@RequestBody HotelCreationCriteria criteria) {
         CCResponsePack<HotelDto> response = hotelService.createHotel(criteria);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(
-            @PathVariable Long id,
-            @Valid @RequestBody HotelDto hotel) {
-        CCResponsePack<HotelDto> response = hotelService.updateHotel(id, hotel);
+    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody Hotel hotelDetails) {
+        CCResponsePack<HotelDto> response = hotelService.updateHotel(id, hotelDetails);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
 
@@ -51,4 +52,26 @@ public class HotelController implements IHotelController {
         CCResponsePack<Boolean> response = hotelService.deleteHotel(id);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
+
+    // HOTEL LANDMARKS
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandmarkDto>> getLandmarksByHotelId(@PathVariable Long id) {
+        CCResponsePack<LandmarkDto> response = hotelService.getLandmarksByHotelId(id);
+        return ResponseEntity.ok(new CCResponseWrapper<>(response));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandmarkDto>> addLandmarkToHotel(@PathVariable Long id, @RequestBody Landmark landmark) {
+        CCResponsePack<LandmarkDto> response = hotelService.addLandmarkToHotel(id, landmark);
+        return ResponseEntity.ok(new CCResponseWrapper<>(response));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<Boolean>> deleteLandmark(@PathVariable Long landmarkId) {
+        CCResponsePack<Boolean> response = hotelService.deleteLandmark(landmarkId);
+        return ResponseEntity.ok(new CCResponseWrapper<>(response));
+    }
+
+
 }
