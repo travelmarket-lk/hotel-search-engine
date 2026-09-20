@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dao.RoomCategory;
@@ -228,13 +227,13 @@ public interface IMasterDataController {
             @PathVariable Long id
     );
 
-    //  BED TYPES
+// BED TYPES
 
     @GetMapping(EndpointConstants.BED_TYPES)
     public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes();
 
     @PostMapping(EndpointConstants.BED_TYPES)
-    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@RequestBody BedType bedType);
+    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@Valid @RequestBody BedType bedType);
 
     @DeleteMapping(EndpointConstants.BED_TYPES_ID)
     public ResponseEntity<CCResponseWrapper<Void>> deleteBedType(@PathVariable Long id);
@@ -243,8 +242,7 @@ public interface IMasterDataController {
     public ResponseEntity<CCResponseWrapper<BedType>> getBedTypeById(@PathVariable("id") Long id);
 
     @PutMapping(EndpointConstants.BED_TYPES_ID)
-    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(@PathVariable("id") Long id, @RequestBody BedType bedType);
-
+    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(@PathVariable("id") Long id, @Valid @RequestBody BedType bedType);
     // ROOMS
 
     @Operation(
