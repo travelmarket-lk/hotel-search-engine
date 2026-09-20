@@ -105,12 +105,15 @@ public class Constants {
             "City deletion failed";
 
     public static final String SUCCESS_RETRIEVE_ROOM_CATEGORIES = "Room Categories retrieve success";
+
     public static final String ERROR_RETRIEVE_ROOM_CATEGORIES = "Room Categories retrieve failed";
     public static final String ERROR_UPDATE_ROOM_CATEGORY = "Room Category update failed";
     public static final String ERROR_RETRIEVE_ROOM_CATEGORIES_NOT_FOUND = "Room Categories retrieve failed not found";
+
     public static final String SUCCESS_CREATE_ROOM_CATEGORY= "Room Category creates success";
     public static final String SUCCESS_UPDATE_ROOM_CATEGORY = "Room Category updates success";
     public static final String SUCCESS_DELETE_ROOM_CATEGORY = "Room Category deletes success";
+
     public static final String ERROR_DELETE_ROOM_CATEGORY = "Room Category deletes error";
     public static final String ERROR_CREATE_ROOM_CATEGORY = "Room Category create error";
 
@@ -209,6 +212,73 @@ public class Constants {
     public static final String ERROR_DELETE_ROOM_BLACKOUT = "Failed to delete room blackout";
     public static final String ERROR_ROOM_BLACKOUT_NOT_FOUND = "Room blackout not found with ID: ";
     public static final String ERROR_ROOM_ID_REQUIRED = "Room ID is required for a room blackout";
+    //Season
+
+    public static final String SUCCESS_RETRIEVE_SEASONS = "Seasons retrieve success";
+    public static final String ERROR_RETRIEVE_SEASONS = "Seasons retrieve failed";
+    public static final String SUCCESS_CREATE_SEASON = "Season created successfully";
+    public static final String ERROR_CREATE_SEASON = "Season creation failed";
+    public static final String SUCCESS_RETRIEVE_SEASON = "Season retrieve success";
+    public static final String ERROR_RETRIEVE_SEASON = "Season retrieve failed";
+    public static final String ERROR_RETRIEVE_SEASON_NOT_FOUND = "Season not found";
+    public static final String SUCCESS_UPDATE_SEASON = "Season updated successfully";
+    public static final String ERROR_UPDATE_SEASON = "Season update failed";
+    public static final String SUCCESS_DELETE_SEASON = "Season deleted successfully";
+    public static final String ERROR_DELETE_SEASON = "Season deletion failed";
+
+
+
+
+    public static final String SUCCESS_RETRIEVE_BOARD_BASIS = "Board Basis retrieve success";
+
+    public static final String ERROR_RETRIEVE_BOARD_BASIS = "Board Basis retrieve failed";
+
+    public static final String ERROR_UPDATE_BOARD_BASIS = "Board Basis update failed";
+
+    public static final String ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND = "Board Basis retrieve failed not found";
+
+    public static final String SUCCESS_CREATE_BOARD_BASIS= "Board Basis creates success";
+
+    public static final String SUCCESS_UPDATE_BOARD_BASIS = "Board Basis updates success";
+
+    public static final String SUCCESS_DELETE_BOARD_BASIS = "Board Basis deletes success";
+
+    public static final String ERROR_DELETE_BOARD_BASIS = "Board Basis deletes error";
+
+    public static final String ERROR_CREATE_BOARD_BASIS = "Board Basis create error";
+
+    //ROOMS
+
+    public static final String SUCCESS_RETRIEVE_ROOMS = "Rooms retrieve success";
+    public static final String ERROR_RETRIEVE_ROOMS = "Rooms retrieve failed";
+    public static final String SUCCESS_CREATE_ROOM = "Room created successfully";
+    public static final String ERROR_CREATE_ROOM = "Room creation failed";
+    public static final String SUCCESS_RETRIEVE_ROOM = "Room retrieve success";
+    public static final String ERROR_RETRIEVE_ROOM = "Room retrieve failed";
+    public static final String ERROR_RETRIEVE_ROOM_NOT_FOUND = "Room not found";
+    public static final String SUCCESS_UPDATE_ROOM = "Room updated successfully";
+    public static final String ERROR_UPDATE_ROOM = "Room update failed";
+    public static final String SUCCESS_DELETE_ROOM = "Room deleted successfully";
+    public static final String ERROR_DELETE_ROOM = "Room deletion failed";
+
+
+    public static final String SUCCESS_RETRIEVE_ROOM_TYPE = "ROOM Type retrieve success";
+
+    public static final String ERROR_RETRIEVE_ROOM_TYPE = "Room Type retrieve failed";
+
+    public static final String ERROR_UPDATE_ROOM_TYPE = "ROom Type update failed";
+
+    public static final String ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND = "Room Type retrieve failed not found";
+
+    public static final String SUCCESS_CREATE_ROOM_TYPE= "Room Type creates success";
+
+    public static final String SUCCESS_UPDATE_ROOM_TYPE = "Room type updates success";
+
+    public static final String SUCCESS_DELETE_ROOM_TYPE = "Room Type deletes success";
+
+    public static final String ERROR_DELETE_ROOM_TYPE = "Room Type deletes error";
+
+    public static final String ERROR_CREATE_ROOM_TYPE = "Room Type create error";
 
     // HOTEL LANDMARKS
     public static final String SUCCESS_RETRIEVE_LANDMARKS = "Landmarks retrieved successfully";

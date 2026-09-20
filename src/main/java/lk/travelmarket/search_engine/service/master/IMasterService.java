@@ -1,9 +1,7 @@
 package lk.travelmarket.search_engine.service.master;
 
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
-import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
@@ -96,4 +94,25 @@ public interface IMasterService {
     CCResponse<FacilityCategoryDto> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto);
 
     CCResponse<FacilityCategoryDto> deleteFacilityCategory(Long id);
+
+    CCResponse<BoardBasisDto> createBoardBasis(BoardBasisDto boardBasisDto);
+
+    CCResponsePack<BoardBasisDto> findAllBoardBasis();
+
+    CCResponse<BoardBasisDto> findBoardBasisById(Long id);
+
+    CCResponse<BoardBasisDto> updateBoardBasis(Long id, BoardBasisDto boardBasisDto);
+
+    CCResponse<BoardBasisDto> deleteBoardBasis(Long id);
+
+
+    CCResponse<RoomTypeDto> createRoomType(RoomTypeDto roomTypeDto);
+
+    CCResponsePack<RoomTypeDto> findAllRoomType();
+
+    CCResponse<RoomTypeDto> findRoomTypeById(Long id);
+
+    CCResponse<RoomTypeDto> updateRoomType(Long id, RoomTypeDto roomTypeDto);
+
+    CCResponse<RoomTypeDto> deleteRoomType(Long id);
 }
