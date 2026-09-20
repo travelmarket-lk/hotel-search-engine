@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dao.RoomCategory;
@@ -44,7 +45,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/districts")
     ResponseEntity<CCResponseWrapper<DistrictDto>> createDistrict(
-            @RequestBody DistrictDto request
+            @Valid @RequestBody DistrictDto request
     );
 
     @Operation(
@@ -76,6 +77,7 @@ public interface IMasterDataController {
     })
     @GetMapping("/districts/{id}")
     ResponseEntity<CCResponseWrapper<DistrictDto>> getDistrictById(
+            @Positive(message = "District ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -99,8 +101,9 @@ public interface IMasterDataController {
     })
     @PutMapping("/districts/{id}")
     ResponseEntity<CCResponseWrapper<DistrictDto>> updateDistrict(
+            @Positive(message = "District ID must be greater than 0")
             @PathVariable Long id,
-            @RequestBody DistrictDto request
+            @Valid @RequestBody DistrictDto request
     );
 
     @Operation(
@@ -119,6 +122,7 @@ public interface IMasterDataController {
     })
     @DeleteMapping("/districts/{id}")
     ResponseEntity<CCResponseWrapper<DistrictDto>> deleteDistrict(
+            @Positive(message = "District ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -141,7 +145,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/cities")
     ResponseEntity<CCResponseWrapper<CityDto>> createCity(
-            @RequestBody CityDto request
+            @Valid @RequestBody CityDto request
     );
 
     @Operation(
@@ -173,6 +177,7 @@ public interface IMasterDataController {
     })
     @GetMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> getCityById(
+            @Positive(message = "City ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -197,7 +202,8 @@ public interface IMasterDataController {
     @PutMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> updateCity(
             @PathVariable Long id,
-            @RequestBody CityDto request
+            @Positive(message = "City ID must be greater than 0")
+            @Valid @RequestBody CityDto request
     );
 
     @Operation(
@@ -217,6 +223,7 @@ public interface IMasterDataController {
 
     @DeleteMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> deleteCity(
+            @Positive(message = "City ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -254,6 +261,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/room-category")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(
+            @Valid
             @RequestBody RoomCategoryDto request
     );
 
@@ -398,6 +406,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/board-basis")
     ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(
+            @Valid
             @RequestBody BoardBasisDto request
     );
 
@@ -493,6 +502,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/room-type")
     ResponseEntity<CCResponseWrapper<RoomTypeDto>> createRoomType(
+            @Valid
             @RequestBody RoomTypeDto request
     );
 

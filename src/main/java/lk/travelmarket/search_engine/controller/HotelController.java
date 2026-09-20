@@ -1,6 +1,5 @@
 package lk.travelmarket.search_engine.controller;
 
-import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
 import lk.travelmarket.search_engine.dto.LandmarkDto;
@@ -9,10 +8,12 @@ import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 import lk.travelmarket.search_engine.service.hotel.HotelService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1") // or use EndpointConstants.V1 if you prefer
+@RequestMapping("/api/v1")
+@Validated
 public class HotelController implements IHotelController {
 
     private final HotelService hotelService;
@@ -40,7 +41,7 @@ public class HotelController implements IHotelController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody Hotel hotelDetails) {
+    public ResponseEntity<CCResponseWrapper<HotelDto>> updateHotel(@PathVariable Long id, @RequestBody HotelDto hotelDetails) {
         CCResponsePack<HotelDto> response = hotelService.updateHotel(id, hotelDetails);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
@@ -70,6 +71,4 @@ public class HotelController implements IHotelController {
         CCResponsePack<Boolean> response = hotelService.deleteLandmark(landmarkId);
         return ResponseEntity.ok(new CCResponseWrapper<>(response));
     }
-
-
 }

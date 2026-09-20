@@ -12,7 +12,7 @@ public interface IHotelService {
 
     CCResponsePack<HotelDto> createHotel(HotelCreationCriteria criteria);
 
-    CCResponsePack<HotelDto> updateHotel(Long id, Hotel hotelDetails);
+    CCResponsePack<HotelDto> updateHotel(Long id, HotelDto hotelDetails);
 
     CCResponsePack<Boolean> deleteHotel(Long id);
 

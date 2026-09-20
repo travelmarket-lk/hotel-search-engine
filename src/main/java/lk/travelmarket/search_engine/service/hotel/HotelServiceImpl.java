@@ -1,7 +1,9 @@
 package lk.travelmarket.search_engine.service.hotel;
 
+import lk.travelmarket.search_engine.dao.Address;
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.Landmark;
+import lk.travelmarket.search_engine.dto.AddressDto;
 import lk.travelmarket.search_engine.dto.HotelDto;
 import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
@@ -53,6 +55,16 @@ public class HotelServiceImpl {
         Hotel hotel = new Hotel();
         hotel.setName(criteria.getName());
         hotel.setDescription(criteria.getDescription());
+        hotel.setStarRating(criteria.getStarRating());
+        hotel.setLocationHighlight(criteria.getLocationHighlight());
+
+        // Convert AddressDto → Address entity
+        if (criteria.getAddress() != null) {
+            Address address = new Address();
+            address.setAddressLine1(criteria.getAddress().getAddressLine1());
+            address.setAddressLine2(criteria.getAddress().getAddressLine2());
+            hotel.setAddress(address);
+        }
 
         Hotel saved = hotelRepository.save(hotel);
         CCError<HotelDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_HOTEL);
@@ -60,7 +72,8 @@ public class HotelServiceImpl {
         return ccError;
     }
 
-    public CCError<HotelDto> update(Long id, Hotel hotelDetails) {
+
+    public CCError<HotelDto> update(Long id, HotelDto hotelDetails) {
         Optional<Hotel> hotelOpt = hotelRepository.findById(id);
         CCError<HotelDto> ccError;
 
@@ -68,7 +81,10 @@ public class HotelServiceImpl {
             Hotel hotel = hotelOpt.get();
             hotel.setName(hotelDetails.getName());
             hotel.setDescription(hotelDetails.getDescription());
-
+            hotel.setStarRating(hotelDetails.getStarRating());
+            hotel.setLocationHighlight(hotelDetails.getLocationHighlight());
+            hotel.getAddress().setAddressLine1( hotelDetails.getAddress().getAddressLine1() );
+            hotel.getAddress().setAddressLine2( hotelDetails.getAddress().getAddressLine2() );
             Hotel updated = hotelRepository.save(hotel);
             ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_HOTEL);
             ccError.setData(toDto(updated));
@@ -144,16 +160,25 @@ public class HotelServiceImpl {
         return ccError;
     }
 
-
-
-
     private HotelDto toDto(Hotel hotel) {
-        List<LandmarkDto> landmarkDtos = (hotel.getLandmarks() != null)
-                ? hotel.getLandmarks().stream().map(this::toLandmarkDto).toList()
-                : Collections.emptyList();
-
-        return new HotelDto(hotel.getId(), hotel.getName(), hotel.getDescription(), landmarkDtos);
+        return new HotelDto(
+                hotel.getId(),
+                hotel.getName(),
+                hotel.getDescription(),
+                hotel.getLocationHighlight(),
+                hotel.getStarRating(),
+                toDto(hotel.getAddress()));
     }
+
+    private AddressDto toDto(Address address) {
+        if (address == null) return null;
+        return new AddressDto(
+                address.getId(),
+                address.getAddressLine1(),
+                address.getAddressLine2()
+        );
+    }
+
 
     private LandmarkDto toLandmarkDto(Landmark landmark) {
         Long hotelId = (landmark.getHotel() != null) ? landmark.getHotel().getId() : null;
