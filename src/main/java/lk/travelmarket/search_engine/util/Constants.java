@@ -291,4 +291,9 @@ public class Constants {
     public static final String ERROR_DELETE_LANDMARK = "Failed to delete landmark";
     public static final String ERROR_LANDMARK_NOT_FOUND = "Landmark not found";
 
+
+    // Hotel V2
+
+    public static final String ERROR_HOTEL_V2_NOT_FOUND = "Hotel not found";
+    public static final String ERROR_HOTEL_SEASONS_BULK_UPDATE = "Hotel seasons update failed";
 }
