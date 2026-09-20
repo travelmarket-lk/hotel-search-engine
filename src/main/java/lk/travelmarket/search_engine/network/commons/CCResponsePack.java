@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.network.commons;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lk.travelmarket.search_engine.dto.RoomDto;
 import lk.travelmarket.search_engine.network.Reference;
 import lk.travelmarket.search_engine.network.error.ErrorInfo;
 import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
@@ -8,6 +9,7 @@ import lk.travelmarket.search_engine.network.error.code.ErrorSource;
 import lk.travelmarket.search_engine.network.error.code.Status;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Map;
