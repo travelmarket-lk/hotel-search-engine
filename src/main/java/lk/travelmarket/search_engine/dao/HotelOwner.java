@@ -1,8 +1,12 @@
 package lk.travelmarket.search_engine.dao;
 
 import jakarta.persistence.*;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.user.User;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table( name = "hotel_owner")
@@ -32,4 +36,9 @@ public class HotelOwner {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
+
+    @OneToMany(mappedBy = "hotelOwner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Hotel> hotels = new ArrayList<>();
+
+
 }

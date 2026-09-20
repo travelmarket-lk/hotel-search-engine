@@ -5,13 +5,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lk.travelmarket.search_engine.dto.RoomDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Validated
 @RequestMapping(EndpointConstants.V1 + EndpointConstants.ROOMS)
 @Tag(
         name = "Room",
@@ -65,6 +68,7 @@ public interface IRoomController {
     })
     @GetMapping("/{id}")
     ResponseEntity<CCResponseWrapper<RoomDto>> getById(
+            @Positive(message = "Room ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -88,6 +92,7 @@ public interface IRoomController {
     })
     @PutMapping("/{id}")
     ResponseEntity<CCResponseWrapper<RoomDto>> update(
+            @Positive(message = "Room ID must be greater than 0")
             @PathVariable Long id,
             @Valid @RequestBody RoomDto request
     );
@@ -108,6 +113,7 @@ public interface IRoomController {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<CCResponseWrapper<RoomDto>> delete(
+            @Positive(message = "Room ID must be greater than 0")
             @PathVariable Long id
     );
 }
