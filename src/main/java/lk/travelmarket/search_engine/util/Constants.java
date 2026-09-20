@@ -247,6 +247,20 @@ public class Constants {
 
     public static final String ERROR_CREATE_BOARD_BASIS = "Board Basis create error";
 
+    //ROOMS
+
+    public static final String SUCCESS_RETRIEVE_ROOMS = "Rooms retrieve success";
+    public static final String ERROR_RETRIEVE_ROOMS = "Rooms retrieve failed";
+    public static final String SUCCESS_CREATE_ROOM = "Room created successfully";
+    public static final String ERROR_CREATE_ROOM = "Room creation failed";
+    public static final String SUCCESS_RETRIEVE_ROOM = "Room retrieve success";
+    public static final String ERROR_RETRIEVE_ROOM = "Room retrieve failed";
+    public static final String ERROR_RETRIEVE_ROOM_NOT_FOUND = "Room not found";
+    public static final String SUCCESS_UPDATE_ROOM = "Room updated successfully";
+    public static final String ERROR_UPDATE_ROOM = "Room update failed";
+    public static final String SUCCESS_DELETE_ROOM = "Room deleted successfully";
+    public static final String ERROR_DELETE_ROOM = "Room deletion failed";
+
 
     public static final String SUCCESS_RETRIEVE_ROOM_TYPE = "ROOM Type retrieve success";
 
@@ -265,4 +279,16 @@ public class Constants {
     public static final String ERROR_DELETE_ROOM_TYPE = "Room Type deletes error";
 
     public static final String ERROR_CREATE_ROOM_TYPE = "Room Type create error";
+
+    // HOTEL LANDMARKS
+    public static final String SUCCESS_RETRIEVE_LANDMARKS = "Landmarks retrieved successfully";
+    public static final String ERROR_RETRIEVE_LANDMARKS = "Failed to retrieve landmarks";
+    public static final String SUCCESS_CREATE_LANDMARK = "Landmark created successfully";
+    public static final String ERROR_CREATE_LANDMARK = "Failed to create landmark";
+    public static final String SUCCESS_UPDATE_LANDMARK = "Landmark updated successfully";
+    public static final String ERROR_UPDATE_LANDMARK = "Failed to update landmark";
+    public static final String SUCCESS_DELETE_LANDMARK = "Landmark deleted successfully";
+    public static final String ERROR_DELETE_LANDMARK = "Failed to delete landmark";
+    public static final String ERROR_LANDMARK_NOT_FOUND = "Landmark not found";
+
 }

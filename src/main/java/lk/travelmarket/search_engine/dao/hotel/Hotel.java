@@ -1,4 +1,5 @@
 package lk.travelmarket.search_engine.dao.hotel;
+
 import jakarta.persistence.*;
 import lk.travelmarket.search_engine.dao.Blackouts;
 import lk.travelmarket.search_engine.dao.HotelOwner;
@@ -25,14 +26,18 @@ public class Hotel {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "description",length = 1000 ,columnDefinition = "TEXT")
+    @Column(name = "description", length = 1000, columnDefinition = "TEXT")
     private String description;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ContentHotel> hotelContents;
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Landmark> landmarks;
+
 
 //    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Policy> policies;
