@@ -50,7 +50,7 @@ public class RoomService implements IRoomService {
             return new CCResponsePack<>(
                     ErrorLayer.HSL_LAYER,
                     ErrorSource.SERVER_ERROR,
-                    ERROR_RETRIEVE_SEASONS,
+                    ERROR_RETRIEVE_ROOMS,
                     e
             );
         }
