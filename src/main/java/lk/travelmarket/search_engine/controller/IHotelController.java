@@ -35,14 +35,18 @@ public interface IHotelController {
     ResponseEntity<CCResponseWrapper<Boolean>> deleteHotel(
             @PathVariable Long id);
 
-    // HOTEL LANDMARKS
+// HOTEL LANDMARKS
 
     @GetMapping(EndpointConstants.HOTEL_LANDMARKS)
     ResponseEntity<CCResponseWrapper<LandmarkDto>> getLandmarksByHotelId(@PathVariable Long id);
 
     @PostMapping(EndpointConstants.HOTEL_LANDMARKS)
-    ResponseEntity<CCResponseWrapper<LandmarkDto>> addLandmarkToHotel(@PathVariable Long id, @RequestBody Landmark landmark);
+    ResponseEntity<CCResponseWrapper<LandmarkDto>> addLandmarkToHotel(
+            @PathVariable Long id,
+            @Valid @RequestBody Landmark landmark
+    );
 
     @DeleteMapping(EndpointConstants.LANDMARK_BY_ID)
     ResponseEntity<CCResponseWrapper<Boolean>> deleteLandmark(@PathVariable Long landmarkId);
+
 }

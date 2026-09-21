@@ -15,7 +15,6 @@ import lk.travelmarket.search_engine.repository.LandmarkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -128,6 +127,19 @@ public class HotelServiceImpl {
         return ccError;
     }
 
+    public CCError<LandmarkDto> findLandmarkById(Long landmarkId) {
+        Optional<Landmark> landmarkOpt = landmarkRepository.findById(landmarkId);
+        if (landmarkOpt.isPresent()) {
+            CCError<LandmarkDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_LANDMARKS);
+            ccError.setData(toLandmarkDto(landmarkOpt.get()));
+            return ccError;
+        }
+
+        CCError<LandmarkDto> ccError = new CCError<>(CCErrorStatus.ERROR, ERROR_LANDMARK_NOT_FOUND);
+        ccError.setData(null);
+        return ccError;
+    }
+
     public CCError<LandmarkDto> addLandmarkToHotel(Long hotelId, Landmark landmark) {
         Optional<Hotel> hotelOpt = hotelRepository.findById(hotelId);
         if (hotelOpt.isPresent()) {
@@ -145,7 +157,6 @@ public class HotelServiceImpl {
     }
 
 
-
     public CCError<Boolean> deleteLandmark(Long landmarkId) {
         Optional<Landmark> landmarkOpt = landmarkRepository.findById(landmarkId);
         if (landmarkOpt.isPresent()) {
@@ -161,13 +172,18 @@ public class HotelServiceImpl {
     }
 
     private HotelDto toDto(Hotel hotel) {
+        List<LandmarkDto> landmarkDtos = landmarkRepository.findByHotelId(hotel.getId()).stream()
+                .map(this::toLandmarkDto)
+                .toList();
+
         return new HotelDto(
                 hotel.getId(),
                 hotel.getName(),
                 hotel.getDescription(),
                 hotel.getLocationHighlight(),
                 hotel.getStarRating(),
-                toDto(hotel.getAddress()));
+                toDto(hotel.getAddress()),
+                landmarkDtos);
     }
 
     private AddressDto toDto(Address address) {

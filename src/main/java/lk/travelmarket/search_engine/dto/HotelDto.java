@@ -1,5 +1,7 @@
 package lk.travelmarket.search_engine.dto;
 
+import java.util.List;
+
 public class HotelDto {
     
     private Long id;
@@ -8,18 +10,20 @@ public class HotelDto {
     private String locationHighlight;
     private Integer starRating;
     private AddressDto address;
+    private List<LandmarkDto> landmarks;
 
     public HotelDto() {
     }
 
     public HotelDto(Long id, String name, String description,
-                    String locationHighlight, Integer starRating, AddressDto address) {
+                    String locationHighlight, Integer starRating, AddressDto address, List<LandmarkDto> landmarks) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.locationHighlight = locationHighlight;
         this.starRating = starRating;
         this.address = address;
+        this.landmarks = landmarks;
     }
 
     // Getters and Setters
@@ -31,6 +35,9 @@ public class HotelDto {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public List<LandmarkDto> getLandmarks() {return landmarks;}
+    public void setLandmarks(List<LandmarkDto> landmarks) {this.landmarks = landmarks;}
 
     public String getLocationHighlight() { return locationHighlight; }
     public void setLocationHighlight(String locationHighlight) { this.locationHighlight = locationHighlight; }

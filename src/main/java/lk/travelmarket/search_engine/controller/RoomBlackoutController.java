@@ -1,14 +1,17 @@
 package lk.travelmarket.search_engine.controller;
 
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dto.BlackoutsDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
 import lk.travelmarket.search_engine.service.hotel.IRoomBlackoutService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class RoomBlackoutController implements lk.travelmarket.search_engine.controller.IRoomBlackoutController {
+@Validated
+public class RoomBlackoutController implements IRoomBlackoutController {
 
     private final IRoomBlackoutService roomBlackoutService;
 
@@ -17,7 +20,7 @@ public class RoomBlackoutController implements lk.travelmarket.search_engine.con
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BlackoutsDto>> create(BlackoutsDto request) {
+    public ResponseEntity<CCResponseWrapper<BlackoutsDto>> create(@Valid BlackoutsDto request) {
         return NetworkUtils.wrap(roomBlackoutService.createRoomBlackout(request));
     }
 
@@ -42,7 +45,7 @@ public class RoomBlackoutController implements lk.travelmarket.search_engine.con
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BlackoutsDto>> update(Long id, BlackoutsDto request) {
+    public ResponseEntity<CCResponseWrapper<BlackoutsDto>> update(Long id, @Valid BlackoutsDto request) {
         return NetworkUtils.wrap(roomBlackoutService.updateRoomBlackout(id, request));
     }
 
