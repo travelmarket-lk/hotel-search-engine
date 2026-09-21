@@ -117,6 +117,7 @@ public class Constants {
     public static final String ERROR_DELETE_ROOM_CATEGORY = "Room Category deletes error";
     public static final String ERROR_CREATE_ROOM_CATEGORY = "Room Category create error";
 
+
     //Hotel
     public static final String SUCCESS_RETRIEVE_HOTELS = "Hotels retrieved successfully";
     public static final String ERROR_RETRIEVE_HOTELS = "Failed to retrieve hotels";
@@ -129,7 +130,6 @@ public class Constants {
     public static final String ERROR_UPDATE_HOTEL = "Failed to update hotel";
     public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
     public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
-
 
     // ---------------------------- HotelType ----------------------------
     public static final String SUCCESS_RETRIEVE_HOTEL_TYPES = "Hotel types retrieved successfully";
@@ -227,8 +227,6 @@ public class Constants {
     public static final String ERROR_DELETE_SEASON = "Season deletion failed";
 
 
-
-
     public static final String SUCCESS_RETRIEVE_BOARD_BASIS = "Board Basis retrieve success";
 
     public static final String ERROR_RETRIEVE_BOARD_BASIS = "Board Basis retrieve failed";
@@ -291,4 +289,9 @@ public class Constants {
     public static final String ERROR_DELETE_LANDMARK = "Failed to delete landmark";
     public static final String ERROR_LANDMARK_NOT_FOUND = "Landmark not found";
 
+
+    // Hotel V2
+
+    public static final String ERROR_HOTEL_V2_NOT_FOUND = "Hotel not found";
+    public static final String ERROR_HOTEL_SEASONS_BULK_UPDATE = "Hotel seasons update failed";
 }

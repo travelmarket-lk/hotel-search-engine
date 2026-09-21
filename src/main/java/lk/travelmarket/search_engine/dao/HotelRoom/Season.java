@@ -1,6 +1,7 @@
 package lk.travelmarket.search_engine.dao.HotelRoom;
 
 import jakarta.persistence.*;
+import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -26,5 +27,12 @@ public class Season {
 
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "hotel_id",
+            nullable = false
+    )
+    private Hotel hotel;
 
 }

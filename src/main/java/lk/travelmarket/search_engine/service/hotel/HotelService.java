@@ -1,5 +1,4 @@
 package lk.travelmarket.search_engine.service.hotel;
-
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
@@ -12,9 +11,7 @@ import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
 import lk.travelmarket.search_engine.network.error.code.ErrorSource;
 import lk.travelmarket.search_engine.network.error.code.Status;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 import static lk.travelmarket.search_engine.util.Constants.*;
 
 @Service
@@ -66,7 +63,7 @@ public class HotelService implements IHotelService {
     }
 
     @Override
-    public CCResponsePack<HotelDto> updateHotel(Long id, Hotel hotelDetails) {
+    public CCResponsePack<HotelDto> updateHotel(Long id, HotelDto hotelDetails) {
         try {
             CCError<HotelDto> ccError = hotelServiceImpl.update(id, hotelDetails);
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
