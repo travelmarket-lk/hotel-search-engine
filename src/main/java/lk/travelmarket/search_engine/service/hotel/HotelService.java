@@ -88,7 +88,7 @@ public class HotelService implements IHotelService {
         }
     }
 
-    // HOTEL LANDMARKS
+// HOTEL LANDMARKS
 
     @Override
     public CCResponsePack<LandmarkDto> getLandmarksByHotelId(Long hotelId) {
@@ -128,6 +128,5 @@ public class HotelService implements IHotelService {
             return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_LANDMARK, e);
         }
     }
-
 
 }

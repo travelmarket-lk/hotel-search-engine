@@ -16,12 +16,13 @@ public interface IHotelService {
 
     CCResponsePack<Boolean> deleteHotel(Long id);
 
-    // HOTEL LANDMARKS
+// HOTEL LANDMARKS
 
     CCResponsePack<LandmarkDto> getLandmarksByHotelId(Long hotelId);
 
     CCResponsePack<LandmarkDto> addLandmarkToHotel(Long hotelId, Landmark landmark);
 
     CCResponsePack<Boolean> deleteLandmark(Long landmarkId);
+
 }
 
