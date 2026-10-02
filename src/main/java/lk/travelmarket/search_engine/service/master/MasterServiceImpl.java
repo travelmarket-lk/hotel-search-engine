@@ -6,10 +6,12 @@ import lk.travelmarket.search_engine.dao.City;
 import lk.travelmarket.search_engine.dao.District;
 import lk.travelmarket.search_engine.dao.RoomCategory;
 import lk.travelmarket.search_engine.dao.hotel.HotelType;
+import lk.travelmarket.search_engine.dao.landmark.LandMarkCategory;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.repository.BedTypeRepository;
 import lk.travelmarket.search_engine.repository.CityRepository;
 import lk.travelmarket.search_engine.repository.DistrictRepository;
@@ -23,6 +25,7 @@ import lk.travelmarket.search_engine.dao.facility.Facility;
 import lk.travelmarket.search_engine.repository.facility.FacilityRepository;
 import lk.travelmarket.search_engine.dao.facility.FacilityCategory;
 import lk.travelmarket.search_engine.repository.facility.FacilityCategoryRepository;
+import lk.travelmarket.search_engine.repository.landmark.LandMarkCategoryRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,6 +44,7 @@ public class MasterServiceImpl {
     private final HotelTypeRepository hotelTypeRepository;
     private final FacilityRepository facilityRepository;
     private final FacilityCategoryRepository facilityCategoryRepository;
+    private final LandMarkCategoryRepository landMarkCategoryRepository;
 
     public MasterServiceImpl(
             BedTypeRepository bedTypeRepository,
@@ -49,7 +53,8 @@ public class MasterServiceImpl {
             CityRepository cityRepository,
             HotelTypeRepository hotelTypeRepository,
             FacilityRepository facilityRepository,
-            FacilityCategoryRepository facilityCategoryRepository
+            FacilityCategoryRepository facilityCategoryRepository,
+            LandMarkCategoryRepository landMarkCategoryRepository
     ) {
 
         this.districtRepository = districtRepository;
@@ -59,6 +64,7 @@ public class MasterServiceImpl {
         this.hotelTypeRepository = hotelTypeRepository;
         this.facilityRepository = facilityRepository;
         this.facilityCategoryRepository = facilityCategoryRepository;
+        this.landMarkCategoryRepository = landMarkCategoryRepository;
     }
 
 
@@ -479,6 +485,9 @@ public class MasterServiceImpl {
     }
 
     // ---------------------------- HotelType ----------------------------
+
+
+
     public CCError<List<HotelTypeDto>> findAllHotelTypes() {
 
         CCError<List<HotelTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL_TYPES);
@@ -508,6 +517,14 @@ public class MasterServiceImpl {
 
     public CCError<HotelTypeDto> saveHotelType(HotelTypeDto hotelTypeDto) {
 
+        if (hotelTypeRepository.existsByHotelType(
+                hotelTypeDto.getHotelType())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    "Hotel type already exists"
+            );
+        }
         HotelType hotelType = toEntity(hotelTypeDto);
         HotelType saved = this.hotelTypeRepository.save(hotelType);
 
@@ -519,6 +536,16 @@ public class MasterServiceImpl {
     public CCError<HotelTypeDto> updateHotelType(Long id, HotelTypeDto hotelTypeDto) {
 
         Optional<HotelType> hotelTypeOpt = this.hotelTypeRepository.findById(id);
+
+        if (hotelTypeRepository.existsByCategoryAndIdNot(
+                hotelTypeDto.getHotelType(),
+                id)) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_HOTEL_TYPE
+            );
+        }
 
         if (hotelTypeOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_HOTEL_TYPE_NOT_FOUND);
@@ -578,6 +605,15 @@ public class MasterServiceImpl {
 
     public CCError<FacilityDto> saveFacility(FacilityDto facilityDto) {
 
+        if (facilityRepository.existsByFacility(
+                facilityDto.getFacilityName())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_FACILITY
+            );
+        }
+
         Facility facility = toEntity(facilityDto);
         Facility saved = this.facilityRepository.save(facility);
 
@@ -590,9 +626,23 @@ public class MasterServiceImpl {
 
         Optional<Facility> facilityOpt = this.facilityRepository.findById(id);
 
+
+        if (facilityRepository.existsByFacilityAndIdNot(
+                facilityDto.getFacilityName(),
+                id)) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_FACILITY
+            );
+        }
+
         if (facilityOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_NOT_FOUND);
         }
+
+
+
 
         Facility facility = facilityOpt.get();
         facility.setFacilityName(facilityDto.getFacilityName());
@@ -651,6 +701,15 @@ public class MasterServiceImpl {
 
     public CCError<FacilityCategoryDto> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
 
+        if (facilityCategoryRepository.existsByFacilityCategory(
+                facilityCategoryDto.getFacilityCategory())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                   DUPLICATE_FACILITY_CATEGORY
+            );
+        }
+
         FacilityCategory category = toEntity(facilityCategoryDto);
         FacilityCategory saved = this.facilityCategoryRepository.save(category);
 
@@ -665,6 +724,16 @@ public class MasterServiceImpl {
 
         if (categoryOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_CATEGORY_NOT_FOUND);
+        }
+
+        if (facilityCategoryRepository.existsByCategoryAndIdNot(
+                facilityCategoryDto.getFacilityCategory(),
+                id)) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_FACILITY_CATEGORY
+            );
         }
 
         FacilityCategory category = categoryOpt.get();
@@ -691,6 +760,138 @@ public class MasterServiceImpl {
         ccError.setData(toDto(categoryOpt.get()));
         return ccError;
     }
+
+    // --------------------------- LandMark Category ---------------------------
+
+
+    public CCError<List<LandMarkCategoryDto>> findAllLandmarkCategories() {
+
+        CCError<List<LandMarkCategoryDto>> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_RETRIEVE_LANDMARK_CATEGORIES
+                );
+
+        List<LandMarkCategoryDto> landmarkData =
+                landMarkCategoryRepository.findAll()
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
+
+        ccError.setData(landmarkData);
+
+        return ccError;
+    }
+
+    public CCError<LandMarkCategoryDto> findLandmarkCategoryById(Long id) {
+
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_RETRIEVE_LANDMARK_CATEGORY
+                );
+
+        Optional<LandMarkCategory> dao =
+                landMarkCategoryRepository.findById(id);
+
+        if (dao.isEmpty()) {
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_LANDMARK_CATEGORY_NOT_FOUND);
+
+            return ccError;
+        }
+
+        ccError.setData(this.toDto(dao.get()));
+
+        return ccError;
+    }
+
+    public CCError<LandMarkCategoryDto> createLandmarkCategory(LandMarkCategoryDto landMarkCategoryDto) {
+
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_CREATE_LANDMARK_CATEGORY
+                );
+
+        if (landMarkCategoryRepository.findByCategory(
+                landMarkCategoryDto.getCategory()
+        )) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+
+            ccError.setMessage(DUPLICATE_CREATE_LANDMARK_CATEGORY);
+            return ccError;
+        }
+
+        LandMarkCategory dao = new LandMarkCategory();
+
+        dao.setCategory(landMarkCategoryDto.getCategory());
+
+        LandMarkCategory saved = this.landMarkCategoryRepository.save(dao);
+
+        ccError.setData(this.toDto(saved));
+
+        return ccError;
+    }
+
+    public CCError<LandMarkCategoryDto> deleteLandmarkCategory(Long id) {
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_DELETE_LANDMARK_CATEGORY
+                );
+
+        Optional<LandMarkCategory> dao =
+                landMarkCategoryRepository.findById(id);
+
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_LANDMARK_CATEGORY_NOT_FOUND);
+            return ccError;
+        }
+
+        landMarkCategoryRepository.delete(dao.get());
+
+        ccError.setData(this.toDto(dao.get()));
+
+        return ccError;
+    }
+
+    public CCError<LandMarkCategoryDto> updateLandmarkCategory(Long id, LandMarkCategoryDto landMarkCategoryDto) {
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_UPDATE_LANDMARK_CATEGORY
+                );
+
+        Optional<LandMarkCategory> dao =
+                landMarkCategoryRepository.findById(id);
+
+        if (dao.isEmpty()) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_LANDMARK_CATEGORY_NOT_FOUND);
+            return ccError;
+        }
+
+        if (landMarkCategoryRepository.existsByCategoryAndIdNot(
+                landMarkCategoryDto.getCategory()
+
+        ))
+
+
+
+        dao.get().setCategory(landMarkCategoryDto.getCategory());
+
+        landMarkCategoryRepository.save(dao.get());
+
+        ccError.setData(this.toDto(dao.get()));
+
+        return ccError;
+    }
+
+
+
 
 
 
@@ -741,4 +942,23 @@ public class MasterServiceImpl {
         category.setFacilityCategory(dto.getFacilityCategory());
         return category;
     }
+
+    private LandMarkCategoryDto toDto(LandMarkCategory category) {
+        LandMarkCategoryDto dto = new LandMarkCategoryDto();
+        dto.setId(category.getId());
+        dto.setCategory(category.getCategory());
+        return dto;
+    }
+
+    private LandMarkCategory toDao(LandMarkCategoryDto dto) {
+        LandMarkCategory category = new LandMarkCategory();
+        category.setId(dto.getId());
+        category.setCategory(dto.getCategory());
+        return category;
+    }
+
+
+
+
+
 }

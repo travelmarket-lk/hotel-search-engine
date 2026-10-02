@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
@@ -11,11 +12,13 @@ import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static lk.travelmarket.search_engine.util.Constants.*;
 import static lk.travelmarket.search_engine.util.EndpointConstants.*;
 
 @RestController
@@ -337,10 +340,13 @@ public interface IMasterDataController {
     ResponseEntity<CCResponseWrapper<HotelTypeDto>> findHotelTypeById(@PathVariable Long id);
 
     @PostMapping(HOTEL_TYPES)
-    ResponseEntity<CCResponseWrapper<HotelTypeDto>> saveHotelType(@RequestBody HotelTypeDto hotelTypeDto);
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> saveHotelType(
+            @Valid @RequestBody HotelTypeDto hotelTypeDto);
 
     @PutMapping(HOTEL_TYPE_BY_ID)
-    ResponseEntity<CCResponseWrapper<HotelTypeDto>> updateHotelType(@PathVariable Long id, @RequestBody HotelTypeDto hotelTypeDto);
+    ResponseEntity<CCResponseWrapper<HotelTypeDto>> updateHotelType(
+            @PathVariable Long id,
+            @Valid @RequestBody HotelTypeDto hotelTypeDto);
 
     @DeleteMapping(HOTEL_TYPE_BY_ID)
     ResponseEntity<CCResponseWrapper<HotelTypeDto>> deleteHotelType(@PathVariable Long id);
@@ -353,10 +359,13 @@ public interface IMasterDataController {
     ResponseEntity<CCResponseWrapper<FacilityDto>> findFacilityById(@PathVariable Long id);
 
     @PostMapping(FACILITIES)
-    ResponseEntity<CCResponseWrapper<FacilityDto>> saveFacility(@RequestBody FacilityDto facilityDto);
+    ResponseEntity<CCResponseWrapper<FacilityDto>> saveFacility(
+            @Valid @RequestBody FacilityDto facilityDto);
 
     @PutMapping(FACILITY_BY_ID)
-    ResponseEntity<CCResponseWrapper<FacilityDto>> updateFacility(@PathVariable Long id, @RequestBody FacilityDto facilityDto);
+    ResponseEntity<CCResponseWrapper<FacilityDto>> updateFacility(
+            @PathVariable Long id,
+            @Valid @RequestBody FacilityDto facilityDto);
 
     @DeleteMapping(FACILITY_BY_ID)
     ResponseEntity<CCResponseWrapper<FacilityDto>> deleteFacility(@PathVariable Long id);
@@ -369,12 +378,44 @@ public interface IMasterDataController {
     ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> findFacilityCategoryById(@PathVariable Long id);
 
     @PostMapping(FACILITY_CATEGORIES)
-    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> saveFacilityCategory(@RequestBody FacilityCategoryDto facilityCategoryDto);
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> saveFacilityCategory(
+            @Valid @RequestBody FacilityCategoryDto facilityCategoryDto);
 
     @PutMapping(FACILITY_CATEGORY_BY_ID)
-    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> updateFacilityCategory(@PathVariable Long id, @RequestBody FacilityCategoryDto facilityCategoryDto);
+    ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> updateFacilityCategory(
+            @PathVariable Long id,
+            @Valid @RequestBody FacilityCategoryDto facilityCategoryDto);
 
     @DeleteMapping(FACILITY_CATEGORY_BY_ID)
     ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(@PathVariable Long id);
+
+    // ------------------------- Landmark Category -------------------------------------
+
+    @GetMapping(LANDMARK_CATEGORIES)
+    ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> findAllLandmarkCategories();
+
+    @GetMapping(LANDMARK_CATEGORY_BY_ID)
+    ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> findLandmarkCategoryById(
+            @PathVariable Long id
+    );
+
+    @PostMapping(LANDMARK_CATEGORIES)
+    ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> createLandmarkCategory(
+            @Valid  @RequestBody LandMarkCategoryDto landMarkCategoryDto
+    );
+
+    @PutMapping(LANDMARK_CATEGORY_BY_ID)
+    ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> updateLandmarkCategory(
+            @PathVariable Long id,
+            @Valid @RequestBody LandMarkCategoryDto landMarkCategoryDto
+    );
+
+    @DeleteMapping(LANDMARK_CATEGORY_BY_ID)
+    ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> deleteLandmarkCategory(
+            @PathVariable Long id
+    );
+
+
+
 
 }

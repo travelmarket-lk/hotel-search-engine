@@ -29,4 +29,9 @@ public class EndpointConstants {
     // FacilityCategory
     public static final String FACILITY_CATEGORIES = "/facility-categories";
     public static final String FACILITY_CATEGORY_BY_ID = "/facility-categories/{id}";
+
+    //LandMark Category
+
+    public static final String LANDMARK_CATEGORIES = "/landmark-categories";
+    public static final String LANDMARK_CATEGORY_BY_ID = "/landmark-categories/{id}";
 }

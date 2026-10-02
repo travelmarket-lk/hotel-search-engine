@@ -1,4 +1,5 @@
-package lk.travelmarket.search_engine.dto.facility;
+package lk.travelmarket.search_engine.dto.landmark;
+
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,10 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Valid
-public class FacilityCategoryDto {
-
+public class LandMarkCategoryDto {
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "Category cannot be Empty")
     @Size(min = 1, max = 50)
-    private String facilityCategory;
+    private String category;
 }

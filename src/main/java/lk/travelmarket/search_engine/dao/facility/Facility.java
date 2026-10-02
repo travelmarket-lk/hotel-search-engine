@@ -21,10 +21,10 @@ public class Facility {
     private String facilityName;
 
     @Column(name = "facility_category", nullable = false)
-    private Long facilityCategory;
+    private String facilityCategory;
 
     @Column(name = "facility_icon")
-    private Long facilityIcon;
+    private String facilityIcon;
 
     @Column(name = "hotel_id")  // ← ADD THIS
     private Long hotelId;
