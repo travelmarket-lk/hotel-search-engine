@@ -60,9 +60,21 @@ public class HotelBlackoutServiceImpl {
     public CCError<BlackoutsDto> createHotelBlackout(BlackoutsDto dto) {
         CCError<BlackoutsDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_HOTEL_BLACKOUT);
 
+        if (dto.getHotelId() == null) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("Hotel ID is required for a hotel blackout");
+            return ccError;
+        }
+
+        if (dto.getStartDate() != null && dto.getEndDate() != null && dto.getEndDate().before(dto.getStartDate())) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("End date must be after start date");
+            return ccError;
+        }
+
         Blackouts dao = new Blackouts();
         dao.setHotelId(dto.getHotelId());
-        dao.setRoomId(null);
+        dao.setRoomId(null); // Hotel blackouts must have roomId as null
         dao.setReason(dto.getReason());
         dao.setStartDate(dto.getStartDate());
         dao.setEndDate(dto.getEndDate());
@@ -85,7 +97,19 @@ public class HotelBlackoutServiceImpl {
             return ccError;
         }
 
+        if (dto.getStartDate() != null && dto.getEndDate() != null && dto.getEndDate().before(dto.getStartDate())) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage("End date must be after start date");
+            return ccError;
+        }
+
         Blackouts entity = dao.get();
+
+        // Maintain existing hotelId if not passed in the update body
+        if (dto.getHotelId() != null) {
+            entity.setHotelId(dto.getHotelId());
+        }
+
         entity.setReason(dto.getReason());
         entity.setStartDate(dto.getStartDate());
         entity.setEndDate(dto.getEndDate());

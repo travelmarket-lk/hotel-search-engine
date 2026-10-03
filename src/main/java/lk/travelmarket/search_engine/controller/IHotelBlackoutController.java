@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lk.travelmarket.search_engine.dto.BlackoutsDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
@@ -21,7 +22,7 @@ public interface IHotelBlackoutController {
             @ApiResponse(responseCode = "400", description = "Invalid request")
     })
     @PostMapping
-    ResponseEntity<CCResponseWrapper<BlackoutsDto>> create(@RequestBody BlackoutsDto request);
+    ResponseEntity<CCResponseWrapper<BlackoutsDto>> create(@Valid @RequestBody BlackoutsDto request);
 
     @Operation(summary = "Get all Hotel Blackouts")
     @ApiResponses({
@@ -52,7 +53,7 @@ public interface IHotelBlackoutController {
             @ApiResponse(responseCode = "404", description = "Hotel Blackout not found")
     })
     @PutMapping("/{id}")
-    ResponseEntity<CCResponseWrapper<BlackoutsDto>> update(@PathVariable Long id, @RequestBody BlackoutsDto request);
+    ResponseEntity<CCResponseWrapper<BlackoutsDto>> update(@PathVariable Long id, @Valid @RequestBody BlackoutsDto request);
 
     @Operation(summary = "Delete Hotel Blackout")
     @ApiResponses({

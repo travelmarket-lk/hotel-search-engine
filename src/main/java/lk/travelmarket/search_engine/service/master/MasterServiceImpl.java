@@ -423,9 +423,14 @@ public class MasterServiceImpl {
         }
         bedType.setId(id);
         BedType updatedBedType = this.bedTypeRepository.save(bedType);
-        return new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BED_TYPES);
+
+        CCError<BedType> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BED_TYPES);
+        ccError.setData(updatedBedType);
+        return ccError;
     }
-//------------------------ROOM CATEGORIES-----------------------------------
+
+    // ROOMS
+
     public CCError<List<RoomCategoryDto>> findAllRoomCategories() {
         CCError<List<RoomCategoryDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_CATEGORIES);
         List<RoomCategoryDto> roomCategoryData = this.categoryRepository.findAll().stream()

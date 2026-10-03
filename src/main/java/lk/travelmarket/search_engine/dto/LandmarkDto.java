@@ -48,4 +48,5 @@ public class LandmarkDto {
     public void setHotelId(Long hotelId) {
         this.hotelId = hotelId;
     }
+
 }
