@@ -10,6 +10,7 @@ import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping(EndpointConstants.V1 + EndpointConstants.POLICY)
 @Tag(
