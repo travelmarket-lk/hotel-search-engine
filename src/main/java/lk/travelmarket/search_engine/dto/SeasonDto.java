@@ -1,8 +1,10 @@
 package lk.travelmarket.search_engine.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,21 +29,26 @@ public class SeasonDto {
             description = "Name of the season",
             example = "Summer Season"
     )
-    @NotBlank
+    @NotBlank(message = "Season name is required")
+    @Size(
+            min = 2,
+            max = 100,
+            message = "Season name must be between 2 and 100 characters"
+    )
     private String seasonName;
 
     @Schema(
             description = "Season start date",
             example = "2026-04-01"
     )
-    @NotNull
+    @NotNull(message = "Start date is required")
     private LocalDate startDate;
 
     @Schema(
             description = "Season end date",
             example = "2026-09-30"
     )
-    @NotNull
+    @NotNull(message = "End date is required")
     private LocalDate endDate;
 
     public SeasonDto() {
@@ -57,5 +64,18 @@ public class SeasonDto {
         this.seasonName = seasonName;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    @AssertTrue(
+            message = "End date must be equal to or after start date"
+    )
+    @Schema(hidden = true)
+    public boolean isDateRangeValid() {
+
+        if (startDate == null || endDate == null) {
+            return true;
+        }
+
+        return !endDate.isBefore(startDate);
     }
 }

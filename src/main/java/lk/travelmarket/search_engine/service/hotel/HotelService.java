@@ -1,7 +1,8 @@
 package lk.travelmarket.search_engine.service.hotel;
-
 import lk.travelmarket.search_engine.dao.hotel.Hotel;
+import lk.travelmarket.search_engine.dao.hotel.Landmark;
 import lk.travelmarket.search_engine.dto.HotelDto;
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.criteria.HotelCreationCriteria;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
@@ -10,9 +11,7 @@ import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
 import lk.travelmarket.search_engine.network.error.code.ErrorSource;
 import lk.travelmarket.search_engine.network.error.code.Status;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 import static lk.travelmarket.search_engine.util.Constants.*;
 
 @Service
@@ -64,7 +63,7 @@ public class HotelService implements IHotelService {
     }
 
     @Override
-    public CCResponsePack<HotelDto> updateHotel(Long id, Hotel hotelDetails) {
+    public CCResponsePack<HotelDto> updateHotel(Long id, HotelDto hotelDetails) {
         try {
             CCError<HotelDto> ccError = hotelServiceImpl.update(id, hotelDetails);
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
@@ -88,4 +87,46 @@ public class HotelService implements IHotelService {
             return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_HOTEL, e);
         }
     }
+
+// HOTEL LANDMARKS
+
+    @Override
+    public CCResponsePack<LandmarkDto> getLandmarksByHotelId(Long hotelId) {
+        try {
+            CCError<List<LandmarkDto>> ccError = hotelServiceImpl.findLandmarksByHotelId(hotelId);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_LANDMARKS, e);
+        }
+    }
+
+    @Override
+    public CCResponsePack<LandmarkDto> addLandmarkToHotel(Long hotelId, Landmark landmark) {
+        try {
+            CCError<LandmarkDto> ccError = hotelServiceImpl.addLandmarkToHotel(hotelId, landmark);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(List.of(ccError.getData()));
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_CREATE_LANDMARK, e);
+        }
+    }
+
+    @Override
+    public CCResponsePack<Boolean> deleteLandmark(Long landmarkId) {
+        try {
+            CCError<Boolean> ccError = hotelServiceImpl.deleteLandmark(landmarkId);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(List.of(ccError.getData()));
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_LANDMARK, e);
+        }
+    }
+
 }

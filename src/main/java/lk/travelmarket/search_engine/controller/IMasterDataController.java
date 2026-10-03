@@ -5,10 +5,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
-import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.*;
+import lk.travelmarket.search_engine.dao.RoomCategory;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
@@ -47,7 +47,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/districts")
     ResponseEntity<CCResponseWrapper<DistrictDto>> createDistrict(
-            @RequestBody DistrictDto request
+            @Valid @RequestBody DistrictDto request
     );
 
     @Operation(
@@ -79,6 +79,7 @@ public interface IMasterDataController {
     })
     @GetMapping("/districts/{id}")
     ResponseEntity<CCResponseWrapper<DistrictDto>> getDistrictById(
+            @Positive(message = "District ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -102,8 +103,9 @@ public interface IMasterDataController {
     })
     @PutMapping("/districts/{id}")
     ResponseEntity<CCResponseWrapper<DistrictDto>> updateDistrict(
+            @Positive(message = "District ID must be greater than 0")
             @PathVariable Long id,
-            @RequestBody DistrictDto request
+            @Valid @RequestBody DistrictDto request
     );
 
     @Operation(
@@ -122,6 +124,7 @@ public interface IMasterDataController {
     })
     @DeleteMapping("/districts/{id}")
     ResponseEntity<CCResponseWrapper<DistrictDto>> deleteDistrict(
+            @Positive(message = "District ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -144,7 +147,7 @@ public interface IMasterDataController {
     })
     @PostMapping("/cities")
     ResponseEntity<CCResponseWrapper<CityDto>> createCity(
-            @RequestBody CityDto request
+            @Valid @RequestBody CityDto request
     );
 
     @Operation(
@@ -176,6 +179,7 @@ public interface IMasterDataController {
     })
     @GetMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> getCityById(
+            @Positive(message = "City ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -200,7 +204,8 @@ public interface IMasterDataController {
     @PutMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> updateCity(
             @PathVariable Long id,
-            @RequestBody CityDto request
+            @Positive(message = "City ID must be greater than 0")
+            @Valid @RequestBody CityDto request
     );
 
     @Operation(
@@ -220,14 +225,17 @@ public interface IMasterDataController {
 
     @DeleteMapping("/cities/{id}")
     ResponseEntity<CCResponseWrapper<CityDto>> deleteCity(
+            @Positive(message = "City ID must be greater than 0")
             @PathVariable Long id
     );
+
+// BED TYPES
 
     @GetMapping(EndpointConstants.BED_TYPES)
     public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes();
 
     @PostMapping(EndpointConstants.BED_TYPES)
-    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@RequestBody BedType bedType);
+    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@Valid @RequestBody BedType bedType);
 
     @DeleteMapping(EndpointConstants.BED_TYPES_ID)
     public ResponseEntity<CCResponseWrapper<Void>> deleteBedType(@PathVariable Long id);
@@ -236,7 +244,8 @@ public interface IMasterDataController {
     public ResponseEntity<CCResponseWrapper<BedType>> getBedTypeById(@PathVariable("id") Long id);
 
     @PutMapping(EndpointConstants.BED_TYPES_ID)
-    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(@PathVariable("id") Long id, @RequestBody BedType bedType);
+    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(@PathVariable("id") Long id, @Valid @RequestBody BedType bedType);
+    // ROOMS
 
     @Operation(
             summary = "Create a new Room Category",
@@ -252,8 +261,9 @@ public interface IMasterDataController {
                     description = "Invalid request"
             )
     })
-    @PostMapping
+    @PostMapping("/room-category")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(
+            @Valid
             @RequestBody RoomCategoryDto request
     );
 
@@ -267,7 +277,7 @@ public interface IMasterDataController {
                     description = "RoomCategory retrieved successfully"
             )
     })
-    @GetMapping
+    @GetMapping("/room-category")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> findAllRoomCategories();
 
     @Operation(
@@ -284,7 +294,7 @@ public interface IMasterDataController {
                     description = "Room Category not found"
             )
     })
-    @GetMapping("/{id}")
+    @GetMapping("/room-category/{id}")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> findRoomCategoryById(
             @PathVariable Long id
     );
@@ -307,7 +317,7 @@ public interface IMasterDataController {
                     description = "Test not found"
             )
     })
-    @PutMapping("/{id}")
+    @PutMapping("/room-category/{id}")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> updateRoomCategory(
             @PathVariable Long id,
             @RequestBody RoomCategoryDto request
@@ -327,7 +337,7 @@ public interface IMasterDataController {
                     description = "Test not found"
             )
     })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/room-category/{id}")
     ResponseEntity<CCResponseWrapper<RoomCategoryDto>> deleteRoomCategory(
             @PathVariable Long id
     );
@@ -412,10 +422,198 @@ public interface IMasterDataController {
 
     @DeleteMapping(LANDMARK_CATEGORY_BY_ID)
     ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> deleteLandmarkCategory(
+
+
+    @Operation(
+            summary = "Create a new Board Basis",
+            description = "Creates a new Board basis resource and returns the created Test details."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Test created successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            )
+    })
+    @PostMapping("/board-basis")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(
+            @Valid
+            @RequestBody BoardBasisDto request
+    );
+
+    @Operation(
+            summary = "Get all Board Basis",
+            description = "Retrieves all available Board Basis resources."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Board basis retrieved successfully"
+            )
+    })
+    @GetMapping("/board-basis")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis();
+
+    @Operation(
+            summary = "Get Board Basis by ID",
+            description = "Retrieves a single Board basis resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Board basis retrieved successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Board Basis not found"
+            )
+    })
+    @GetMapping("/board-basis/{id}")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> findBoardBasisById(
+            @PathVariable Long id
+    );
+
+    @Operation(
+            summary = "Update Bord basis",
+            description = "Updates an existing Board Basis resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Board Basis updated successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @PutMapping("/board-basis/{id}")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> updateBoardBasis(
+            @PathVariable Long id,
+            @RequestBody BoardBasisDto request
+    );
+
+    @Operation(
+            summary = "Delete Board Basis",
+            description = "Deletes an existing Board Basis resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Room Category deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @DeleteMapping("/board-basis/{id}")
+    ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(
             @PathVariable Long id
     );
 
 
 
+    @Operation(
+            summary = "Create a new Room Type",
+            description = "Creates a new Room Type resource and returns the created Test details."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Test created successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            )
+    })
+    @PostMapping("/room-type")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> createRoomType(
+            @Valid
+            @RequestBody RoomTypeDto request
+    );
+
+    @Operation(
+            summary = "Get all Room Type",
+            description = "Retrieves all available Room Type resources."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Room Type retrieved successfully"
+            )
+    })
+    @GetMapping("/room-type")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> findAllRoomType();
+
+    @Operation(
+            summary = "Get Room Type by ID",
+            description = "Retrieves a single Room Type resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Room Type retrieved successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Board Basis not found"
+            )
+    })
+    @GetMapping("/room-type/{id}")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> findRoomTypeById(
+            @PathVariable Long id
+    );
+
+    @Operation(
+            summary = "Update Room Type",
+            description = "Updates an existing Room Type resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Room Type updated successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @PutMapping("/room-type/{id}")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> updateRoomType(
+            @PathVariable Long id,
+            @RequestBody RoomTypeDto request
+    );
+
+    @Operation(
+            summary = "Delete Room Type",
+            description = "Deletes an existing Room Type resource using its unique ID."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Room Type deleted successfully"
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Test not found"
+            )
+    })
+    @DeleteMapping("/room-type/{id}")
+    ResponseEntity<CCResponseWrapper<RoomTypeDto>> deleteRoomType(
+            @PathVariable Long id
+    );
 
 }

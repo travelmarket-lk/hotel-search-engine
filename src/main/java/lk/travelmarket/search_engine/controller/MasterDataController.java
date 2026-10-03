@@ -1,5 +1,7 @@
 package lk.travelmarket.search_engine.controller;
 
+import jakarta.validation.Valid;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
@@ -118,15 +120,15 @@ public class MasterDataController implements IMasterDataController {
         );
     }
 
-    // BED TYPES
-
-        @Override
-        public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
-            return NetworkUtils.wrap(masterService.findAllBedTypes());
-        }
+// BED TYPES
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(BedType bedType) {
+    public ResponseEntity<CCResponseWrapper<BedType>> getAllBedTypes() {
+        return NetworkUtils.wrap(masterService.findAllBedTypes());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BedType>> addBedType(@Valid BedType bedType) {
         return NetworkUtils.wrap(masterService.addBedType(bedType));
     }
 
@@ -141,9 +143,11 @@ public class MasterDataController implements IMasterDataController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, BedType bedType) {
+    public ResponseEntity<CCResponseWrapper<BedType>> updateBedType(Long id, @Valid BedType bedType) {
         return NetworkUtils.wrap(masterService.updateBedType(id, bedType));
     }
+
+    // ROOMS
 
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> createRoomCategory(RoomCategoryDto request) {
@@ -275,5 +279,53 @@ public class MasterDataController implements IMasterDataController {
     @Override
     public ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> deleteLandmarkCategory(Long id) {
         return NetworkUtils.wrap(masterService.deleteLandMarkCategory( id ));
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(BoardBasisDto request) {
+        return NetworkUtils.wrap(masterService.createBoardBasis(request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis() {
+        return NetworkUtils.wrap(masterService.findAllBoardBasis());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findBoardBasisById(Long id) {
+        return NetworkUtils.wrap(masterService.findBoardBasisById(id));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> updateBoardBasis(Long id, BoardBasisDto request) {
+        return NetworkUtils.wrap(masterService.updateBoardBasis(id,request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BoardBasisDto>> deleteBoardBasis(Long id) {
+        return NetworkUtils.wrap(masterService.deleteBoardBasis(id));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<RoomTypeDto>> createRoomType(RoomTypeDto request) {
+        return NetworkUtils.wrap(masterService.createRoomType(request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<RoomTypeDto>> findAllRoomType() {
+        return NetworkUtils.wrap(masterService.findAllRoomType());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<RoomTypeDto>> findRoomTypeById(Long id) {
+        return NetworkUtils.wrap(masterService.findRoomTypeById(id));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<RoomTypeDto>> updateRoomType(Long id, RoomTypeDto request) {
+        return NetworkUtils.wrap(masterService.updateRoomType(id,request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<RoomTypeDto>> deleteRoomType(Long id) {
+        return NetworkUtils.wrap(masterService.deleteRoomType(id));
     }
 }

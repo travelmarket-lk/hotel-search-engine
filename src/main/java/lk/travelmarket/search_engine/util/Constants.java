@@ -105,14 +105,18 @@ public class Constants {
             "City deletion failed";
 
     public static final String SUCCESS_RETRIEVE_ROOM_CATEGORIES = "Room Categories retrieve success";
+
     public static final String ERROR_RETRIEVE_ROOM_CATEGORIES = "Room Categories retrieve failed";
     public static final String ERROR_UPDATE_ROOM_CATEGORY = "Room Category update failed";
     public static final String ERROR_RETRIEVE_ROOM_CATEGORIES_NOT_FOUND = "Room Categories retrieve failed not found";
+
     public static final String SUCCESS_CREATE_ROOM_CATEGORY= "Room Category creates success";
     public static final String SUCCESS_UPDATE_ROOM_CATEGORY = "Room Category updates success";
     public static final String SUCCESS_DELETE_ROOM_CATEGORY = "Room Category deletes success";
+
     public static final String ERROR_DELETE_ROOM_CATEGORY = "Room Category deletes error";
     public static final String ERROR_CREATE_ROOM_CATEGORY = "Room Category create error";
+
 
     //Hotel
     public static final String SUCCESS_RETRIEVE_HOTELS = "Hotels retrieved successfully";
@@ -126,7 +130,6 @@ public class Constants {
     public static final String ERROR_UPDATE_HOTEL = "Failed to update hotel";
     public static final String SUCCESS_DELETE_HOTEL = "Hotel deleted successfully";
     public static final String ERROR_DELETE_HOTEL = "Failed to delete hotel";
-
 
     // ---------------------------- HotelType ----------------------------
     public static final String SUCCESS_RETRIEVE_HOTEL_TYPES = "Hotel types retrieved successfully";
@@ -220,5 +223,72 @@ public class Constants {
 
 
 
+    public static final String SUCCESS_RETRIEVE_BOARD_BASIS = "Board Basis retrieve success";
+
+    public static final String ERROR_RETRIEVE_BOARD_BASIS = "Board Basis retrieve failed";
+
+    public static final String ERROR_UPDATE_BOARD_BASIS = "Board Basis update failed";
+
+    public static final String ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND = "Board Basis retrieve failed not found";
+
+    public static final String SUCCESS_CREATE_BOARD_BASIS= "Board Basis creates success";
+
+    public static final String SUCCESS_UPDATE_BOARD_BASIS = "Board Basis updates success";
+
+    public static final String SUCCESS_DELETE_BOARD_BASIS = "Board Basis deletes success";
+
+    public static final String ERROR_DELETE_BOARD_BASIS = "Board Basis deletes error";
+
+    public static final String ERROR_CREATE_BOARD_BASIS = "Board Basis create error";
+
+    //ROOMS
+
+    public static final String SUCCESS_RETRIEVE_ROOMS = "Rooms retrieve success";
+    public static final String ERROR_RETRIEVE_ROOMS = "Rooms retrieve failed";
+    public static final String SUCCESS_CREATE_ROOM = "Room created successfully";
+    public static final String ERROR_CREATE_ROOM = "Room creation failed";
+    public static final String SUCCESS_RETRIEVE_ROOM = "Room retrieve success";
+    public static final String ERROR_RETRIEVE_ROOM = "Room retrieve failed";
+    public static final String ERROR_RETRIEVE_ROOM_NOT_FOUND = "Room not found";
+    public static final String SUCCESS_UPDATE_ROOM = "Room updated successfully";
+    public static final String ERROR_UPDATE_ROOM = "Room update failed";
+    public static final String SUCCESS_DELETE_ROOM = "Room deleted successfully";
+    public static final String ERROR_DELETE_ROOM = "Room deletion failed";
+
+
+    public static final String SUCCESS_RETRIEVE_ROOM_TYPE = "ROOM Type retrieve success";
+
+    public static final String ERROR_RETRIEVE_ROOM_TYPE = "Room Type retrieve failed";
+
+    public static final String ERROR_UPDATE_ROOM_TYPE = "ROom Type update failed";
+
+    public static final String ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND = "Room Type retrieve failed not found";
+
+    public static final String SUCCESS_CREATE_ROOM_TYPE= "Room Type creates success";
+
+    public static final String SUCCESS_UPDATE_ROOM_TYPE = "Room type updates success";
+
+    public static final String SUCCESS_DELETE_ROOM_TYPE = "Room Type deletes success";
+
+    public static final String ERROR_DELETE_ROOM_TYPE = "Room Type deletes error";
+
+    public static final String ERROR_CREATE_ROOM_TYPE = "Room Type create error";
+
+    // HOTEL LANDMARKS
+    public static final String SUCCESS_RETRIEVE_LANDMARKS = "Landmarks retrieved successfully";
+    public static final String ERROR_RETRIEVE_LANDMARKS = "Failed to retrieve landmarks";
+    public static final String SUCCESS_CREATE_LANDMARK = "Landmark created successfully";
+    public static final String ERROR_CREATE_LANDMARK = "Failed to create landmark";
+    public static final String SUCCESS_UPDATE_LANDMARK = "Landmark updated successfully";
+    public static final String ERROR_UPDATE_LANDMARK = "Failed to update landmark";
+    public static final String SUCCESS_DELETE_LANDMARK = "Landmark deleted successfully";
+    public static final String ERROR_DELETE_LANDMARK = "Failed to delete landmark";
+    public static final String ERROR_LANDMARK_NOT_FOUND = "Landmark not found";
+
+
+    // Hotel V2
+
+    public static final String ERROR_HOTEL_V2_NOT_FOUND = "Hotel not found";
+    public static final String ERROR_HOTEL_SEASONS_BULK_UPDATE = "Hotel seasons update failed";
 }
 

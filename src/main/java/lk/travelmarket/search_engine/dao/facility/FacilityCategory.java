@@ -16,7 +16,7 @@ public class FacilityCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="facility_category", nullable = false)
-    private String facilityCategory;
+    @Column(name="name", nullable = false)
+    private String name;
 
 }

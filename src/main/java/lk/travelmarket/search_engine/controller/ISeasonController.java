@@ -5,13 +5,16 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lk.travelmarket.search_engine.dto.SeasonDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Validated
 @RequestMapping(EndpointConstants.V1 + EndpointConstants.SEASONS)
 @Tag(
         name = "Season",
@@ -67,6 +70,7 @@ public interface ISeasonController {
     })
     @GetMapping("/{id}")
     ResponseEntity<CCResponseWrapper<SeasonDto>> getById(
+            @Positive(message = "Season ID must be greater than 0")
             @PathVariable Long id
     );
 
@@ -90,8 +94,11 @@ public interface ISeasonController {
     })
     @PutMapping("/{id}")
     ResponseEntity<CCResponseWrapper<SeasonDto>> update(
+            @Positive(message = "Season ID must be greater than 0")
             @PathVariable Long id,
-            @Valid @RequestBody SeasonDto request
+
+            @Valid
+            @RequestBody SeasonDto request
     );
 
     @Operation(
@@ -110,6 +117,7 @@ public interface ISeasonController {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<CCResponseWrapper<SeasonDto>> delete(
+            @Positive(message = "Season ID must be greater than 0")
             @PathVariable Long id
     );
 }

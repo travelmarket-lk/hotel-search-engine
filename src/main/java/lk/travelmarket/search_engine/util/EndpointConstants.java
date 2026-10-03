@@ -3,6 +3,9 @@ package lk.travelmarket.search_engine.util;
 public class EndpointConstants {
 
     public static final String V1 = "/v1";
+    public static final String V2 = "/v2";
+    public static final String DATA = "/data";
+    public static final String HOTELS = "/hotels";
 
     public static final String TEST = "tests";
     public static final String SEASONS = "/seasons";
@@ -34,4 +37,16 @@ public class EndpointConstants {
 
     public static final String LANDMARK_CATEGORIES = "/landmark-categories";
     public static final String LANDMARK_CATEGORY_BY_ID = "/landmark-categories/{id}";
+    // HOTEL BLACKOUT
+    public static final String HOTEL_BLACKOUTS = "/hotel-blackouts";
+    // ROOM BLACKOUT
+    public static final String ROOM_BLACKOUTS = "/room-blackouts";
+
+    // HOTEL LANDMARKS
+    public static final String HOTEL_LANDMARKS = "hotels/{id}/landmarks";
+    public static final String LANDMARK_BY_ID = "landmarks/{landmarkId}";
+
+    //Room
+    public static final String ROOMS = "/rooms";
+
 }
