@@ -23,8 +23,11 @@ public class DataController implements IDataController {
 
     private final IDataService dataService;
 
-    public DataController(IDataService dataService) {
+
+
+    public DataController(IDataService dataService ) {
         this.dataService = dataService;
+
     }
 
     @Override
@@ -37,31 +40,26 @@ public class DataController implements IDataController {
         );
     }
 
-    private final IMasterService masterService;
 
-    public DataController(IMasterService masterService) {
-        this.masterService = masterService;
-    }
 
     //---------Room Category-----------
     @Override
     public ResponseEntity<CCResponseWrapper<RoomCategoryDto>> findAllRoomCategories(int page, int size) {
-        return NetworkUtils.wrap(masterService.findAllRoomCategories());
+        return NetworkUtils.wrap(dataService.findAllRoomCategories( page, size));
     }
 
 
     //---------Board Basis-------------
     @Override
     public ResponseEntity<CCResponseWrapper<BoardBasisDto>> findAllBoardBasis(int page, int size) {
-        return NetworkUtils.wrap(masterService.findAllBoardBasis());
+        return NetworkUtils.wrap(dataService.findAllBoardBasis( page, size) );
     }
 
     //---------Room Type---------------
     @Override
     public ResponseEntity<CCResponseWrapper<RoomTypeDto>> findAllRoomType(int page, int size) {
-        return NetworkUtils.wrap(masterService.findAllRoomType());
+        return NetworkUtils.wrap(dataService.findAllRoomType( page, size));
     }
-}
 
     @Override
     public ResponseEntity<CCResponseWrapper<Page<CityDto>>> getAllCities(

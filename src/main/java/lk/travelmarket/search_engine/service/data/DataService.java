@@ -1,7 +1,6 @@
 package lk.travelmarket.search_engine.service.data;
 
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
@@ -61,43 +60,18 @@ public class DataService implements IDataService {
             int page,
             int size
     ) {
-
         try {
-
-            CCError<Page<CityDto>> ccError =
-                    dataServiceImpl.findAllCities(page, size);
-
+            CCError<Page<CityDto>> ccError = dataServiceImpl.findAllCities(page,size);
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
-                return new CCResponsePack<>(
-                        Status.ERROR,
-                        ccError.getMessage(),
-                        null
-                );
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
             }
-import lk.travelmarket.search_engine.dto.BoardBasisDto;
-import lk.travelmarket.search_engine.dto.RoomCategoryDto;
-import lk.travelmarket.search_engine.dto.RoomTypeDto;
-import lk.travelmarket.search_engine.network.commons.CCError;
-import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
-import lk.travelmarket.search_engine.network.commons.CCResponsePack;
-import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
-import lk.travelmarket.search_engine.network.error.code.ErrorSource;
-import lk.travelmarket.search_engine.network.error.code.Status;
-import lk.travelmarket.search_engine.service.master.MasterServiceImpl;
-import org.springframework.data.domain.Page;
-
-import java.util.List;
-
-import static lk.travelmarket.search_engine.util.Constants.*;
-
-
-public class DataService implements IDataService{
-
-    private final DataServiceImpl dataServiceImpl;
-
-    public DataService(DataServiceImpl dataServiceImpl) {
-        this.dataServiceImpl = dataServiceImpl;
+            return new CCResponsePack<>(ccError.getData().getContent());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_CITIES, e);
+        }
     }
+
+
 
     //------------Room Category-------------
     @Override
@@ -138,22 +112,6 @@ public class DataService implements IDataService{
             return new CCResponsePack<>(ccError.getData().getContent());
         } catch (Exception e) {
             return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_ROOM_TYPE, e);
-        }
-    }
-}
-
-            return new CCResponsePack<>(
-                    ccError.getData().getContent()
-            );
-
-        } catch (Exception e) {
-
-            return new CCResponsePack<>(
-                    ErrorLayer.HSL_LAYER,
-                    ErrorSource.SERVER_ERROR,
-                    ERROR_RETRIEVE_CITIES,
-                    e
-            );
         }
     }
 }

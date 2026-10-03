@@ -39,6 +39,16 @@ public interface IDataController {
             @RequestParam(defaultValue = "10") int size
     );
 
+    @Operation(
+            summary = "Get all Districts",
+            description = "Retrieves Districts with pagination."
+    )
+    @GetMapping("/districts")
+    ResponseEntity<CCResponseWrapper<Page<DistrictDto>>> getAllDistricts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    );
+
     //---------Room Category-----------
     @Operation(
             summary = "Get all RoomCategory",
@@ -90,15 +100,4 @@ public interface IDataController {
             @RequestParam(defaultValue = "10") int size
     );
 
-}
-
-    @Operation(
-            summary = "Get all Districts",
-            description = "Retrieves Districts with pagination."
-    )
-    @GetMapping("/districts")
-    ResponseEntity<CCResponseWrapper<Page<DistrictDto>>> getAllDistricts(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-    );
 }

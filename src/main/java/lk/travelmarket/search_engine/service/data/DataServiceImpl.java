@@ -35,33 +35,25 @@ public class DataServiceImpl {
 
     private final DistrictRepository districtRepository;
     private final CityRepository cityRepository;
-    private final SeasonRepository seasonRepository;
-    private final HotelRepository hotelRepository;
-    private final LandmarkRepository landmarkRepository;
-    private final RoomRepository roomRepository;
-    private final HotelOwnerRepository hotelOwnerRepository;
-    private final HotelTypeRepository hotelTypeRepository;
+    private final RoomTypeRepository roomTypeRepository;
     private final RoomCategoryRepository categoryRepository;
     private final BoardBasisRepository boardBasisRepository;
-    private final RoomTypeRepository roomTypeRepository;
+
 
     public DataServiceImpl(
 
             DistrictRepository districtRepository,
-            CityRepository cityRepository
-            SeasonRepository seasonRepository,
-            HotelRepository hotelRepository,
-            LandmarkRepository landmarkRepository,
-            RoomRepository roomRepository,
-            HotelOwnerRepository hotelOwnerRepository,
-            HotelTypeRepository hotelTypeRepository,
+            CityRepository cityRepository,
+            RoomTypeRepository roomTypeRepository,
             RoomCategoryRepository categoryRepository,
-            BoardBasisRepository boardBasisRepository,
-            RoomTypeRepository roomTypeRepository
+            BoardBasisRepository boardBasisRepository
     )
     {
         this.districtRepository = districtRepository;
         this.cityRepository = cityRepository;
+        this.roomTypeRepository = roomTypeRepository;
+        this.categoryRepository = categoryRepository;
+        this.boardBasisRepository = boardBasisRepository;
     }
 
     public CCError<Page<DistrictDto>> findAllDistricts(
@@ -93,15 +85,6 @@ public class DataServiceImpl {
                 district.getId(),
                 district.getName()
         );
-        this.seasonRepository = seasonRepository;
-        this.hotelRepository = hotelRepository;
-        this.landmarkRepository = landmarkRepository;
-        this.roomRepository = roomRepository;
-        this.hotelOwnerRepository = hotelOwnerRepository;
-        this.hotelTypeRepository = hotelTypeRepository;
-        this.categoryRepository = categoryRepository;
-        this.boardBasisRepository = boardBasisRepository;
-        this.roomTypeRepository = roomTypeRepository;
     }
     //----------Room Category------------
     public CCError<Page<RoomCategoryDto>> findAllRoomCategories(int page, int size) {
