@@ -5,6 +5,8 @@ import lk.travelmarket.search_engine.dao.hotel.Hotel;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "facility")
 @Getter
@@ -15,15 +17,13 @@ public class Facility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "facility_name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String facilityName;
 
-    @Column(name = "facility_category", nullable = false)
+    @Column(name = "category", nullable = false)
     private String facilityCategory;
 
-    @Column(name = "facility_icon")
-    private String facilityIcon;
-
     @Column(name = "icon")
-    private String icon;
+    private String facilityIcon;
 }
+
