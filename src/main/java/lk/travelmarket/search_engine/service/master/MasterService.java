@@ -5,6 +5,7 @@ import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
@@ -824,6 +825,85 @@ public class MasterService implements IMasterService {
 
         } catch (Exception e) {
             return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_DELETE_FACILITY_CATEGORY, e);
+        }
+    }
+    // -------------------- LandMark Category -------------------
+
+    @Override
+    public CCResponsePack<LandMarkCategoryDto> findAllLandMarkCategories() {
+
+            try {
+                CCError<List<LandMarkCategoryDto>> ccError = masterServiceImpl.findAllLandmarkCategories();
+
+                if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                    return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+                }
+                return new CCResponsePack<>(ccError.getData());
+
+            } catch (Exception e) {
+                return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_LANDMARK_CATEGORIES, e);
+            }
+        }
+
+
+    @Override
+    public CCResponse<LandMarkCategoryDto> findLandMarkCategoryById(Long id) {
+        try {
+            CCError<LandMarkCategoryDto> ccError = masterServiceImpl.findLandmarkCategoryById(id);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_LANDMARK_CATEGORY, e);
+        }
+    }
+
+
+    @Override
+    public CCResponse<LandMarkCategoryDto> createLandMarkCategory(LandMarkCategoryDto landMarkCategoryDto) {
+        try {
+            CCError<LandMarkCategoryDto> ccError = masterServiceImpl.createLandmarkCategory(landMarkCategoryDto);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_CREATE_LANDMARK_CATEGORY, e);
+        }
+    }
+
+    @Override
+    public CCResponse<LandMarkCategoryDto> deleteLandMarkCategory(Long id) {
+        try {
+            CCError<LandMarkCategoryDto> ccError = masterServiceImpl.deleteLandmarkCategory(id);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR,ERROR_DELETE_LANDMARK_CATEGORY, e);
+        }
+    }
+
+    @Override
+    public CCResponse<LandMarkCategoryDto> updateLandMarkCategory(Long id, LandMarkCategoryDto landMarkCategoryDto) {
+        try {
+            CCError<LandMarkCategoryDto> ccError = masterServiceImpl.updateLandmarkCategory(id, landMarkCategoryDto);
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponse<>(ccError.getData());
+
+        } catch (Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_UPDATE_LANDMARK_CATEGORY, e);
         }
     }
 }

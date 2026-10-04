@@ -6,6 +6,10 @@ import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+import lk.travelmarket.search_engine.dto.CityDto;
+import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dto.RoomCategoryDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
 import lk.travelmarket.search_engine.service.master.IMasterService;
@@ -243,11 +247,38 @@ public class MasterDataController implements IMasterDataController {
         return NetworkUtils.wrap(masterService.updateFacilityCategory(id, facilityCategoryDto));
     }
 
+
+
     @Override
     public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> deleteFacilityCategory(Long id) {
         return NetworkUtils.wrap(masterService.deleteFacilityCategory( id ));
     }
 
+    // LandMark Categories
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> findAllLandmarkCategories() {
+        return NetworkUtils.wrap(masterService.findAllLandMarkCategories());
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> findLandmarkCategoryById(Long id) {
+        return NetworkUtils.wrap(masterService.findLandMarkCategoryById( id ));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> createLandmarkCategory(LandMarkCategoryDto landMarkCategoryDto) {
+        return NetworkUtils.wrap(masterService.createLandMarkCategory(landMarkCategoryDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> updateLandmarkCategory(Long id, LandMarkCategoryDto landMarkCategoryDto) {
+        return NetworkUtils.wrap(masterService.updateLandMarkCategory(id, landMarkCategoryDto));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<LandMarkCategoryDto>> deleteLandmarkCategory(Long id) {
+        return NetworkUtils.wrap(masterService.deleteLandMarkCategory( id ));
     @Override
     public ResponseEntity<CCResponseWrapper<BoardBasisDto>> createBoardBasis(BoardBasisDto request) {
         return NetworkUtils.wrap(masterService.createBoardBasis(request));

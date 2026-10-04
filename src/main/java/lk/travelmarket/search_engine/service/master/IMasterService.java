@@ -5,6 +5,7 @@ import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 
@@ -94,6 +95,20 @@ public interface IMasterService {
     CCResponse<FacilityCategoryDto> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto);
 
     CCResponse<FacilityCategoryDto> deleteFacilityCategory(Long id);
+
+
+    // ------------------- LandMarkCategory -------------------------------------------
+
+    CCResponsePack<LandMarkCategoryDto> findAllLandMarkCategories();
+
+    CCResponse<LandMarkCategoryDto> findLandMarkCategoryById(Long id);
+
+    CCResponse<LandMarkCategoryDto> createLandMarkCategory(LandMarkCategoryDto landMarkCategoryDto);
+
+    CCResponse<LandMarkCategoryDto> deleteLandMarkCategory(Long id);
+
+    CCResponse<LandMarkCategoryDto> updateLandMarkCategory(Long id, LandMarkCategoryDto landMarkCategoryDto);
+
 
     CCResponse<BoardBasisDto> createBoardBasis(BoardBasisDto boardBasisDto);
 

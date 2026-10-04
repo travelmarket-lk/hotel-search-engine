@@ -10,10 +10,12 @@ import lk.travelmarket.search_engine.dao.HotelRoom.RoomContent;
 import lk.travelmarket.search_engine.dao.HotelRoom.RoomType;
 import lk.travelmarket.search_engine.dao.RoomCategory;
 import lk.travelmarket.search_engine.dao.hotel.HotelType;
+import lk.travelmarket.search_engine.dao.landmark.LandMarkCategory;
 import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.repository.*;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
@@ -22,6 +24,7 @@ import lk.travelmarket.search_engine.dao.facility.Facility;
 import lk.travelmarket.search_engine.repository.facility.FacilityRepository;
 import lk.travelmarket.search_engine.dao.facility.FacilityCategory;
 import lk.travelmarket.search_engine.repository.facility.FacilityCategoryRepository;
+import lk.travelmarket.search_engine.repository.landmark.LandMarkCategoryRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -40,6 +43,7 @@ public class MasterServiceImpl {
     private final HotelTypeRepository hotelTypeRepository;
     private final FacilityRepository facilityRepository;
     private final FacilityCategoryRepository facilityCategoryRepository;
+    private final LandMarkCategoryRepository landMarkCategoryRepository;
     private final BoardBasisRepository boardBasisRepository;
     private final RoomTypeRepository roomTypeRepository;
 
@@ -51,8 +55,7 @@ public class MasterServiceImpl {
             HotelTypeRepository hotelTypeRepository,
             FacilityRepository facilityRepository,
             FacilityCategoryRepository facilityCategoryRepository,
-            BoardBasisRepository boardBasisRepository,
-            RoomTypeRepository roomTypeRepository
+            LandMarkCategoryRepository landMarkCategoryRepository
     ) {
 
         this.districtRepository = districtRepository;
@@ -62,8 +65,7 @@ public class MasterServiceImpl {
         this.hotelTypeRepository = hotelTypeRepository;
         this.facilityRepository = facilityRepository;
         this.facilityCategoryRepository = facilityCategoryRepository;
-        this.boardBasisRepository = boardBasisRepository;
-        this.roomTypeRepository = roomTypeRepository;
+        this.landMarkCategoryRepository = landMarkCategoryRepository;
     }
 
 
@@ -545,6 +547,9 @@ public class MasterServiceImpl {
     }
 
     // ---------------------------- HotelType ----------------------------
+
+
+
     public CCError<List<HotelTypeDto>> findAllHotelTypes() {
 
         CCError<List<HotelTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_HOTEL_TYPES);
@@ -574,6 +579,14 @@ public class MasterServiceImpl {
 
     public CCError<HotelTypeDto> saveHotelType(HotelTypeDto hotelTypeDto) {
 
+        if (hotelTypeRepository.existsByHotelType(
+                hotelTypeDto.getHotelType())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    "Hotel type already exists"
+            );
+        }
         HotelType hotelType = toEntity(hotelTypeDto);
         HotelType saved = this.hotelTypeRepository.save(hotelType);
 
@@ -585,6 +598,16 @@ public class MasterServiceImpl {
     public CCError<HotelTypeDto> updateHotelType(Long id, HotelTypeDto hotelTypeDto) {
 
         Optional<HotelType> hotelTypeOpt = this.hotelTypeRepository.findById(id);
+
+        if (hotelTypeRepository.existsByCategoryAndIdNot(
+                hotelTypeDto.getHotelType(),
+                id)) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_HOTEL_TYPE
+            );
+        }
 
         if (hotelTypeOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_HOTEL_TYPE_NOT_FOUND);
@@ -644,6 +667,15 @@ public class MasterServiceImpl {
 
     public CCError<FacilityDto> saveFacility(FacilityDto facilityDto) {
 
+        if (facilityRepository.existsByFacility(
+                facilityDto.getFacilityName())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_FACILITY
+            );
+        }
+
         Facility facility = toEntity(facilityDto);
         Facility saved = this.facilityRepository.save(facility);
 
@@ -657,13 +689,22 @@ public class MasterServiceImpl {
         Optional<Facility> facilityOpt = this.facilityRepository.findById(id);
         Optional<FacilityCategory> facilityCategory = this.facilityCategoryRepository.findById( facilityDto.getCategory().getId() );
 
+
+        if (facilityRepository.existsByFacilityAndIdNot(
+                facilityDto.getFacilityName(),
+                id)) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_FACILITY
+            );
+        }
+
         if (facilityOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_NOT_FOUND);
         }
 
-        if (facilityCategory.isEmpty()) {
-            return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_CATEGORY_NOT_FOUND);
-        }
+
 
 
         Facility facility = facilityOpt.get();
@@ -722,6 +763,15 @@ public class MasterServiceImpl {
 
     public CCError<FacilityCategoryDto> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
 
+        if (facilityCategoryRepository.existsByFacilityCategory(
+                facilityCategoryDto.getFacilityCategory())) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                   DUPLICATE_FACILITY_CATEGORY
+            );
+        }
+
         FacilityCategory category = toEntity(facilityCategoryDto);
         FacilityCategory saved = this.facilityCategoryRepository.save(category);
 
@@ -736,6 +786,16 @@ public class MasterServiceImpl {
 
         if (categoryOpt.isEmpty()) {
             return new CCError<>(CCErrorStatus.ERROR, ERROR_FACILITY_CATEGORY_NOT_FOUND);
+        }
+
+        if (facilityCategoryRepository.existsByCategoryAndIdNot(
+                facilityCategoryDto.getFacilityCategory(),
+                id)) {
+
+            return new CCError<>(
+                    CCErrorStatus.ERROR,
+                    DUPLICATE_FACILITY_CATEGORY
+            );
         }
 
         FacilityCategory category = categoryOpt.get();
@@ -763,107 +823,137 @@ public class MasterServiceImpl {
         return ccError;
     }
 
-    private BoardBasisDto toBoardBasisDto(BoardBasis boardBasis) {
-        return new BoardBasisDto(boardBasis.getId(), boardBasis.getName(), boardBasis.getDescription());
-    }
+    // --------------------------- LandMark Category ---------------------------
 
-    public CCError<BoardBasisDto> createBoardBasis(BoardBasisDto dto) {
-        if (dto == null) {
-            return createErrorResponse(CCErrorStatus.ERROR, "Request payload cannot be null");
-        }
 
-        // Business Logic Validation: Duplicate check
-        if (boardBasisRepository.existsByName(dto.getName())) {
-            return createErrorResponse(CCErrorStatus.ERROR, "A board basis with this name already exists");
-        }
+    public CCError<List<LandMarkCategoryDto>> findAllLandmarkCategories() {
 
-        BoardBasis dao = new BoardBasis();
-        dao.setName(dto.getName());
-        dao.setDescription(dto.getDescription());
+        CCError<List<LandMarkCategoryDto>> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_RETRIEVE_LANDMARK_CATEGORIES
+                );
 
-        BoardBasis saved = boardBasisRepository.save(dao);
+        List<LandMarkCategoryDto> landmarkData =
+                landMarkCategoryRepository.findAll()
+                        .stream()
+                        .map(this::toDto)
+                        .toList();
 
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_BOARD_BASIS);
-        ccError.setData(toBoardBasisDto(saved));
+        ccError.setData(landmarkData);
+
         return ccError;
     }
 
-    public CCError<List<BoardBasisDto>> findAllBoardBasis() {
-        CCError<List<BoardBasisDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BOARD_BASIS);
+    public CCError<LandMarkCategoryDto> findLandmarkCategoryById(Long id) {
 
-        List<BoardBasisDto> data = boardBasisRepository.findAll().stream()
-                .map(this::toBoardBasisDto)
-                .toList();
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_RETRIEVE_LANDMARK_CATEGORY
+                );
 
-        ccError.setData(data);
-        return ccError;
-    }
+        Optional<LandMarkCategory> dao =
+                landMarkCategoryRepository.findById(id);
 
-    public CCError<BoardBasisDto> findBoardBasisById(Long id) {
-        if (id == null || id <= 0) {
-            return createErrorResponse(CCErrorStatus.ERROR, "Invalid Board Basis ID");
-        }
-
-        Optional<BoardBasis> dao = boardBasisRepository.findById(id);
         if (dao.isEmpty()) {
-            return createErrorResponse(CCErrorStatus.ERROR, ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
+
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_LANDMARK_CATEGORY_NOT_FOUND);
+
+            return ccError;
         }
 
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_BOARD_BASIS);
-        ccError.setData(toBoardBasisDto(dao.get()));
+        ccError.setData(this.toDto(dao.get()));
+
         return ccError;
     }
 
-    public CCError<BoardBasisDto> updateBoardBasis(Long id, BoardBasisDto dto) {
-        if (id == null || id <= 0) {
-            return createErrorResponse(CCErrorStatus.ERROR, "Invalid Board Basis ID");
-        }
-        if (dto == null) {
-            return createErrorResponse(CCErrorStatus.ERROR, "Request payload cannot be null");
+    public CCError<LandMarkCategoryDto> createLandmarkCategory(LandMarkCategoryDto landMarkCategoryDto) {
+
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_CREATE_LANDMARK_CATEGORY
+                );
+
+        if (landMarkCategoryRepository.findByCategory(
+                landMarkCategoryDto.getCategory()
+        )) {
+            ccError.setStatus(CCErrorStatus.ERROR);
+
+            ccError.setMessage(DUPLICATE_CREATE_LANDMARK_CATEGORY);
+            return ccError;
         }
 
-        Optional<BoardBasis> dao = boardBasisRepository.findById(id);
+        LandMarkCategory dao = new LandMarkCategory();
+
+        dao.setCategory(landMarkCategoryDto.getCategory());
+
+        LandMarkCategory saved = this.landMarkCategoryRepository.save(dao);
+
+        ccError.setData(this.toDto(saved));
+
+        return ccError;
+    }
+
+    public CCError<LandMarkCategoryDto> deleteLandmarkCategory(Long id) {
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_DELETE_LANDMARK_CATEGORY
+                );
+
+        Optional<LandMarkCategory> dao =
+                landMarkCategoryRepository.findById(id);
+
         if (dao.isEmpty()) {
-            return createErrorResponse(CCErrorStatus.ERROR, ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_LANDMARK_CATEGORY_NOT_FOUND);
+            return ccError;
         }
 
+        landMarkCategoryRepository.delete(dao.get());
 
-        if (boardBasisRepository.existsByNameAndIdNot(dto.getName(), id)) {
-            return createErrorResponse(CCErrorStatus.ERROR, "A board basis with this name already exists");
-        }
+        ccError.setData(this.toDto(dao.get()));
 
-        BoardBasis entity = dao.get();
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-        BoardBasis updated = boardBasisRepository.save(entity);
-
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_BOARD_BASIS);
-        ccError.setData(toBoardBasisDto(updated));
         return ccError;
     }
 
-    public CCError<BoardBasisDto> deleteBoardBasis(Long id) {
-        if (id == null || id <= 0) {
-            return createErrorResponse(CCErrorStatus.ERROR, "Invalid Board Basis ID");
-        }
+    public CCError<LandMarkCategoryDto> updateLandmarkCategory(Long id, LandMarkCategoryDto landMarkCategoryDto) {
+        CCError<LandMarkCategoryDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_UPDATE_LANDMARK_CATEGORY
+                );
 
-        Optional<BoardBasis> dao = boardBasisRepository.findById(id);
+        Optional<LandMarkCategory> dao =
+                landMarkCategoryRepository.findById(id);
+
         if (dao.isEmpty()) {
-            return createErrorResponse(CCErrorStatus.ERROR, ERROR_RETRIEVE_BOARD_BASIS_NOT_FOUND);
+            ccError.setStatus(CCErrorStatus.ERROR);
+            ccError.setMessage(ERROR_LANDMARK_CATEGORY_NOT_FOUND);
+            return ccError;
         }
 
-        boardBasisRepository.delete(dao.get());
+        if (landMarkCategoryRepository.existsByCategoryAndIdNot(
+                landMarkCategoryDto.getCategory()
 
-        CCError<BoardBasisDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_BOARD_BASIS);
-        ccError.setData(toBoardBasisDto(dao.get()));
+        ))
+
+
+
+        dao.get().setCategory(landMarkCategoryDto.getCategory());
+
+        landMarkCategoryRepository.save(dao.get());
+
+        ccError.setData(this.toDto(dao.get()));
+
         return ccError;
     }
 
 
-    private <T> CCError<T> createErrorResponse(CCErrorStatus status, String message) {
-        CCError<T> error = new CCError<>(status, message);
-        return error;
-    }
+
 
 
 
@@ -913,86 +1003,22 @@ public class MasterServiceImpl {
         return category;
     }
 
-
-
-    private RoomTypeDto toRoomTypeDto(RoomType roomType) {
-        return new RoomTypeDto(roomType.getId(), roomType.getType());
+    private LandMarkCategoryDto toDto(LandMarkCategory category) {
+        LandMarkCategoryDto dto = new LandMarkCategoryDto();
+        dto.setId(category.getId());
+        dto.setCategory(category.getCategory());
+        return dto;
     }
 
-    public CCError<RoomTypeDto> createRoomType(@Valid RoomTypeDto dto) {
-        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_CREATE_ROOM_TYPE);
-
-        if (roomTypeRepository.existsByType(dto.getType())) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage("Room type already exists");
-            return ccError;
-        }
-
-        RoomType dao = new RoomType();
-        dao.setType(dto.getType());
-
-        RoomType saved = roomTypeRepository.save(dao);
-        ccError.setData(toRoomTypeDto(saved));
-        return ccError;
+    private LandMarkCategory toDao(LandMarkCategoryDto dto) {
+        LandMarkCategory category = new LandMarkCategory();
+        category.setId(dto.getId());
+        category.setCategory(dto.getCategory());
+        return category;
     }
 
 
-    public CCError<List<RoomTypeDto>> findAllRoomType() {
-        CCError<List<RoomTypeDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_TYPE);
 
-        List<RoomTypeDto> data = roomTypeRepository.findAll().stream()
-                .map(this::toRoomTypeDto)
-                .toList();
-
-        ccError.setData(data);
-        return ccError;
-    }
-
-    public CCError<RoomTypeDto> findRoomTypeById(Long id) {
-        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_RETRIEVE_ROOM_TYPE);
-
-        Optional<RoomType> dao = roomTypeRepository.findById(id);
-        if (dao.isEmpty()) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage(ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND);
-            return ccError;
-        }
-
-        ccError.setData(toRoomTypeDto(dao.get()));
-        return ccError;
-    }
-
-    public CCError<RoomTypeDto> updateRoomType(Long id, RoomTypeDto dto) {
-        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_UPDATE_ROOM_TYPE);
-
-        Optional<RoomType> dao = roomTypeRepository.findById(id);
-        if (dao.isEmpty()) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage(ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND);
-            return ccError;
-        }
-
-        dao.get().setType(dto.getType());
-        RoomType updated = roomTypeRepository.save(dao.get());
-
-        ccError.setData(toRoomTypeDto(updated));
-        return ccError;
-    }
-
-    public CCError<RoomTypeDto> deleteRoomType(Long id) {
-        CCError<RoomTypeDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_DELETE_ROOM_TYPE);
-
-        Optional<RoomType> dao = roomTypeRepository.findById(id);
-        if (dao.isEmpty()) {
-            ccError.setStatus(CCErrorStatus.ERROR);
-            ccError.setMessage(ERROR_RETRIEVE_ROOM_TYPE_NOT_FOUND);
-            return ccError;
-        }
-
-        roomTypeRepository.delete(dao.get());
-        ccError.setData(toRoomTypeDto(dao.get()));
-        return ccError;
-    }
 
 
 }
