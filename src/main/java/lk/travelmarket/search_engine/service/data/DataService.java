@@ -1,7 +1,6 @@
 package lk.travelmarket.search_engine.service.data;
 
-import lk.travelmarket.search_engine.dto.CityDto;
-import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
@@ -61,32 +60,58 @@ public class DataService implements IDataService {
             int page,
             int size
     ) {
-
         try {
-
-            CCError<Page<CityDto>> ccError =
-                    dataServiceImpl.findAllCities(page, size);
-
+            CCError<Page<CityDto>> ccError = dataServiceImpl.findAllCities(page,size);
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
-                return new CCResponsePack<>(
-                        Status.ERROR,
-                        ccError.getMessage(),
-                        null
-                );
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
             }
-
-            return new CCResponsePack<>(
-                    ccError.getData().getContent()
-            );
-
+            return new CCResponsePack<>(ccError.getData().getContent());
         } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_CITIES, e);
+        }
+    }
 
-            return new CCResponsePack<>(
-                    ErrorLayer.HSL_LAYER,
-                    ErrorSource.SERVER_ERROR,
-                    ERROR_RETRIEVE_CITIES,
-                    e
-            );
+
+
+    //------------Room Category-------------
+    @Override
+    public CCResponsePack<RoomCategoryDto> findAllRoomCategories(int page, int size) {
+        try {
+            CCError<Page<RoomCategoryDto>> ccError = dataServiceImpl.findAllRoomCategories(page,size);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData().getContent());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_ROOM_CATEGORIES, e);
+        }
+    }
+
+    //-------------Board Basis---------------
+    @Override
+    public CCResponsePack<BoardBasisDto> findAllBoardBasis(int page, int size) {
+        try {
+            CCError<Page<BoardBasisDto>> ccError = dataServiceImpl.findAllBoardBasis(page,size);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData().getContent());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_BOARD_BASIS, e);
+        }
+    }
+
+    //--------------Room Type-----------------
+    @Override
+    public CCResponsePack<RoomTypeDto> findAllRoomType(int page,int size) {
+        try {
+            CCError<Page<RoomTypeDto>> ccError = dataServiceImpl.findAllRoomType(page, size);
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+            }
+            return new CCResponsePack<>(ccError.getData().getContent());
+        } catch (Exception e) {
+            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_ROOM_TYPE, e);
         }
     }
 }
