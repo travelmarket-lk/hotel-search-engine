@@ -186,8 +186,8 @@ public class MasterDataController implements IMasterDataController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> saveHotelType(HotelTypeDto hotelTypeDto) {
-        return NetworkUtils.wrap(masterService.saveHotelType(hotelTypeDto));
+    public ResponseEntity<CCResponseWrapper<HotelTypeDto>> createHotelType(HotelTypeDto hotelTypeDto) {
+        return NetworkUtils.wrap(masterService.createHotelType(hotelTypeDto));
     }
 
     @Override
@@ -212,8 +212,8 @@ public class MasterDataController implements IMasterDataController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<FacilityDto>> saveFacility(FacilityDto facilityDto) {
-        return NetworkUtils.wrap(masterService.saveFacility(facilityDto));
+    public ResponseEntity<CCResponseWrapper<FacilityDto>> createFacility(FacilityDto facilityDto) {
+        return NetworkUtils.wrap(masterService.createFacility(facilityDto));
     }
 
     @Override
@@ -238,8 +238,8 @@ public class MasterDataController implements IMasterDataController {
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
-        return NetworkUtils.wrap(masterService.saveFacilityCategory(facilityCategoryDto));
+    public ResponseEntity<CCResponseWrapper<FacilityCategoryDto>> createFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
+        return NetworkUtils.wrap(masterService.createFacilityCategory(facilityCategoryDto));
     }
 
     @Override

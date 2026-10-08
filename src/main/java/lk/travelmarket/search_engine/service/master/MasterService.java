@@ -632,9 +632,9 @@ public class MasterService implements IMasterService {
     }
 
     @Override
-    public CCResponse<HotelTypeDto> saveHotelType(HotelTypeDto hotelTypeDto) {
+    public CCResponse<HotelTypeDto> createHotelType(HotelTypeDto hotelTypeDto) {
         try {
-            CCError<HotelTypeDto> ccError = masterServiceImpl.saveHotelType(hotelTypeDto);
+            CCError<HotelTypeDto> ccError = masterServiceImpl.createHotelType(hotelTypeDto);
 
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
@@ -708,9 +708,9 @@ public class MasterService implements IMasterService {
     }
 
     @Override
-    public CCResponse<FacilityDto> saveFacility(FacilityDto facilityDto) {
+    public CCResponse<FacilityDto> createFacility(FacilityDto facilityDto) {
         try {
-            CCError<FacilityDto> ccError = masterServiceImpl.saveFacility(facilityDto);
+            CCError<FacilityDto> ccError = masterServiceImpl.createFacility(facilityDto);
 
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);
@@ -784,9 +784,9 @@ public class MasterService implements IMasterService {
     }
 
     @Override
-    public CCResponse<FacilityCategoryDto> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
+    public CCResponse<FacilityCategoryDto> createFacilityCategory(FacilityCategoryDto facilityCategoryDto) {
         try {
-            CCError<FacilityCategoryDto> ccError = masterServiceImpl.saveFacilityCategory(facilityCategoryDto);
+            CCError<FacilityCategoryDto> ccError = masterServiceImpl.createFacilityCategory(facilityCategoryDto);
 
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, ccError.getMessage(), null);

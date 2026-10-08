@@ -15,13 +15,13 @@ public class Facility {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String facilityName;
+    @Column(name = "title", nullable = false)
+    private String title;
 
     @Column(name = "category", nullable = false)
-    private String facilityCategory;
+    private String category;
 
     @Column(name = "icon")
-    private String facilityIcon;
+    private String icon;
 }
 

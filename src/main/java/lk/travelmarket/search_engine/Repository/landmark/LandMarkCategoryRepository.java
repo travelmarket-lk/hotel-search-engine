@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LandMarkCategoryRepository extends JpaRepository<LandMarkCategory, Long> {
 
-    boolean findByCategory(String LandMarkCategory);
+    boolean existsByCategory(String category);
 
-    boolean existsByCategoryAndIdNot(String LandMarkCategory);
+    boolean existsByCategoryAndIdNot(String category , long id);
 
 
 

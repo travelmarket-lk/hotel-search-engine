@@ -60,11 +60,14 @@ public interface IMasterService {
 
     CCResponse <RoomCategoryDto>deleteRoomCategory(Long id);
 
+    // ---------------------------- HotelType ----------------------------
+
+
     CCResponsePack<HotelTypeDto> findAllHotelTypes();
 
     CCResponse<HotelTypeDto> findHotelTypeById(Long id);
 
-    CCResponse<HotelTypeDto> saveHotelType(HotelTypeDto hotelTypeDto);
+    CCResponse<HotelTypeDto> createHotelType(HotelTypeDto hotelTypeDto);
 
     CCResponse<HotelTypeDto> updateHotelType(Long id, HotelTypeDto hotelTypeDto);
 
@@ -77,7 +80,7 @@ public interface IMasterService {
 
     CCResponse<FacilityDto> findFacilityById(Long id);
 
-    CCResponse<FacilityDto> saveFacility(FacilityDto facilityDto);
+    CCResponse<FacilityDto> createFacility(FacilityDto facilityDto);
 
     CCResponse<FacilityDto> updateFacility(Long id, FacilityDto facilityDto);
 
@@ -90,7 +93,7 @@ public interface IMasterService {
 
     CCResponse<FacilityCategoryDto> findFacilityCategoryById(Long id);
 
-    CCResponse<FacilityCategoryDto> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto);
+    CCResponse<FacilityCategoryDto> createFacilityCategory(FacilityCategoryDto facilityCategoryDto);
 
     CCResponse<FacilityCategoryDto> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto);
 

@@ -15,7 +15,7 @@ public class LandMarkCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "landmark_category", nullable = false, unique = true)
+    @Column(name = "category", nullable = false, unique = true)
     private String category;
 
 }

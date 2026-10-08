@@ -14,10 +14,7 @@ public class FacilityDto {
     private Long id;
     @NotEmpty
     @Size(min = 1, max = 50)
-    private String facilityName;
-    @NotEmpty
-    @Size(min = 1, max = 50)
-    private String facilityCategory;
-    private String facilityIcon;
-    private Long hotelId;
+    private String title;
+    private String category;
+    private String icon;
 }

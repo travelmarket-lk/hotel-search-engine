@@ -14,5 +14,5 @@ public class FacilityCategoryDto {
     private Long id;
     @NotEmpty
     @Size(min = 1, max = 50)
-    private String facilityCategory;
+    private String name;
 }

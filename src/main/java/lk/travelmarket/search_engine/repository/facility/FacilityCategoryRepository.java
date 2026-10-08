@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FacilityCategoryRepository
         extends JpaRepository<FacilityCategory, Long> {
 
-    boolean existsByFacilityCategory(String LandMarkCategory);
+    boolean existsByName(String category);
 
-    boolean existsByCategoryAndIdNot(String LandMarkCategory, Long id);
+    boolean existsByNameAndIdNot(String category, Long id);
 }
