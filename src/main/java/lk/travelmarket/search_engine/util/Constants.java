@@ -149,6 +149,9 @@ public class Constants {
 
     public static final String ERROR_HOTEL_TYPE_NOT_FOUND = "Hotel type not found";
 
+    public static final String DUPLICATE_HOTEL_TYPE = "Hotel type already exists";
+
+
     // ---------------------------- Facility ----------------------------
     public static final String SUCCESS_RETRIEVE_FACILITIES = "Facilities retrieved successfully";
     public static final String ERROR_RETRIEVE_FACILITIES = "Error retrieving facilities";
@@ -167,6 +170,8 @@ public class Constants {
 
     public static final String ERROR_FACILITY_NOT_FOUND = "Facility not found";
 
+    public static final String DUPLICATE_FACILITY = "Facility already exists";
+
     // ------------------------- FacilityCategory -------------------------
     public static final String SUCCESS_RETRIEVE_FACILITY_CATEGORIES = "Facility categories retrieved successfully";
     public static final String ERROR_RETRIEVE_FACILITY_CATEGORIES = "Error retrieving facility categories";
@@ -184,34 +189,8 @@ public class Constants {
     public static final String ERROR_DELETE_FACILITY_CATEGORY = "Error deleting facility category";
     public static final String ERROR_FACILITY_CATEGORY_NOT_FOUND = "Facility category not found";
 
-    // HOTEL BLACKOUTS
-    public static final String SUCCESS_RETRIEVE_HOTEL_BLACKOUTS = "Hotel blackouts retrieved successfully";
-    public static final String SUCCESS_RETRIEVE_HOTEL_BLACKOUT = "Hotel blackout retrieved successfully";
-    public static final String SUCCESS_CREATE_HOTEL_BLACKOUT = "Hotel blackout created successfully";
-    public static final String SUCCESS_UPDATE_HOTEL_BLACKOUT = "Hotel blackout updated successfully";
-    public static final String SUCCESS_DELETE_HOTEL_BLACKOUT = "Hotel blackout deleted successfully";
+    public static final String DUPLICATE_FACILITY_CATEGORY = "Facility Category already exists";
 
-    public static final String ERROR_RETRIEVE_HOTEL_BLACKOUTS = "Failed to retrieve hotel blackouts";
-    public static final String ERROR_RETRIEVE_HOTEL_BLACKOUT = "Failed to retrieve hotel blackout";
-    public static final String ERROR_CREATE_HOTEL_BLACKOUT = "Failed to create hotel blackout";
-    public static final String ERROR_UPDATE_HOTEL_BLACKOUT = "Failed to update hotel blackout";
-    public static final String ERROR_DELETE_HOTEL_BLACKOUT = "Failed to delete hotel blackout";
-    public static final String ERROR_HOTEL_BLACKOUT_NOT_FOUND = "Hotel blackout not found with ID: ";
-
-    // ROOM BLACKOUTS
-    public static final String SUCCESS_RETRIEVE_ROOM_BLACKOUTS = "Room blackouts retrieved successfully";
-    public static final String SUCCESS_RETRIEVE_ROOM_BLACKOUT = "Room blackout retrieved successfully";
-    public static final String SUCCESS_CREATE_ROOM_BLACKOUT = "Room blackout created successfully";
-    public static final String SUCCESS_UPDATE_ROOM_BLACKOUT = "Room blackout updated successfully";
-    public static final String SUCCESS_DELETE_ROOM_BLACKOUT = "Room blackout deleted successfully";
-
-    public static final String ERROR_RETRIEVE_ROOM_BLACKOUTS = "Failed to retrieve room blackouts";
-    public static final String ERROR_RETRIEVE_ROOM_BLACKOUT = "Failed to retrieve room blackout";
-    public static final String ERROR_CREATE_ROOM_BLACKOUT = "Failed to create room blackout";
-    public static final String ERROR_UPDATE_ROOM_BLACKOUT = "Failed to update room blackout";
-    public static final String ERROR_DELETE_ROOM_BLACKOUT = "Failed to delete room blackout";
-    public static final String ERROR_ROOM_BLACKOUT_NOT_FOUND = "Room blackout not found with ID: ";
-    public static final String ERROR_ROOM_ID_REQUIRED = "Room ID is required for a room blackout";
     //Season
 
     public static final String SUCCESS_RETRIEVE_SEASONS = "Seasons retrieve success";
@@ -225,6 +204,23 @@ public class Constants {
     public static final String ERROR_UPDATE_SEASON = "Season update failed";
     public static final String SUCCESS_DELETE_SEASON = "Season deleted successfully";
     public static final String ERROR_DELETE_SEASON = "Season deletion failed";
+
+    // ----------  LandMark Category -------------------
+
+
+    public static final String SUCCESS_CREATE_LANDMARK_CATEGORY = "Landmark Category saved successfully";
+    public static final String ERROR_CREATE_LANDMARK_CATEGORY = "Error saving landmark category";
+    public static final String SUCCESS_RETRIEVE_LANDMARK_CATEGORIES = "Landmark categories retrieved successfully";
+    public static final String ERROR_RETRIEVE_LANDMARK_CATEGORIES = "Error retrieving landmark categories";
+    public static final String SUCCESS_RETRIEVE_LANDMARK_CATEGORY = "Landmark category retrieved successfully";
+    public static final String ERROR_RETRIEVE_LANDMARK_CATEGORY = "Error retrieving landmark category";
+    public static final String SUCCESS_UPDATE_LANDMARK_CATEGORY = "Landmark category updated successfully";
+    public static final String ERROR_UPDATE_LANDMARK_CATEGORY = "Error updating landmark category";
+    public static final String SUCCESS_DELETE_LANDMARK_CATEGORY = "Landmark category deleted successfully";
+    public static final String ERROR_DELETE_LANDMARK_CATEGORY = "Error deleting landmark category";
+    public static final String ERROR_LANDMARK_CATEGORY_NOT_FOUND = "Landmark category not found";
+    public static final String DUPLICATE_CREATE_LANDMARK_CATEGORY = "LandMarkCategory already exists";
+
 
 
     public static final String SUCCESS_RETRIEVE_BOARD_BASIS = "Board Basis retrieve success";
@@ -295,3 +291,4 @@ public class Constants {
     public static final String ERROR_HOTEL_V2_NOT_FOUND = "Hotel not found";
     public static final String ERROR_HOTEL_SEASONS_BULK_UPDATE = "Hotel seasons update failed";
 }
+

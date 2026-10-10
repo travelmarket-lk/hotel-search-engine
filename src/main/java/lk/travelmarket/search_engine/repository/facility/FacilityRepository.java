@@ -6,4 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FacilityRepository extends JpaRepository<Facility, Long> {
+
+    boolean existsByTitle( String name );
+
+    boolean existsByTitleAndIdNot(String name, Long id);
 }

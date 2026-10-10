@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HotelTypeRepository extends JpaRepository<HotelType, Long> {
 
+    boolean existsByHotelType(String type);
+
+    boolean existsByHotelTypeAndIdNot(String type, Long id);
+
 }

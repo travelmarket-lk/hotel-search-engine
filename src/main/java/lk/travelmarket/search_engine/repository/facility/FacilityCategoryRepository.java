@@ -1,13 +1,13 @@
 package lk.travelmarket.search_engine.repository.facility;
 
 import lk.travelmarket.search_engine.dao.facility.FacilityCategory;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
 
 public interface FacilityCategoryRepository
-        extends CrudRepository<FacilityCategory, Long> {
+        extends JpaRepository<FacilityCategory, Long> {
 
+    boolean existsByName(String category);
 
+    boolean existsByNameAndIdNot(String category, Long id);
 }
