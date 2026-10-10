@@ -38,5 +38,5 @@ public interface IPolicyService {
 
     CCResponse<List<PolicyDto>> findPoliciesByHotelId(String hotelId);
 
-    CCResponse bulkUpdatePolicies(String hotelId, @Valid PolicyBulkRequestDto request);
+    CCResponse bulkUpdatePolicies(String hotelId, @Valid @RequestBody PolicyBulkRequestDto request);
 }
