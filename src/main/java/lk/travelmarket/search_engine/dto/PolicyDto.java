@@ -48,4 +48,10 @@ public class PolicyDto {
     public void setPolicyName(String name) {
     }
 
+    public String getId() {
+        return null;
+    }
+
+    public void setId(String policyId) {
+    }
 }

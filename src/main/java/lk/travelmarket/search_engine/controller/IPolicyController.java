@@ -4,11 +4,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lk.travelmarket.search_engine.dto.PolicyBulkRequestDto;
 import lk.travelmarket.search_engine.dto.PolicyDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -18,6 +21,11 @@ import org.springframework.web.bind.annotation.*;
         description = "APIs for managing Policy resources"
 )
 public interface IPolicyController {
+
+    ResponseEntity<CCResponseWrapper<List<PolicyDto>>> getPolicies(String hotelId);
+
+    ResponseEntity<CCResponseWrapper<List<PolicyDto>>> bulkUpdatePolicies(String hotelId, PolicyBulkRequestDto request);
+
 
     @Operation(
             summary = "Create a new Policy",
@@ -112,5 +120,4 @@ public interface IPolicyController {
     ResponseEntity<CCResponseWrapper<PolicyDto>> delete(
             @PathVariable Long id
     );
-
 }

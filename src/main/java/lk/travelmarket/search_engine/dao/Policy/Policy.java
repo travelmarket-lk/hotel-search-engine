@@ -67,4 +67,8 @@ public class Policy implements Serializable {
     public String getName() {
         return null;
     }
+
+    public void setHotelId(String hotelId) {
+
+    }
 }

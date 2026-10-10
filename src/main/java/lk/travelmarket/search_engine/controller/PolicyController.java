@@ -1,12 +1,15 @@
 package lk.travelmarket.search_engine.controller;
 
 import jakarta.validation.Valid;
+import lk.travelmarket.search_engine.dto.PolicyBulkRequestDto;
 import lk.travelmarket.search_engine.dto.PolicyDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
 import lk.travelmarket.search_engine.service.Policy.IPolicyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/policies")
@@ -16,6 +19,16 @@ public class PolicyController implements IPolicyController {
 
     public PolicyController(IPolicyService policyService) {
         this.policyService = policyService;
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<List<PolicyDto>>> getPolicies(@PathVariable String hotelId) {
+        return NetworkUtils.wrap(policyService.findPoliciesByHotelId(hotelId));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<List<PolicyDto>>> bulkUpdatePolicies(@PathVariable String hotelId, @Valid @RequestBody PolicyBulkRequestDto request) {
+        return NetworkUtils.wrap(policyService.bulkUpdatePolicies(hotelId, request));
     }
 
     @PostMapping
@@ -45,5 +58,4 @@ public class PolicyController implements IPolicyController {
     public ResponseEntity<CCResponseWrapper<PolicyDto>> delete(@PathVariable Long id) {
         return NetworkUtils.wrap(policyService.deletePolicy(id));
     }
-
 }
