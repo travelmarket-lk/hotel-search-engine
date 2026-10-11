@@ -1,4 +1,4 @@
-package lk.travelmarket.search_engine.Repository;
+package lk.travelmarket.search_engine.repository;
 
 
 import lk.travelmarket.search_engine.dao.Policy.Policy;

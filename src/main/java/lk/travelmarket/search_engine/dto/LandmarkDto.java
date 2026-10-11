@@ -1,5 +1,11 @@
 package lk.travelmarket.search_engine.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+
 public class LandmarkDto {
 
     private Long id;
@@ -15,6 +21,9 @@ public class LandmarkDto {
         this.landmarkName = landmarkName;
         this.landmarkDist = landmarkDist;
         this.hotelId = hotelId;
+    }
+
+    public LandmarkDto(Long id, @NotBlank(message = "Landmark name is required and cannot be blank") @Size(max = 255, message = "Landmark name must not exceed 255 characters") String landmarkName, @NotNull(message = "Landmark distance is required") @PositiveOrZero(message = "Landmark distance must be greater than or equal to 0") Double landmarkDist) {
     }
 
     public Long getId() {

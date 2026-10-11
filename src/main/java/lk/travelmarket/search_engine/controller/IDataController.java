@@ -3,6 +3,8 @@ package lk.travelmarket.search_engine.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.dto.RoomDto;
@@ -28,6 +30,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(EndpointConstants.V1 + EndpointConstants.DATA)
 public interface IDataController {
+
+
+    // Bed Types
+    @Operation(
+            summary = "Get all Bed Types",
+            description = "Retrieves Bed Types with pagination."
+    )
+    @GetMapping("/bed-types")
+    ResponseEntity<CCResponseWrapper<Page<BedType>>> getAllBedTypes(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    );
 
     @Operation(
             summary = "Get all Cities",

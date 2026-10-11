@@ -35,4 +35,5 @@ public class Landmark {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
+
 }
