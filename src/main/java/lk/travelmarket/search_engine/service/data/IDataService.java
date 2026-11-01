@@ -5,8 +5,16 @@ import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.RoomTypeDto;
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+
 
 public interface IDataService {
+
+    // Bed Types
+    CCResponsePack<BedType> findAllBedTypes(
+            int page,
+            int size
+    );
 
     CCResponsePack<DistrictDto> findAllDistricts(
             int page,

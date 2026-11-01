@@ -4,6 +4,8 @@ import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
 import lk.travelmarket.search_engine.dto.RoomDto;
 import lk.travelmarket.search_engine.dto.SeasonDto;
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+import lk.travelmarket.search_engine.dto.LandmarkDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
 import lk.travelmarket.search_engine.service.data.IDataService;
@@ -40,7 +42,16 @@ public class DataController implements IDataController {
         );
     }
 
-
+    // Bed Types
+    @Override
+    public ResponseEntity<CCResponseWrapper<Page<BedType>>> getAllBedTypes(
+            int page,
+            int size
+    ) {
+        return NetworkUtils.wrap(
+                dataService.findAllBedTypes(page, size)
+        );
+    }
 
     //---------Room Category-----------
     @Override

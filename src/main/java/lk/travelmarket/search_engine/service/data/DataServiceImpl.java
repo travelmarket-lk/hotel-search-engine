@@ -4,6 +4,8 @@ import lk.travelmarket.search_engine.dao.City;
 import lk.travelmarket.search_engine.dao.District;
 import lk.travelmarket.search_engine.dto.CityDto;
 import lk.travelmarket.search_engine.dto.DistrictDto;
+import lk.travelmarket.search_engine.dao.HotelRoom.BedType;
+import lk.travelmarket.search_engine.repository.BedTypeRepository;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.dao.BoardBasis;
@@ -28,8 +30,6 @@ import java.util.List;
 
 import static lk.travelmarket.search_engine.util.Constants.*;
 
-import static lk.travelmarket.search_engine.util.Constants.*;
-
 @Service
 public class DataServiceImpl {
 
@@ -38,9 +38,35 @@ public class DataServiceImpl {
     private final RoomTypeRepository roomTypeRepository;
     private final RoomCategoryRepository categoryRepository;
     private final BoardBasisRepository boardBasisRepository;
+    private final BedTypeRepository bedTypeRepository;
 
 
     public DataServiceImpl(
+            BedTypeRepository bedTypeRepository
+    ) {
+        this.bedTypeRepository = bedTypeRepository;
+    }
+
+    // Bed Types
+    public CCError<Page<BedType>> findAllBedTypes(
+            int page,
+            int size
+    ) {
+
+        CCError<Page<BedType>> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_RETRIEVE_BED_TYPES
+                );
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<BedType> bedTypeData = bedTypeRepository.findAll(pageable);
+
+        ccError.setData(bedTypeData);
+
+        return ccError;
+    }
 
             DistrictRepository districtRepository,
             CityRepository cityRepository,
