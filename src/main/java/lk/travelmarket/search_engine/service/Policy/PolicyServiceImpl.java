@@ -3,8 +3,8 @@ package lk.travelmarket.search_engine.service.Policy;
 import jakarta.transaction.Transactional;
 import lk.travelmarket.search_engine.Repository.PolicyRepository;
 import lk.travelmarket.search_engine.dao.Policy.Policy;
-import lk.travelmarket.search_engine.dto.PolicyBulkRequestDto;
-import lk.travelmarket.search_engine.dto.PolicyDto;
+import lk.travelmarket.search_engine.dto.Policy.PolicyBulkRequestDto;
+import lk.travelmarket.search_engine.dto.Policy.PolicyDto;
 import lk.travelmarket.search_engine.network.commons.CCError;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
@@ -23,7 +23,7 @@ public class PolicyServiceImpl implements IPolicyService {
         this.policyRepository = policyRepository;
     }
 
-    public CCError<List<PolicyDto>> findPoliciesByHotelId(String hotelId) {
+    public CCResponse findPoliciesByHotelId(String hotelId) {
         CCError<List<PolicyDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, "Policies retrieved successfully");
 
 
@@ -35,7 +35,7 @@ public class PolicyServiceImpl implements IPolicyService {
         return ccError;
     }
 
-    public CCError<List<PolicyDto>> bulkUpdatePolicies(String hotelId, PolicyBulkRequestDto request) {
+    public CCResponse bulkUpdatePolicies(String hotelId, PolicyBulkRequestDto request) {
         CCError<List<PolicyDto>> ccError = new CCError<>(CCErrorStatus.SUCCESS, "Policies updated successfully");
 
 
@@ -130,7 +130,7 @@ public class PolicyServiceImpl implements IPolicyService {
     }
 
     @Override
-    public CCResponse deletepolicy(String s) {
+    public CCResponse<PolicyDto> deletepolicy(String s) {
         return null;
     }
 }

@@ -48,4 +48,8 @@ public class CCResponsePack<T> extends ErrorInfo {
     public CCResponsePack(ErrorLayer errorLayer, ErrorSource errorSource, String shortText, Exception exception) {
         super( errorLayer, errorSource , shortText , exception);
     }
+
+    public String getMessage() {
+        return "";
+    }
 }

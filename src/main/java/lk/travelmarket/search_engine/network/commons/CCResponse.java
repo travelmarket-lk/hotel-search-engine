@@ -51,4 +51,8 @@ public class CCResponse<T> extends ErrorInfo {
     public CCResponse(ErrorLayer errorLayer, ErrorSource errorSource, String shortText, Exception exception) {
         super( errorLayer, errorSource , shortText , exception);
     }
+
+    public String getMessage() {
+        return "";
+    }
 }

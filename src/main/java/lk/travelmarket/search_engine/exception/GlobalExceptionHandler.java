@@ -16,10 +16,6 @@ public class GlobalExceptionHandler {
     public CCError<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage())
-        );
-
         CCError<Map<String, String>> ccError = new CCError<>(CCErrorStatus.ERROR, "Validation failed");
         ccError.setData(errors);
         return ccError;

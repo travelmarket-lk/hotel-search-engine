@@ -1,4 +1,4 @@
-package lk.travelmarket.search_engine.dto;
+package lk.travelmarket.search_engine.dto.Policy;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

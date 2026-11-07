@@ -1,4 +1,4 @@
-package lk.travelmarket.search_engine.dto;
+package lk.travelmarket.search_engine.dto.Policy;
 
 import jakarta.validation.Valid;
 

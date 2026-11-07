@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Repository
-public interface PolicyRepository extends JpaRepository<Policy, String> {
+public interface PolicyRepository extends JpaRepository<Policy, Long> {
 
-    Collection<Policy> findByHotelId(String hotelId);
+    Optional<Policy> findByHotelIdAndHotelId(Long hotelId, Long id);
 }
+
+

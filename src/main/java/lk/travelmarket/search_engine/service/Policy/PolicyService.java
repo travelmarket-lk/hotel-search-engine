@@ -1,18 +1,18 @@
 package lk.travelmarket.search_engine.service.Policy;
 
-import lk.travelmarket.search_engine.dto.PolicyDto;
-import lk.travelmarket.search_engine.network.commons.CCError;
+import lk.travelmarket.search_engine.dto.Policy.PolicyBulkRequestDto;
+import lk.travelmarket.search_engine.dto.Policy.PolicyDto;
 import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 import lk.travelmarket.search_engine.network.error.code.ErrorLayer;
 import lk.travelmarket.search_engine.network.error.code.ErrorSource;
 import lk.travelmarket.search_engine.network.error.code.Status;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
+@RequiredArgsConstructor
 public class PolicyService implements IPolicyService {
 
     static final String ERROR_RETRIEVE_POLICIES = "Error occurred while retrieving policies";
@@ -23,14 +23,10 @@ public class PolicyService implements IPolicyService {
 
     private final PolicyServiceImpl policyServiceImpl;
 
-    public PolicyService(PolicyServiceImpl policyServiceImpl) {
-        this.policyServiceImpl = policyServiceImpl;
-    }
-
     @Override
     public CCResponse<PolicyDto> createPolicy(PolicyDto dto) {
         try {
-            CCError<PolicyDto> response = policyServiceImpl.createPolicy(dto);
+            CCResponse<PolicyDto> response = policyServiceImpl.createPolicy(dto);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -43,7 +39,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> findPolicy(Long id) {
         try {
-            CCError<PolicyDto> response = policyServiceImpl.findPolicy(id);
+            CCResponse<PolicyDto> response = policyServiceImpl.findPolicy(id);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -61,7 +57,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponsePack<PolicyDto> findAll() {
         try {
-            CCError<List<PolicyDto>> response = policyServiceImpl.findAll();
+            CCResponsePack<PolicyDto> response = policyServiceImpl.findAll();
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponsePack<>(Status.ERROR, response.getMessage(), null);
             }
@@ -74,7 +70,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> updatePolicy(Long id, PolicyDto dto) {
         try {
-            CCError<PolicyDto> response = policyServiceImpl.updatePolicy(id, dto);
+            CCResponse<PolicyDto> response = policyServiceImpl.updatePolicy(id, dto);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -92,7 +88,7 @@ public class PolicyService implements IPolicyService {
     @Override
     public CCResponse<PolicyDto> deletePolicy(Long id) {
         try {
-            CCError<PolicyDto> response = policyServiceImpl.deletePolicy(id);
+            CCResponse<PolicyDto> response = policyServiceImpl.deletePolicy(id);
             if (response.getStatus().equals(CCErrorStatus.ERROR)) {
                 return new CCResponse<>(Status.ERROR, response.getMessage(), null);
             }
@@ -118,7 +114,19 @@ public class PolicyService implements IPolicyService {
     }
 
     @Override
-    public CCResponse deletepolicy(String s) {
+    public CCResponse<PolicyDto> deletepolicy(String s) {
         return null;
     }
+
+    @Override
+    public CCResponse findPoliciesByHotelId(String hotelId) {
+        return null;
+    }
+
+    @Override
+    public CCResponse bulkUpdatePolicies(String hotelId, PolicyBulkRequestDto request) {
+        return null;
+    }
+
 }
+

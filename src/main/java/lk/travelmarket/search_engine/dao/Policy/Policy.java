@@ -1,11 +1,13 @@
 package lk.travelmarket.search_engine.dao.Policy;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.stereotype.Repository;
 
 import javax.naming.Name;
 import java.io.Serializable;
 
+@Data
 @Repository
 @Entity
 @Table(name = "Policy")
