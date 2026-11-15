@@ -21,6 +21,8 @@ public class PolicyService implements IPolicyService {
     static final String ERROR_DELETE_POLICY = "Error occurred while deleting policy";
     static final String ERROR_RETRIEVE_POLICY = "Error occurred while retrieving policy";
 
+
+
     private final PolicyServiceImpl policyServiceImpl;
 
     @Override
@@ -34,6 +36,11 @@ public class PolicyService implements IPolicyService {
         } catch (Exception e) {
             return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_CREATE_POLICY, e);
         }
+    }
+
+    @Override
+    public CCResponse<PolicyDto> createPolicy(String hotelId, PolicyDto dto) {
+        return createPolicy(dto);
     }
 
     @Override
@@ -128,5 +135,10 @@ public class PolicyService implements IPolicyService {
         return null;
     }
 
+
+    @Override
+    public CCResponse bulkUpdatePoliciies(String hotelId, PolicyBulkRequestDto request) {
+        return null;
+    }
 }
 

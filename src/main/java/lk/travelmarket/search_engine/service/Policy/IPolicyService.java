@@ -1,18 +1,18 @@
 package lk.travelmarket.search_engine.service.Policy;
 
 import jakarta.validation.Valid;
-import lk.travelmarket.search_engine.dto.PolicyBulkRequestDto;
-import lk.travelmarket.search_engine.dto.PolicyDto;
+import lk.travelmarket.search_engine.dto.Policy.PolicyBulkRequestDto;
+import lk.travelmarket.search_engine.dto.Policy.PolicyDto;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
-
-import java.util.List;
 
 public interface IPolicyService {
 
 
     CCResponse<PolicyDto> createPolicy(PolicyDto dto);
 
+
+    CCResponse<PolicyDto> createPolicy(String hotelId, PolicyDto dto);
 
     CCResponse<PolicyDto> findPolicy(Long id);
 
@@ -22,7 +22,6 @@ public interface IPolicyService {
 
 
     CCResponse<PolicyDto> updatePolicy(Long id, PolicyDto dto);
-
 
     CCResponse<PolicyDto> updatePolicy(String id, PolicyDto dto);
 
@@ -34,9 +33,11 @@ public interface IPolicyService {
 
     CCResponse<PolicyDto> updatepolicy(String s, PolicyDto request);
 
-    CCResponse deletepolicy(String s);
+    CCResponse<PolicyDto> deletepolicy(String s);
 
-    CCResponse<List<PolicyDto>> findPoliciesByHotelId(String hotelId);
+    CCResponse<PolicyDto> findPoliciesByHotelId(String hotelId);
 
-    CCResponse bulkUpdatePolicies(String hotelId, @Valid PolicyBulkRequestDto request);
+    CCResponse<PolicyDto> bulkUpdatePolicies(String hotelId, @Valid PolicyBulkRequestDto request);
+
+    CCResponse<PolicyDto> bulkUpdatePoliciies(String hotelId, @Valid PolicyBulkRequestDto request);
 }
