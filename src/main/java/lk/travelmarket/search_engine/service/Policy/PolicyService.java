@@ -1,6 +1,6 @@
 package lk.travelmarket.search_engine.service.Policy;
 
-import lk.travelmarket.search_engine.Repository.PolicyRepository;
+import lk.travelmarket.search_engine.repository.PolicyRepository;
 import lk.travelmarket.search_engine.dao.Policy.Policy;
 
 import org.springframework.stereotype.Service;

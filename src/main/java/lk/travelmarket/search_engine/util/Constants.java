@@ -294,4 +294,27 @@ public class Constants {
 
     public static final String ERROR_HOTEL_V2_NOT_FOUND = "Hotel not found";
     public static final String ERROR_HOTEL_SEASONS_BULK_UPDATE = "Hotel seasons update failed";
+
+    // ---------------------------- Blackouts ----------------------------
+
+    public static final String SUCCESS_RETRIEVE_BLACKOUTS = "Blackouts retrieved successfully";
+    public static final String ERROR_RETRIEVE_BLACKOUTS = "Error retrieving blackouts";
+    public static final String SUCCESS_BULK_UPDATE_HOTEL_BLACKOUTS = " Blackout bulk updated successfully";
+    public static final String ERROR_HOTEL_BLACKOUTS_BULK_UPDATE = "Error updating blackout bulk";
+    public static final String SUCCESS_CREATE_BLACKOUT = "Blackout created successfully";
+    public static final String ERROR_CREATE_BLACKOUT = "Error creating blackout";
+    public static final String SUCCESS_RETRIEVE_BLACKOUT = "Blackout retrieved successfully";
+    public static final String ERROR_RETRIEVE_BLACKOUT = "Error retrieving blackout";
+    public static final String ERROR_BLACKOUT_NOT_FOUND = "Blackout not found";
+    public static final String SUCCESS_UPDATE_BLACKOUT = "Blackout updated successfully";
+    public static final String ERROR_UPDATE_BLACKOUT = "Error updating blackout";
+    public static final String SUCCESS_DELETE_BLACKOUT = "Blackout deleted successfully";
+    public static final String ERROR_DELETE_BLACKOUT = "Error deleting blackout";
+
+
+    // Room Blackouts
+
+    public static final String ERROR_ROOM_BLACKOUTS_BULK_UPDATE = "Error while bulk updating room blackouts";
+    public static final String SUCCESS_ROOM_BLACKOUTS_BULK_UPDATE = "Success bulk updating room blackouts";
+    public static final String SUCCESS_BULK_UPDATE_ROOM_BLACKOUTS = "Room blackout bulk updated successfully";
 }

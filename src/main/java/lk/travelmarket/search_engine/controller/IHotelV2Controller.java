@@ -4,17 +4,20 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import lk.travelmarket.search_engine.dto.BlackoutsDto;
 import lk.travelmarket.search_engine.dto.SeasonDto;
+import lk.travelmarket.search_engine.dto.bulk.blackout.BlackoutBulkUpdateDto;
 import lk.travelmarket.search_engine.dto.bulk.season.SeasonBulkUpdateDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.util.EndpointConstants;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(EndpointConstants.V2 + EndpointConstants.HOTELS)
 public interface IHotelV2Controller {
-
 
     @Operation(
             summary = "Get all hotel seasons",
@@ -33,5 +36,27 @@ public interface IHotelV2Controller {
     ResponseEntity<CCResponseWrapper<SeasonBulkUpdateDto>> bulkSeasonsUpdate(
             @PathVariable Long hotelId,
             @Valid @RequestBody SeasonBulkUpdateDto request
+    );
+
+    @GetMapping("/{hotelId}/blackouts")
+    ResponseEntity<CCResponseWrapper<List<BlackoutsDto>>> retrieveBlackouts(@PathVariable Long hotelId);
+
+    @PatchMapping("/{hotelId}/blackouts")
+    ResponseEntity<CCResponseWrapper<BlackoutBulkUpdateDto>> bulkBlackoutUpdate(
+            @PathVariable Long hotelId,
+            @Valid @RequestBody BlackoutBulkUpdateDto request
+    );
+
+    @GetMapping("/{hotelId}/rooms/{roomId}/blackouts")
+    ResponseEntity<CCResponseWrapper<List<BlackoutsDto>>> retrieveRoomBlackouts(
+            @PathVariable Long hotelId,
+            @PathVariable Long roomId
+    );
+
+    @PatchMapping("/{hotelId}/rooms/{roomId}/blackouts")
+    ResponseEntity<CCResponseWrapper<BlackoutBulkUpdateDto>> bulkRoomBlackoutUpdate(
+            @PathVariable Long hotelId,
+            @PathVariable Long roomId,
+            @Valid @RequestBody BlackoutBulkUpdateDto request
     );
 }

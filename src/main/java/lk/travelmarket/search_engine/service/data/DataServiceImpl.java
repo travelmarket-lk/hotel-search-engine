@@ -14,18 +14,12 @@ import lk.travelmarket.search_engine.dao.RoomCategory;
 import lk.travelmarket.search_engine.dto.BoardBasisDto;
 import lk.travelmarket.search_engine.dto.RoomCategoryDto;
 import lk.travelmarket.search_engine.dto.RoomTypeDto;
-import lk.travelmarket.search_engine.network.commons.CCError;
-import lk.travelmarket.search_engine.network.commons.CCErrorStatus;
+
 import lk.travelmarket.search_engine.repository.*;
-import lk.travelmarket.search_engine.repository.hotel.HotelTypeRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
 import java.util.List;
 
 import static lk.travelmarket.search_engine.util.Constants.*;
@@ -42,9 +36,20 @@ public class DataServiceImpl {
 
 
     public DataServiceImpl(
+            DistrictRepository districtRepository,
+            CityRepository cityRepository,
+            RoomTypeRepository roomTypeRepository,
+            RoomCategoryRepository categoryRepository,
+            BoardBasisRepository boardBasisRepository,
             BedTypeRepository bedTypeRepository
     ) {
+        this.districtRepository = districtRepository;
+        this.cityRepository = cityRepository;
+        this.roomTypeRepository = roomTypeRepository;
+        this.categoryRepository = categoryRepository;
+        this.boardBasisRepository = boardBasisRepository;
         this.bedTypeRepository = bedTypeRepository;
+
     }
 
     // Bed Types
@@ -66,20 +71,6 @@ public class DataServiceImpl {
         ccError.setData(bedTypeData);
 
         return ccError;
-    }
-
-            DistrictRepository districtRepository,
-            CityRepository cityRepository,
-            RoomTypeRepository roomTypeRepository,
-            RoomCategoryRepository categoryRepository,
-            BoardBasisRepository boardBasisRepository
-    )
-    {
-        this.districtRepository = districtRepository;
-        this.cityRepository = cityRepository;
-        this.roomTypeRepository = roomTypeRepository;
-        this.categoryRepository = categoryRepository;
-        this.boardBasisRepository = boardBasisRepository;
     }
 
     public CCError<Page<DistrictDto>> findAllDistricts(
