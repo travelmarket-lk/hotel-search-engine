@@ -180,7 +180,12 @@ public class HotelV2ServiceImpl {
     }
 
     public CCError<BlackoutBulkUpdateDto> bulkUpdateBlackouts(Long hotelId, BlackoutBulkUpdateDto request) {
-        CCError<BlackoutBulkUpdateDto> ccError = new CCError<>(CCErrorStatus.SUCCESS, SUCCESS_BULK_UPDATE_HOTEL_BLACKOUTS);
+        CCError<BlackoutBulkUpdateDto> ccError =
+                new CCError<>(
+                        CCErrorStatus.SUCCESS,
+                        SUCCESS_BULK_UPDATE_HOTEL_BLACKOUTS
+                );
+        // 1. Check hotel exists
         Optional<Hotel> hotelDao = this.hotelRepository.findById(hotelId);
 
         if (hotelDao.isEmpty()) {
@@ -189,10 +194,12 @@ public class HotelV2ServiceImpl {
             return ccError;
         }
 
+        // 2. Get request lists
         List<BlackoutsDto> created = request.getCreated() != null ? request.getCreated() : List.of();
         List<BlackoutsDto> updated = request.getUpdated() != null ? request.getUpdated() : List.of();
         List<Long> deleted = request.getDeleted() != null ? request.getDeleted() : List.of();
 
+        // 3. Validate CREATE list
         boolean createdHasId = created.stream().anyMatch(blackout -> blackout.getId() != null);
         if (createdHasId) {
             ccError.setStatus(CCErrorStatus.ERROR);
@@ -200,6 +207,7 @@ public class HotelV2ServiceImpl {
             return ccError;
         }
 
+        // 4. Validate UPDATE list
         boolean updateMissingId = updated.stream().anyMatch(blackout -> blackout.getId() == null);
         if (updateMissingId) {
             ccError.setStatus(CCErrorStatus.ERROR);
@@ -207,6 +215,7 @@ public class HotelV2ServiceImpl {
             return ccError;
         }
 
+        // 5. Check update/delete conflicts
         List<Long> updateIds = updated.stream().map(BlackoutsDto::getId).toList();
         Set<Long> deletedSet = new HashSet<>(deleted);
         List<Long> conflictingIds = updateIds.stream().filter(deletedSet::contains).toList();
@@ -217,6 +226,7 @@ public class HotelV2ServiceImpl {
             return ccError;
         }
 
+        // 6. Load existing blackouts
         Set<Long> requestedExistingIds = new HashSet<>();
         requestedExistingIds.addAll(updateIds);
         requestedExistingIds.addAll(deleted);
@@ -224,6 +234,7 @@ public class HotelV2ServiceImpl {
         List<Blackouts> existingBlackouts = requestedExistingIds.isEmpty() ? List.of() : hotelBlackoutRepository.findAllById(requestedExistingIds);
         Map<Long, Blackouts> existingBlackoutMap = existingBlackouts.stream().collect(Collectors.toMap(Blackouts::getId, Function.identity()));
 
+        // 7. Check missing blackouts
         List<Long> missingIds = requestedExistingIds.stream().filter(id -> !existingBlackoutMap.containsKey(id)).toList();
         if (!missingIds.isEmpty()) {
             ccError.setStatus(CCErrorStatus.ERROR);
@@ -231,6 +242,7 @@ public class HotelV2ServiceImpl {
             return ccError;
         }
 
+        // 8. Validate hotel ownership
         List<Long> invalidHotelBlackoutIds = existingBlackouts.stream()
                 .filter(blackout -> !Objects.equals(blackout.getHotelId(), hotelId) || blackout.getRoomId() != null)
                 .map(Blackouts::getId)
@@ -242,6 +254,7 @@ public class HotelV2ServiceImpl {
             return ccError;
         }
 
+        // 9. CREATE
         List<Blackouts> blackoutsToCreate = created.stream()
                 .map(dto -> Blackouts.builder()
                         .hotelId(hotelId)
@@ -253,6 +266,7 @@ public class HotelV2ServiceImpl {
                 ).toList();
         List<Blackouts> createdBlackouts = hotelBlackoutRepository.saveAll(blackoutsToCreate);
 
+        // 10. UPDATE
         List<Blackouts> blackoutsToUpdate = updated.stream()
                 .map(dto -> {
                     Blackouts blackout = existingBlackoutMap.get(dto.getId());
@@ -263,10 +277,12 @@ public class HotelV2ServiceImpl {
                 }).toList();
         List<Blackouts> updatedBlackouts = hotelBlackoutRepository.saveAll(blackoutsToUpdate);
 
+        // 11. DELETE
         if (!deleted.isEmpty()) {
             hotelBlackoutRepository.deleteAllByIdInBatch(deleted);
         }
 
+        // 12. Build response
         BlackoutBulkUpdateDto response = new BlackoutBulkUpdateDto();
         response.setCreated(createdBlackouts.stream().map(this::mapToBlackoutsDto).toList());
         response.setUpdated(updatedBlackouts.stream().map(this::mapToBlackoutsDto).toList());

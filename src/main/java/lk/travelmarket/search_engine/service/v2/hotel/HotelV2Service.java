@@ -57,11 +57,23 @@ public class HotelV2Service implements IHotelV2Service {
         try {
             CCError<List<BlackoutsDto>> ccError = hotelServiceImpl.retrieveBlackouts( hotelId );
             if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
-                return new CCResponsePack<>(Status.ERROR, ccError.getMessage(), null);
+                return new CCResponsePack<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
             }
-            return new CCResponsePack<>(ccError.getData());
+            return new CCResponsePack<>(
+                    ccError.getData()
+            );
+
         } catch (Exception e) {
-            return new CCResponsePack<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_RETRIEVE_BLACKOUTS, e);
+            return new CCResponsePack<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_RETRIEVE_BLACKOUTS,
+                    e
+            );
         }
     }
 
@@ -104,3 +116,5 @@ public class HotelV2Service implements IHotelV2Service {
         }
     }
 }
+
+
