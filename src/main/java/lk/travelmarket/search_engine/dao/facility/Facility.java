@@ -1,7 +1,7 @@
 package lk.travelmarket.search_engine.dao.facility;
 
 import jakarta.persistence.*;
-import lk.travelmarket.search_engine.dao.hotel.Hotel;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,10 +18,10 @@ public class Facility {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "category_id", nullable = false)
-    private FacilityCategory category;
+    @Column(name = "category", nullable = false)
+    private String category;
 
     @Column(name = "icon")
     private String icon;
 }
+

@@ -5,6 +5,7 @@ import lk.travelmarket.search_engine.dto.*;
 import lk.travelmarket.search_engine.dto.hotel.HotelTypeDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityDto;
 import lk.travelmarket.search_engine.dto.facility.FacilityCategoryDto;
+import lk.travelmarket.search_engine.dto.landmark.LandMarkCategoryDto;
 import lk.travelmarket.search_engine.network.commons.CCResponse;
 import lk.travelmarket.search_engine.network.commons.CCResponsePack;
 
@@ -59,11 +60,14 @@ public interface IMasterService {
 
     CCResponse <RoomCategoryDto>deleteRoomCategory(Long id);
 
+    // ---------------------------- HotelType ----------------------------
+
+
     CCResponsePack<HotelTypeDto> findAllHotelTypes();
 
     CCResponse<HotelTypeDto> findHotelTypeById(Long id);
 
-    CCResponse<HotelTypeDto> saveHotelType(HotelTypeDto hotelTypeDto);
+    CCResponse<HotelTypeDto> createHotelType(HotelTypeDto hotelTypeDto);
 
     CCResponse<HotelTypeDto> updateHotelType(Long id, HotelTypeDto hotelTypeDto);
 
@@ -76,7 +80,7 @@ public interface IMasterService {
 
     CCResponse<FacilityDto> findFacilityById(Long id);
 
-    CCResponse<FacilityDto> saveFacility(FacilityDto facilityDto);
+    CCResponse<FacilityDto> createFacility(FacilityDto facilityDto);
 
     CCResponse<FacilityDto> updateFacility(Long id, FacilityDto facilityDto);
 
@@ -89,11 +93,25 @@ public interface IMasterService {
 
     CCResponse<FacilityCategoryDto> findFacilityCategoryById(Long id);
 
-    CCResponse<FacilityCategoryDto> saveFacilityCategory(FacilityCategoryDto facilityCategoryDto);
+    CCResponse<FacilityCategoryDto> createFacilityCategory(FacilityCategoryDto facilityCategoryDto);
 
     CCResponse<FacilityCategoryDto> updateFacilityCategory(Long id, FacilityCategoryDto facilityCategoryDto);
 
     CCResponse<FacilityCategoryDto> deleteFacilityCategory(Long id);
+
+
+    // ------------------- LandMarkCategory -------------------------------------------
+
+    CCResponsePack<LandMarkCategoryDto> findAllLandMarkCategories();
+
+    CCResponse<LandMarkCategoryDto> findLandMarkCategoryById(Long id);
+
+    CCResponse<LandMarkCategoryDto> createLandMarkCategory(LandMarkCategoryDto landMarkCategoryDto);
+
+    CCResponse<LandMarkCategoryDto> deleteLandMarkCategory(Long id);
+
+    CCResponse<LandMarkCategoryDto> updateLandMarkCategory(Long id, LandMarkCategoryDto landMarkCategoryDto);
+
 
     CCResponse<BoardBasisDto> createBoardBasis(BoardBasisDto boardBasisDto);
 

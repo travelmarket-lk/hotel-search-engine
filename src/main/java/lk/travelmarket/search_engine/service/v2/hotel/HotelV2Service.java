@@ -115,6 +115,49 @@ public class HotelV2Service implements IHotelV2Service {
             return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_ROOM_BLACKOUTS_BULK_UPDATE, e);
         }
     }
+
+    @Override
+    public CCResponsePack<BlackoutsDto> retrieveBlackouts(Long hotelId) {
+        try {
+
+            CCError<List<BlackoutsDto>> ccError = hotelServiceImpl.retrieveBlackouts( hotelId );
+
+            if (ccError.getStatus().equals(CCErrorStatus.ERROR)) {
+
+                return new CCResponsePack<>(
+                        Status.ERROR,
+                        ccError.getMessage(),
+                        null
+                );
+            }
+
+            return new CCResponsePack<>(
+                    ccError.getData()
+            );
+
+        } catch (Exception e) {
+
+            return new CCResponsePack<>(
+                    ErrorLayer.HSL_LAYER,
+                    ErrorSource.SERVER_ERROR,
+                    ERROR_RETRIEVE_BLACKOUTS,
+                    e
+            );
+        }
+    }
+
+    @Override
+    public CCResponse<BlackoutBulkUpdateDto> bulkUpdateBlackouts(Long hotelId, BlackoutBulkUpdateDto request) {
+        try {
+            CCError<BlackoutBulkUpdateDto> ccError = hotelServiceImpl.bulkUpdateBlackouts (hotelId, request);
+            if ( ccError.getStatus().equals( CCErrorStatus.ERROR)) {
+                return new CCResponse<>( Status.ERROR, ccError.getMessage(), null );
+            }
+            return new CCResponse<>( ccError.getData() );
+        } catch ( Exception e) {
+            return new CCResponse<>(ErrorLayer.HSL_LAYER, ErrorSource.SERVER_ERROR, ERROR_HOTEL_BLACKOUTS_BULK_UPDATE, e );
+        }
+    }
 }
 
 
