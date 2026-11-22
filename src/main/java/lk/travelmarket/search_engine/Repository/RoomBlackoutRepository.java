@@ -12,5 +12,6 @@ public interface RoomBlackoutRepository extends JpaRepository<Blackouts, Long> {
     List<Blackouts> findByRoomIdIsNotNull();
     List<Blackouts> findByRoomId(Long roomId);
     List<Blackouts> findByHotelIdAndRoomIdIsNotNull(Long hotelId);
+    List<Blackouts> findByHotelIdAndRoomId(Long hotelId, Long roomId);
 
 }

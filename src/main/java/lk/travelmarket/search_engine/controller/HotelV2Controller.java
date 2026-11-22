@@ -2,7 +2,7 @@ package lk.travelmarket.search_engine.controller;
 
 import lk.travelmarket.search_engine.dto.BlackoutsDto;
 import lk.travelmarket.search_engine.dto.SeasonDto;
-import lk.travelmarket.search_engine.dto.bulk.season.BlackoutBulkUpdateDto;
+import lk.travelmarket.search_engine.dto.bulk.blackout.BlackoutBulkUpdateDto;
 import lk.travelmarket.search_engine.dto.bulk.season.SeasonBulkUpdateDto;
 import lk.travelmarket.search_engine.network.CCResponseWrapper;
 import lk.travelmarket.search_engine.network.util.NetworkUtils;
@@ -33,11 +33,21 @@ public class HotelV2Controller implements IHotelV2Controller {
 
     @Override
     public ResponseEntity<CCResponseWrapper<List<BlackoutsDto>>> retrieveBlackouts(Long hotelId) {
-        return NetworkUtils.wrap(hotelService.retrieveBlackouts( hotelId ));
+        return NetworkUtils.wrap(hotelService.retrieveBlackouts(hotelId));
     }
 
     @Override
-    public ResponseEntity<CCResponseWrapper<BlackoutBulkUpdateDto>> bulkBlackoutUpdate(Long hotelIdd, BlackoutBulkUpdateDto request) {
-        return NetworkUtils.wrap(hotelService.bulkUpdateBlackouts( hotelIdd, request ));
+    public ResponseEntity<CCResponseWrapper<BlackoutBulkUpdateDto>> bulkBlackoutUpdate(Long hotelId, BlackoutBulkUpdateDto request) {
+        return NetworkUtils.wrap(hotelService.bulkUpdateBlackouts(hotelId, request));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<List<BlackoutsDto>>> retrieveRoomBlackouts(Long hotelId, Long roomId) {
+        return NetworkUtils.wrap(hotelService.retrieveRoomBlackouts(hotelId, roomId));
+    }
+
+    @Override
+    public ResponseEntity<CCResponseWrapper<BlackoutBulkUpdateDto>> bulkRoomBlackoutUpdate(Long hotelId, Long roomId, BlackoutBulkUpdateDto request) {
+        return NetworkUtils.wrap(hotelService.bulkUpdateRoomBlackouts(hotelId, roomId, request));
     }
 }
