@@ -1,4 +1,4 @@
-package lk.travelmarket.search_engine.dto.bulk.season;
+package lk.travelmarket.search_engine.dto.bulk.Blackout;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
